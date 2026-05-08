@@ -101,7 +101,7 @@ h1,h2,h3{font-family:'Urbanist',sans-serif;font-weight:700}
 .modal-hero p{font-size:11px;color:var(--ocean);margin-top:2px}
 .modal-event-tag{display:inline-block;background:var(--terracotta);color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;margin-bottom:6px}
 .modal-close{margin-left:auto;background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:18px;font-weight:700}
-.modal-body{padding:1.25rem;position:relative;background-size:cover;background-position:center}
+.modal-body{padding:1.25rem 1.25rem 2rem;position:relative;background-size:cover;background-position:center}
 .modal-body::before{content:"";position:absolute;inset:0;background:rgba(248,245,239,.85);z-index:0}
 .modal-body > *{position:relative;z-index:1}
 .modal-desc{font-size:13px;color:var(--text);line-height:1.5;margin-bottom:1rem}
@@ -244,7 +244,7 @@ h1,h2,h3{font-family:'Urbanist',sans-serif;font-weight:700}
     <div class="modal-body" id="modal-body">
       <p class="modal-desc" id="modal-desc-text"></p>
       <div class="modal-details" id="m-details"></div>
-      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem"></a>
+      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem;width:100%;box-sizing:border-box"></a>
       <span class="upload-label" id="upload-label-text"></span>
       <label class="upload-area" id="upload-area-label">
         <span id="upload-area-text"></span>
@@ -771,7 +771,7 @@ function openModal(i){
   document.getElementById('m-details').innerHTML=html;
   const infoUrl=a.link||a.maps;
   const il=document.getElementById('m-info-link');
-  if(infoUrl){il.href=infoUrl;il.style.display='block';}else{il.style.display='none';}
+  if(infoUrl){il.href=infoUrl;il.style.display='block';il.textContent=T[lang].moreInfo;}else{il.style.display='none';}
   document.getElementById('preview-wrap').classList.remove('show');
   document.getElementById('preview-img').src='';
   document.getElementById('finput').value='';
@@ -779,17 +779,31 @@ function openModal(i){
   if(photos[i]){document.getElementById('preview-img').src=photos[i];document.getElementById('preview-wrap').classList.add('show');document.getElementById('btn-done').disabled=false;}
   document.getElementById('modal-overlay').classList.add('open');
 }
+let currentPhotoDataUrl = null;
 function handleFile(e){
   const f=e.target.files[0];if(!f)return;currentFile=f;
-  const r=new FileReader();r.onload=ev=>{document.getElementById('preview-img').src=ev.target.result;document.getElementById('preview-wrap').classList.add('show');document.getElementById('btn-done').disabled=false;};r.readAsDataURL(f);
+  const r=new FileReader();
+  r.onload=ev=>{
+    currentPhotoDataUrl=ev.target.result;
+    document.getElementById('preview-img').src=currentPhotoDataUrl;
+    document.getElementById('preview-wrap').classList.add('show');
+    document.getElementById('btn-done').disabled=false;
+  };
+  r.readAsDataURL(f);
 }
 function markDone(){
-  if(currentCell===null)return;done[currentCell]=true;
-  if(currentFile){const r=new FileReader();r.onload=ev=>{photos[currentCell]=ev.target.result;saveLocal();renderCard();};r.readAsDataURL(currentFile);}
-  else{saveLocal();renderCard();}
-  closeModal();showToast(T[lang].toastSaved);
+  if(currentCell===null)return;
+  done[currentCell]=true;
+  if(currentPhotoDataUrl){
+    photos[currentCell]=currentPhotoDataUrl;
+  }
+  saveLocal();
+  renderCard();
+  closeModal();
+  showToast(T[lang].toastSaved);
+  currentPhotoDataUrl=null;
 }
-function closeModal(){document.getElementById('modal-overlay').classList.remove('open');currentCell=null;currentFile=null;}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');currentCell=null;currentFile=null;currentPhotoDataUrl=null;}
 function openRules(){applyLangRules();document.getElementById('rules-overlay').classList.add('open');}
 function closeRules(){document.getElementById('rules-overlay').classList.remove('open');}
 function openClaimModal(){if(!getLines().length)return;applyLangClaim();document.getElementById('claim-overlay').classList.add('open');}
