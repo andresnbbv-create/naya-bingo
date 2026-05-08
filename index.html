@@ -174,7 +174,6 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
   <button class="claim-cta" id="ctabtn" onclick="openClaimModal()">🎁 Claim My Gift</button>
 </div>
 
-<!-- Activity Modal -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-hero">
@@ -188,7 +187,7 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
     <div class="modal-body" id="modal-body">
       <p class="modal-desc">Click the link below for more info. Take a photo doing the activity, upload it, and mark complete to check this spot!</p>
       <div class="modal-details" id="m-details"></div>
-      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem;display:none">More Info →</a>
+      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem">More Info →</a>
       <span class="upload-label">Upload your photo to complete:</span>
       <label class="upload-area">📷 Tap to upload from camera roll<input type="file" accept="image/*" id="finput" onchange="handleFile(event)"></label>
       <div class="preview-wrap" id="preview-wrap"><img id="preview-img"></div>
@@ -200,7 +199,6 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
   </div>
 </div>
 
-<!-- Claim Modal -->
 <div class="modal-overlay" id="claim-overlay">
   <div class="modal">
     <div class="modal-hero">
@@ -220,7 +218,6 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
   </div>
 </div>
 
-<!-- Rules Modal -->
 <div class="modal-overlay" id="rules-overlay" style="z-index:400">
   <div class="modal" style="max-width:520px">
     <div style="background:linear-gradient(135deg,var(--moss) 0%,var(--moss-dark) 100%);padding:1.75rem 1.5rem;text-align:center;position:relative">
@@ -234,20 +231,14 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
         <div style="font-weight:700;font-size:15px;margin-bottom:4px;font-family:'Urbanist',sans-serif">🎯 The Goal</div>
         <div style="font-size:13px">Complete <b>5 activities in a row</b> — horizontally, vertically, or diagonally — to earn a special thank-you gift from Naya Homes!</div>
       </div>
-      <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎟️ Getting Started</h3>
-      <ol style="padding-left:20px;margin-bottom:1.25rem">
-        <li>Choose your region (Puerto Vallarta or Nuevo Vallarta)</li>
-        <li>Pick your check-in date</li>
-        <li>Your custom weekly card loads — 25 unique experiences!</li>
-      </ol>
       <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎲 How to Play</h3>
       <p style="margin-bottom:1.25rem">Tap a tile → Go do the activity → Take a photo → Upload it → Mark complete. Get 5 in a row to claim your gift!</p>
       <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎁 Claiming Your Reward</h3>
-      <p style="margin-bottom:1.25rem">Once you complete a line of 5, tap "Claim My Gift" and enter your name + reservation number. You'll get a unique <b>Naya Token</b> (like PALM-OCEAN-427). Show it to a Naya Homes team member to redeem.</p>
+      <p style="margin-bottom:1.25rem">Once you complete a line of 5, tap "Claim My Gift" and enter your name + reservation. You'll get a unique <b>Naya Token</b> (like PALM-OCEAN-427). Show it to a Naya Homes team member to redeem.</p>
       <div style="background:var(--sunshine);border:1.5px solid var(--sunrise);border-radius:8px;padding:10px 14px;margin-bottom:1.25rem">
         <b>📌 Save your token!</b> Screenshot or write it down — you'll need it to claim your gift.
       </div>
-      <div style="background:var(--moss);color:var(--sand);border-radius:12px;padding:16px;text-align:center;margin-top:1rem">
+      <div style="background:var(--moss);color:var(--sand);border-radius:12px;padding:16px;text-align:center">
         <div style="font-weight:700;font-size:15px;margin-bottom:8px;font-family:'Urbanist',sans-serif">❓ Questions?</div>
         <div style="font-size:13px;line-height:1.7">
           <div>📞 <a href="tel:+523151820301" style="color:var(--ocean);text-decoration:none;font-weight:600">+52 315 182 0301</a></div>
@@ -259,7 +250,6 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
   </div>
 </div>
 
-<!-- Congrats Screen -->
 <div id="congrats-screen">
   <div class="congrats-content">
     <div class="emoji">🎉</div>
@@ -278,181 +268,160 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 // ============================================================
-// PUERTO VALLARTA — EVERGREEN ACTIVITIES
+// PUERTO VALLARTA — ACTIVITIES (from official Naya guide)
 // ============================================================
 const EG_PV = {
-  malecon:    {n:"Walk the Malecón",tip:"Go at sunset — the sculptures and ocean views are magical at golden hour.",addr:"Paseo Díaz Ordaz, Puerto Vallarta",maps:"https://maps.google.com/?q=Malecon+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1518638150340-f706e86654de?w=400&q=80"},
-  losmuertos: {n:"Beach Day at Los Muertos",tip:"Los Muertos Pier is the heart of the action — great for people-watching and swimming.",addr:"Playa Los Muertos, Puerto Vallarta",maps:"https://maps.google.com/?q=Playa+Los+Muertos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
-  oldtown:    {n:"Explore Zona Romántica",tip:"The cobblestone streets of the Old Town are best explored in the morning before it gets hot.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
-  whalewatching:{n:"Whale Watching Tour",tip:"Humpback whales are in Banderas Bay Dec–Mar. Other months look for dolphins and manta rays!",phone:"(322) 209-0133",addr:"Los Muertos Pier, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Pier+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
-  snorkel:    {n:"Snorkel at Los Arcos",tip:"Los Arcos marine sanctuary has incredible visibility. Book a tour from the pier.",addr:"Los Arcos, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Arcos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
-  zipline:    {n:"Canopy Zip Line Tour",tip:"Sierra Madre zip line tours depart from Vallarta — book the day before for best availability.",phone:"(322) 222-5954",addr:"Sierra Madre, Puerto Vallarta",maps:"https://maps.google.com/?q=zip+line+tours+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
-  boattour:   {n:"Sunset Boat Tour",tip:"Two-hour sunset cruises leave from Los Muertos Pier — dolphins often show up!",phone:"(322) 224-4777",addr:"Los Muertos Pier, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Pier+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80"},
-  artgallery: {n:"Art Walk Thursday",tip:"Every Thursday (Nov–May) Vallarta's galleries open late for the weekly Art Walk. Free and fun!",when:"Every Thursday, 6–10 PM",addr:"Zona Romántica galleries, Puerto Vallarta",maps:"https://maps.google.com/?q=art+galleries+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
-  tequilatour:{n:"Tequila Tasting",tip:"Several shops in the Romantic Zone offer free tastings — El Catrin has a great selection.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=tequila+tasting+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&q=80"},
-  marketday:  {n:"Mercado Municipal",tip:"The downtown market is open daily — go early for fresh fruit, flowers, and local snacks.",addr:"Av. Miramar 126, Puerto Vallarta",maps:"https://maps.google.com/?q=Mercado+Municipal+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80"},
-  cathedral:  {n:"Visit the Cathedral",tip:"Our Lady of Guadalupe's crown is iconic. Best photos from the Malecón across the street.",addr:"Calle Hidalgo 370, Puerto Vallarta",maps:"https://maps.google.com/?q=Cathedral+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&q=80"},
-  tacos:      {n:"Eat Street Tacos",tip:"La Esquina del Gusto on Basilio Badillo is a local favorite — open late and incredibly cheap.",addr:"Basilio Badillo, Puerto Vallarta",maps:"https://maps.google.com/?q=tacos+Basilio+Badillo+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80"},
-  surflesson: {n:"Take a Surf Lesson",tip:"Sayulita is 45 min north and perfect for beginners. Punta Mita also has great surf schools.",addr:"Sayulita or Punta Mita, Nayarit",maps:"https://maps.google.com/?q=surf+lessons+Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
-  kayak:      {n:"Kayak the Bay",tip:"Morning kayak tours leave from Los Muertos — calm water and great wildlife sightings before 9am.",addr:"Los Muertos Beach, Puerto Vallarta",maps:"https://maps.google.com/?q=kayak+tours+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
-  hidingtowns:{n:"Day Trip to Sayulita",tip:"The colorful surf town of Sayulita is 45 min away — great tacos, art, and beach vibes.",addr:"Sayulita, Nayarit",maps:"https://maps.google.com/?q=Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
-  massage:    {n:"Spa or Massage",tip:"Vallarta is full of great value spas — book a beach massage or a full treatment at a hotel spa.",addr:"Puerto Vallarta Hotel Zone",maps:"https://maps.google.com/?q=spa+massage+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80"},
-  cooking:    {n:"Mexican Cooking Class",tip:"Several local chefs offer morning classes with market tours included — Vallarta Food Tours is excellent.",addr:"Puerto Vallarta",maps:"https://maps.google.com/?q=cooking+class+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=400&q=80"},
-  bikeride:   {n:"Bike the Malecón",tip:"Rent a bike near the boardwalk — the flat Malecón path is perfect for an early morning ride.",addr:"Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=bike+rental+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=400&q=80"},
-  scuba:      {n:"Scuba Diving",tip:"Banderas Bay has 30+ dive sites. Chimo Divers and Pacific Scuba are highly rated.",phone:"(322) 222-1657",addr:"Los Muertos Pier, Puerto Vallarta",maps:"https://maps.google.com/?q=scuba+diving+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
-  rooftopbar: {n:"Rooftop Bar Sunset",tip:"La Palapa and Demente rooftop are iconic for sunset drinks with Banderas Bay views.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=rooftop+bar+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80"},
-  stars:      {n:"Stargazing on the Beach",tip:"Head south past the Romantic Zone to a dark beach — the Milky Way is visible on clear nights.",addr:"South Puerto Vallarta beaches",maps:"https://maps.google.com/?q=beaches+south+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80"},
-  nightlife:  {n:"Explore PV Nightlife",tip:"The Romantic Zone is packed with live music, bars, and drag shows. Starts around 9pm!",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=nightlife+Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
-  mariachi:   {n:"Live Mariachi Show",tip:"El Arrayán and several Malecón restaurants host live mariachi — no reservation needed.",addr:"Malecón & Zona Romántica, PV",maps:"https://maps.google.com/?q=mariachi+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1547476745-29d6572ffd7e?w=400&q=80"},
-  foodtour:   {n:"PV Food Tour",tip:"Vallarta Food Tours runs excellent 3-hour walking tours hitting all the best local spots.",addr:"Puerto Vallarta downtown",maps:"https://maps.google.com/?q=food+tour+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
-  parasail:   {n:"Parasailing",tip:"Multiple operators on Los Muertos Beach offer tandem parasailing — about $40 USD per person.",addr:"Los Muertos Beach, Puerto Vallarta",maps:"https://maps.google.com/?q=parasailing+Los+Muertos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  malecon:     {n:"Walk the Malecón",tip:"Start or end at Los Muertos Pier. Best at sunset — sculptures, street performers, and ocean views for 1.5 km.",addr:"Malecón Boardwalk, Puerto Vallarta",maps:"https://www.google.com/maps/place/Malecon+Boardwalk+Vallarta/@20.612298,-105.234943,540m/",photo:"https://images.unsplash.com/photo-1518638150340-f706e86654de?w=400&q=80"},
+  guadalupe:   {n:"Visit the Cathedral",tip:"The crown on Our Lady of Guadalupe is a world-famous icon. No visit to PV is complete without it.",addr:"Parroquia de Nuestra Señora de Guadalupe, Puerto Vallarta",maps:"https://www.google.com/maps/place/Parroquia+de+Nuestra+Se%C3%B1ora+de+Guadalupe/@20.608199,-105.2391847",photo:"https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&q=80"},
+  artwalk:     {n:"Art Walk Thursday",tip:"Free weekly gallery crawl every Thursday in the Romantic Zone. Wine, local art, and great vibes 6–10 PM.",when:"Every Thursday, 6–10 PM",addr:"Zona Romántica galleries, Puerto Vallarta",link:"https://vallartaartwalk.com/#mapa",maps:"https://maps.google.com/?q=art+galleries+Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
+  botanicgarden:{n:"Vallarta Botanical Gardens",tip:"8 hectares of plants, bird watching, scenic restaurant Hacienda de Oro, and a swim in Río Los Horcones.",addr:"Jardín Botánico de Vallarta, Km 24 Carretera a Barra de Navidad",link:"https://www.vbgardens.org/es/",maps:"https://www.google.com/maps/place/Jard%C3%ADn+Bot%C3%A1nico+de+Vallarta/@20.4653179,-105.294577",photo:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80"},
+  marietas:    {n:"Boat Trip to Marietas Islands",tip:"National park — perfect for snorkeling, bird watching, and seeing the famous Hidden Beach (Playa del Amor). Book 2 days ahead!",addr:"Las Islas Marietas, Banderas Bay",maps:"https://maps.google.com/?q=Islas+Marietas+Nayarit",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  losarcos:    {n:"Snorkel at Los Arcos",tip:"Los Arcos National Marine Park — granite arches, caves, and tropical fish. The best snorkel spot near PV.",addr:"Los Arcos de Mismaloya, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Arcos+Mismaloya+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  whalepv:     {n:"Whale Watching Tour",tip:"Humpback whales Dec–Mar. Year-round you'll spot dolphins and manta rays on Banderas Bay tours.",addr:"Los Muertos Pier, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Pier+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+  hikevelapa:  {n:"Hike to Yelapa Waterfall",tip:"Take a water taxi from Los Muertos Pier to Yelapa, then hike to the stunning waterfall. Half-day adventure!",addr:"Yelapa, Jalisco (water taxi from Los Muertos)",maps:"https://maps.google.com/?q=Yelapa+waterfall+Jalisco",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
+  hikecolomitos:{n:"Hike Boca de Tomatlán to Las Ánimas",tip:"Most iconic coastal hike in the region — 4 km through virgin coves including famous Playa Colomitos.",addr:"Boca de Tomatlán, Puerto Vallarta",maps:"https://maps.google.com/?q=Boca+de+Tomatlan+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80"},
+  miradorcruz: {n:"Mirador Cerro de la Cruz",tip:"Steep steps but the reward is the most spectacular panoramic view of the entire Bahía de Banderas. Go at sunrise!",addr:"Cerro de la Cruz, Puerto Vallarta",maps:"https://maps.google.com/?q=Cerro+de+la+Cruz+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
+  cascadapalo: {n:"Cascada Palo María",tip:"Follow the river through rocky trails to find natural pools and waterfalls. A true off-the-beaten-path adventure.",addr:"Cascada Palo María, Puerto Vallarta",maps:"https://maps.google.com/?q=Cascada+Palo+Maria+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80"},
+  ziplinepv:   {n:"Zip Line in Sierra Madre",tip:"Multiple operators offer canopy zip line tours into the Sierra Madre. Book the day before for best availability.",addr:"Sierra Madre, Puerto Vallarta",maps:"https://maps.google.com/?q=zip+line+tours+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=400&q=80"},
+  margaritapv: {n:"Drinks at Margarita PV",tip:"Famous Margaritas Grill in the Romantic Zone — huge variety of margaritas, great food, and live music.",addr:"Margarita PV, Zona Romántica, Puerto Vallarta",maps:"https://www.google.com/maps/place/Margarita+PV/@20.6024059,-105.2367872",photo:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80"},
+  panchostakos:{n:"Tacos at Pancho's",tip:"Local favorite taqueria in the Romantic Zone — beloved by thousands of visitors. Go late, go hungry.",addr:"Pancho's Takos, Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=Pancho+Takos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80"},
+  palmcabaret: {n:"Show at The Palm Cabaret",tip:"World-class live shows in the Romantic Zone — comedy, drag, music. Book tickets in advance!",addr:"The Palm Cabaret & Bar, Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=The+Palm+Cabaret+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
+  barlaplaya:  {n:"Drinks at Bar La Playa",tip:"Oceanfront bar with a relaxed atmosphere and great views. Perfect for a sunset cocktail.",addr:"Bar La Playa, Puerto Vallarta",maps:"https://maps.google.com/?q=Bar+La+Playa+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
+  maleconnightlife:{n:"Malecón Nightlife",tip:"Murphy's and Andale's offer live rock and jazz. Street performers at Los Arcos amphitheater most evenings.",addr:"El Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Malecon+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80"},
+  romanticzone:{n:"Explore Zona Romántica",tip:"Cobblestone streets, art galleries, Los Muertos Pier, piano clubs, and vibrant cabaret shows. PV's bohemian heart.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
+  laisla:      {n:"La Isla Shopping Village",tip:"Elegant outdoor mall with water canals, international brands, and movie theaters. Great for a rainy afternoon.",addr:"La Isla Shopping Village, Puerto Vallarta",maps:"https://maps.google.com/?q=La+Isla+Shopping+Village+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80"},
+  galerias:    {n:"Galerías Vallarta",tip:"Traditional shopping center opposite the cruise terminal — quick shopping, food court, and local stores.",addr:"Galerías Vallarta, Puerto Vallarta",maps:"https://maps.google.com/?q=Galerias+Vallarta",photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80"},
+  mandalanightclub:{n:"Mandala or Strana Club",tip:"The top nightclubs on the Malecón — dancing until dawn. Best Thu–Sat after 11pm.",addr:"Mandala Nightclub, Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Mandala+nightclub+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
+  paddlepv:    {n:"Paddleboard or Kayak",tip:"Rent a board or kayak at Los Muertos Beach — calm morning waters are best before 10am.",addr:"Los Muertos Beach, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Beach+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
+  scubapv:     {n:"Scuba Dive Banderas Bay",tip:"30+ dive sites in Banderas Bay. Los Arcos has the best visibility and tropical fish variety.",addr:"Los Arcos / Banderas Bay, Puerto Vallarta",maps:"https://maps.google.com/?q=scuba+diving+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  marinaartmarket:{n:"Marina Art & Market Thursday",tip:"Every Thursday night at Marina Vallarta — live music, artisan crafts, and local food stalls.",when:"Every Thursday night",addr:"Marina Vallarta, Puerto Vallarta",maps:"https://maps.google.com/?q=Marina+Vallarta",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  losmuertosbeach:{n:"Day at Los Muertos Beach",tip:"The iconic pier, beach clubs, water sports, and people-watching — the heart of PV beach life.",addr:"Playa Los Muertos, Puerto Vallarta",maps:"https://maps.google.com/?q=Playa+Los+Muertos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
 };
 
 // ============================================================
-// PUERTO VALLARTA — WEEKLY EVENTS (May–Jun 2026)
-// ============================================================
-const EVENTS_PV = {
-  artnight:   {n:"Gallery Night Thursday",when:"Every Thursday, 6–10 PM",tip:"Stroll 20+ galleries in the Romantic Zone — free wine and local art.",addr:"Zona Romántica galleries, Puerto Vallarta",maps:"https://maps.google.com/?q=art+galleries+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
-  sundaymarket:{n:"Farmers & Crafts Market",when:"Every Sunday, 9 AM–2 PM",tip:"The boardwalk market has local produce, artisan crafts, and amazing street food.",addr:"Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Sunday+market+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
-  livemusic:  {n:"Live Music at La Bodeguita",when:"Fri & Sat, 9 PM",tip:"La Bodeguita del Medio is famous for mojitos and live Cuban music on weekends.",addr:"Paseo Díaz Ordaz 858, Puerto Vallarta",maps:"https://maps.google.com/?q=La+Bodeguita+del+Medio+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80",isEvent:true},
-  salsa:      {n:"Salsa Night",when:"Wednesday & Saturday nights",tip:"Salsa clubs in the Romantic Zone get going after 10pm — lessons often available earlier.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=salsa+dancing+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1504609813442-a8924e83f76e?w=400&q=80",isEvent:true},
-  fireworks:  {n:"Malecón Evening Show",when:"Saturday evenings",tip:"The Malecón comes alive on Saturday evenings with performers, vendors, and occasional fireworks.",addr:"Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Malecon+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1514672013381-c6d0df1c8b18?w=400&q=80",isEvent:true},
-};
-
-// ============================================================
-// NUEVO VALLARTA — EVERGREEN ACTIVITIES
+// NUEVO VALLARTA — ACTIVITIES (from official Naya guide)
 // ============================================================
 const EG_NV = {
-  beachclub:  {n:"Beach Club Day",tip:"Nuevo Vallarta has some of the calmest waters in Banderas Bay — perfect for families.",addr:"Nuevo Vallarta Beach, Nayarit",maps:"https://maps.google.com/?q=Nuevo+Vallarta+beach",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
-  paradisuspool:{n:"Pools & Waterpark",tip:"The Vidanta resort area has a public access waterpark (Aquaventuras) nearby — worth the trip!",addr:"Av. Paseo Cocoteros, Nuevo Vallarta",maps:"https://maps.google.com/?q=Aquaventuras+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=400&q=80"},
-  marina:     {n:"Explore the Marina",tip:"La Cruz de Huanacaxtle marina is 15 min north — great seafood restaurants and boat tours.",addr:"La Cruz de Huanacaxtle Marina, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+marina",photo:"https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80"},
-  puntamita:  {n:"Day Trip to Punta Mita",tip:"Punta Mita is 20 min away — world-class surf, pristine beaches, and the famous Four Seasons.",addr:"Punta Mita, Nayarit",maps:"https://maps.google.com/?q=Punta+Mita+Nayarit",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
-  sayulita:   {n:"Day Trip to Sayulita",tip:"The hippie surf town 30 min north is a must-do — colorful streets, great tacos, and surf.",addr:"Sayulita, Nayarit",maps:"https://maps.google.com/?q=Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
-  snorkelislas:{n:"Snorkel Islas Marietas",tip:"The hidden beach at Marietas Islands is world-famous — book a tour 2–3 days ahead, spots fill fast!",addr:"Islas Marietas, Banderas Bay",maps:"https://maps.google.com/?q=Islas+Marietas+Nayarit",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
-  whalenv:    {n:"Whale or Dolphin Tour",tip:"Dolphin pods are common year-round in Banderas Bay. Whale season is Dec–Mar.",addr:"La Cruz Marina, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+marina",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
-  surf:       {n:"Surf Lesson",tip:"La Lancha and El Anclote in Punta Mita are great beginner breaks. Lessons ~$40 USD.",addr:"Punta Mita, Nayarit",maps:"https://maps.google.com/?q=surf+lessons+Punta+Mita",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
-  kayaknv:    {n:"Kayak or Paddleboard",tip:"The estuary behind Nuevo Vallarta is perfect for flat-water paddling — great for wildlife.",addr:"Nuevo Vallarta Estuary, Nayarit",maps:"https://maps.google.com/?q=Nuevo+Vallarta+estuary",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
-  fishing:    {n:"Sport Fishing",tip:"Nuevo Vallarta is a prime fishing spot — marlin, tuna, dorado. Charter boats from La Cruz.",phone:"(329) 295-5456",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=sport+fishing+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1504277585821-e2fd1ca03f4d?w=400&q=80"},
-  sunsetcruise:{n:"Sunset Catamaran",tip:"Several operators run sunset catamaran trips from La Cruz Marina — open bar and snorkeling included.",addr:"La Cruz Marina, Nayarit",maps:"https://maps.google.com/?q=catamaran+tour+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80"},
-  atv:        {n:"ATV / Jungle Tour",tip:"Off-road ATV tours into the Sierra Madre depart from Bucerías — great for adrenaline seekers.",addr:"Bucerías, Nayarit",maps:"https://maps.google.com/?q=ATV+tour+Bucerias+Nayarit",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
-  bucerias:   {n:"Explore Bucerías",tip:"The art town of Bucerías is 10 min south — great galleries, seafood, and the Sunday art walk.",addr:"Bucerías, Nayarit",maps:"https://maps.google.com/?q=Bucerias+Nayarit",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80"},
-  seafood:    {n:"Fresh Seafood Lunch",tip:"El Anclote in Punta Mita has the freshest fish tacos and ceviche — order the aguachile.",addr:"Punta Mita or La Cruz, Nayarit",maps:"https://maps.google.com/?q=seafood+restaurant+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
-  ziplinenv:  {n:"Zip Line Adventure",tip:"Vallarta Adventures runs zip line tours into the jungle — departs from Nuevo Vallarta.",phone:"(329) 297-1212",addr:"Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=zip+line+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
-  massagenv:  {n:"Spa or Beach Massage",tip:"Beach massages on the Nuevo Vallarta strip are great value — negotiate a 60-min for ~$30 USD.",addr:"Nuevo Vallarta Beach, Nayarit",maps:"https://maps.google.com/?q=spa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80"},
-  tacosnv:    {n:"Street Tacos in Bucerías",tip:"The taco stands on Bucerías' main street open at 6pm — carnitas and al pastor are the best.",addr:"Bucerías, Nayarit",maps:"https://maps.google.com/?q=tacos+Bucerias+Nayarit",photo:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80"},
-  bikenv:     {n:"Bike Along the Coast",tip:"Rent a bike in Nuevo Vallarta and ride the coastal path toward La Cruz — flat and scenic.",addr:"Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=bike+rental+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=400&q=80"},
-  starsbeach: {n:"Stargazing on the Beach",tip:"The beach in front of Nuevo Vallarta has very little light pollution — incredible stargazing after 9pm.",addr:"Nuevo Vallarta Beach, Nayarit",maps:"https://maps.google.com/?q=Nuevo+Vallarta+beach",photo:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80"},
-  lacruzmkt:  {n:"La Cruz Sunday Market",when:"Every Sunday, 9 AM–2 PM",tip:"The La Cruz market is one of the best on the Riviera Nayarit — fresh food, live music, artisan crafts.",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+market",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
-  horseback:  {n:"Horseback on the Beach",tip:"Several operators near Bucerías offer beach horseback rides at sunset — about $40 USD/hr.",addr:"Bucerías Beach, Nayarit",maps:"https://maps.google.com/?q=horseback+riding+Bucerias",photo:"https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=400&q=80"},
-  cookclassnv:{n:"Cooking Class",tip:"Book a class in Bucerías or Puerto Vallarta — most include a market tour and 3–4 dishes.",addr:"Bucerías or Puerto Vallarta",maps:"https://maps.google.com/?q=cooking+class+Bucerias",photo:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=400&q=80"},
-  nightnv:    {n:"Nightlife in Bucerías",tip:"Bucerías' malecón has great restaurants and live music bars — much more relaxed than PV.",addr:"Bucerías Malecón, Nayarit",maps:"https://maps.google.com/?q=nightlife+Bucerias+Nayarit",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
-  hiddenbeach:{n:"Visit Hidden Beach",tip:"El Anclote beach in Punta Mita is a stunning half-hidden cove — great snorkeling and calm water.",addr:"El Anclote, Punta Mita, Nayarit",maps:"https://maps.google.com/?q=El+Anclote+Punta+Mita",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
-  scubanv:    {n:"Scuba Diving",tip:"The Marietas Islands dive sites are world-class. Most dive shops are in La Cruz or Punta Mita.",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=scuba+diving+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+  playayflamingos:{n:"Playa Flamingos Walk",tip:"Long sandy beach ideal for walking, running, or just relaxing — one of the calmest and cleanest in Banderas Bay.",addr:"Playa Flamingos, Nuevo Vallarta",maps:"https://maps.google.com/?q=Playa+Flamingos+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  marina_nv:   {n:"Explore the Marina",tip:"Nuevo Vallarta Marina has great restaurants, boutique shops, and boat tour operators. Great for an evening stroll.",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80"},
+  salado:      {n:"Estero El Salado",tip:"The only urban mangrove Protected Natural Area in Mexico — incredible wildlife, birds, and eco-tours available.",addr:"Estero El Salado, Nuevo Vallarta",maps:"https://maps.google.com/?q=Estero+El+Salado+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80"},
+  golf:        {n:"Golf at El Tigre",tip:"World-class 18-hole course at El Tigre Golf Club — one of the top-rated courses in Riviera Nayarit.",addr:"El Tigre Golf Club, Nuevo Vallarta",maps:"https://maps.google.com/?q=El+Tigre+Golf+Club+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=400&q=80"},
+  kayaknv:     {n:"Kayak or Paddleboard",tip:"Rent directly in front of the resorts on Playa Nuevo Vallarta — calm waters perfect for beginners.",addr:"Playa Nuevo Vallarta (resort beach), Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
+  fishingnv:   {n:"Deep Sea Sport Fishing",tip:"Charter boats from Marina Nuevo Vallarta target marlin, tuna, and dorado. Half-day charters available.",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=sport+fishing+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1504277585821-e2fd1ca03f4d?w=400&q=80"},
+  spanv:       {n:"Resort Spa Day",tip:"Vidanta, Grand Velas, and Hard Rock all have world-class spas — book a treatment and enjoy the pools.",addr:"Nuevo Vallarta resort area, Nayarit",maps:"https://maps.google.com/?q=spa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80"},
+  hikebocanegra:{n:"Hike to Playa Bocanegra",tip:"Flat and quiet hike from Plaza Marina to Playa Bocanegra — perfect for wildlife spotting near the Río Ameca mouth.",addr:"Plaza Marina to Playa Bocanegra, Nayarit",maps:"https://maps.google.com/?q=Playa+Bocanegra+Nayarit",photo:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80"},
+  marietasnv:  {n:"Marietas Islands — Hidden Beach",tip:"The iconic Playa Escondida (Hidden Beach) is only accessible by swimming through a cave tunnel. Book well in advance!",addr:"Islas Marietas — Playa Escondida, Banderas Bay",maps:"https://maps.google.com/?q=Islas+Marietas+hidden+beach",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  paddlenv:    {n:"Paddleboard at Marietas",tip:"Marietas Islands is a top destination for deep paddleboarding and scuba — crystal clear water and marine life.",addr:"Islas Marietas, Banderas Bay",maps:"https://maps.google.com/?q=Islas+Marietas+Nayarit",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  paradisevillage:{n:"Paradise Village Shopping",tip:"The main shopping plaza in Nuevo Vallarta — souvenirs, restaurants, and essential services facing the marina.",addr:"Paradise Village Shopping Center, Nuevo Vallarta",maps:"https://maps.google.com/?q=Paradise+Village+Shopping+Center+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80"},
+  marinaartmktnv:{n:"Marina Art & Market Thursday",tip:"Every Thursday night at Marina Vallarta — live music, artisan crafts stalls, great atmosphere.",when:"Every Thursday night",addr:"Marina Vallarta (NV/PV border), Nayarit",maps:"https://maps.google.com/?q=Marina+Vallarta",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  hotelbars:   {n:"Luxury Resort Bar Night",tip:"Catch a sunset at the Grand Velas or Hard Rock rooftop bar — open to non-guests at most spots.",addr:"Nuevo Vallarta resort strip, Nayarit",maps:"https://maps.google.com/?q=Grand+Velas+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80"},
+  marinadinenv:{n:"Dinner at Marina Restaurants",tip:"The marina-front restaurants are perfect for a relaxed dinner with boats and bay views. Try the ceviche!",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=restaurants+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
+  puntamitanv: {n:"Day Trip to Punta Mita",tip:"20 min north — world-class surf, the Four Seasons beach club (open to public), and the best fish tacos at El Anclote.",addr:"Punta Mita, Nayarit",maps:"https://maps.google.com/?q=Punta+Mita+Nayarit",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
+  sayulitanv:  {n:"Day Trip to Sayulita",tip:"Colorful hippie surf town 30 min north — murals, tacos, surfboard rentals, and a great beach vibe.",addr:"Sayulita, Nayarit",maps:"https://maps.google.com/?q=Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
+  scubanv:     {n:"Scuba Dive Banderas Bay",tip:"La Cruz de Huanacaxtle has excellent dive shops for Marietas and bay dive sites.",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=scuba+diving+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  sunsetcruise:{n:"Sunset Catamaran",tip:"Open-bar sunset catamaran cruises depart from Marina Nuevo Vallarta — dolphins often join the ride!",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=catamaran+tour+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80"},
+  beachvolley: {n:"Beach Volleyball & Sports",tip:"The resort beaches have volleyball nets, beach soccer, and watersports set up daily — just show up and play!",addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80"},
+  lacruzmkt:   {n:"La Cruz Sunday Market",tip:"Best Sunday market on the Riviera Nayarit — 15 min from NV. Fresh food, live music, artisan crafts, and great energy.",when:"Every Sunday, 9 AM–2 PM",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+market",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  bikenv:      {n:"Bike Along the Coast",tip:"Rent a bike in Nuevo Vallarta and ride the coastal path toward La Cruz — flat, scenic, and perfect at sunrise.",addr:"Nuevo Vallarta coastal path, Nayarit",maps:"https://maps.google.com/?q=bike+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=400&q=80"},
+  whalenv:     {n:"Whale or Dolphin Tour",tip:"Dolphin pods are common year-round in Banderas Bay. Whale season is Dec–Mar — humpbacks right in the bay!",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=whale+watching+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+  starsbeach:  {n:"Stargazing on the Beach",tip:"Nuevo Vallarta beaches have minimal light pollution. Grab a blanket, walk past the resort lights, and look up.",addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80"},
+  snorkelnv:   {n:"Snorkel in Banderas Bay",tip:"The calm waters off Nuevo Vallarta have surprisingly good snorkeling — rent gear from beach vendors.",addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=snorkeling+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
 };
 
 // ============================================================
-// NUEVO VALLARTA — WEEKLY EVENTS
-// ============================================================
-const EVENTS_NV = {
-  lacruzmkt:  {n:"La Cruz Sunday Market",when:"Every Sunday, 9 AM–2 PM",tip:"The best Sunday market on the Riviera Nayarit — fresh food, live music, artisan goods.",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+market",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
-  bucartsun:  {n:"Bucerías Art Walk",when:"Every Sunday, 6–9 PM (Nov–Apr)",tip:"Stroll Bucerías' art galleries on Sunday evenings for free wine and local art.",addr:"Bucerías, Nayarit",maps:"https://maps.google.com/?q=art+walk+Bucerias",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
-  livemusicnv:{n:"Live Music at La Cruz",when:"Fri & Sat evenings",tip:"The marina restaurants in La Cruz have live music on weekends — great vibe and fresh seafood.",addr:"La Cruz Marina, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+marina",photo:"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80",isEvent:true},
-};
-
-// ============================================================
-// 5 WEEKLY CARDS — PUERTO VALLARTA (May–Jun 2026)
+// 5 WEEKLY CARDS — PUERTO VALLARTA
 // ============================================================
 const WEEKLY_CARDS_PV = [
   // WEEK 1: May 1–7
   [
-    EG_PV.malecon, EVENTS_PV.sundaymarket, EG_PV.losmuertos, EG_PV.snorkel, EG_PV.tacos,
-    EVENTS_PV.artnight, EG_PV.boattour, EVENTS_PV.livemusic, EG_PV.tequilatour, EG_PV.cathedral,
-    EG_PV.kayak, EG_PV.cooking, EG_PV.rooftopbar, EG_PV.marketday, EG_PV.zipline,
-    EVENTS_PV.salsa, EG_PV.oldtown, EG_PV.bikeride, EVENTS_PV.fireworks, EG_PV.stars,
-    EG_PV.mariachi, EG_PV.whalewatching, EG_PV.parasail, EG_PV.foodtour, EG_PV.scuba
+    EG_PV.malecon, EG_PV.artwalk, EG_PV.losmuertosbeach, EG_PV.marietas, EG_PV.panchostakos,
+    EG_PV.marinaartmarket, EG_PV.losarcos, EG_PV.margaritapv, EG_PV.guadalupe, EG_PV.romanticzone,
+    EG_PV.paddlepv, EG_PV.hikecolomitos, EG_PV.palmcabaret, EG_PV.botanicgarden, EG_PV.ziplinepv,
+    EG_PV.barlaplaya, EG_PV.miradorcruz, EG_PV.maleconnightlife, EG_PV.whalepv, EG_PV.scubapv,
+    EG_PV.laisla, EG_PV.hikevelapa, EG_PV.cascadapalo, EG_PV.mandalanightclub, EG_PV.galerias
   ],
   // WEEK 2: May 8–14
   [
-    EVENTS_PV.sundaymarket, EG_PV.losmuertos, EG_PV.oldtown, EG_PV.whalewatching, EVENTS_PV.artnight,
-    EG_PV.tequilatour, EVENTS_PV.livemusic, EG_PV.snorkel, EG_PV.malecon, EG_PV.tacos,
-    EG_PV.surflesson, EG_PV.massage, EG_PV.cathedral, EG_PV.cooking, EG_PV.mariachi,
-    EVENTS_PV.salsa, EG_PV.kayak, EG_PV.hidingtowns, EVENTS_PV.fireworks, EG_PV.boattour,
-    EG_PV.rooftopbar, EG_PV.scuba, EG_PV.foodtour, EG_PV.bikeride, EG_PV.parasail
+    EG_PV.losmuertosbeach, EG_PV.marinaartmarket, EG_PV.romanticzone, EG_PV.whalepv, EG_PV.artwalk,
+    EG_PV.panchostakos, EG_PV.margaritapv, EG_PV.losarcos, EG_PV.malecon, EG_PV.guadalupe,
+    EG_PV.hikecolomitos, EG_PV.botanicgarden, EG_PV.cascadapalo, EG_PV.palmcabaret, EG_PV.ziplinepv,
+    EG_PV.barlaplaya, EG_PV.paddlepv, EG_PV.marietas, EG_PV.maleconnightlife, EG_PV.scubapv,
+    EG_PV.laisla, EG_PV.miradorcruz, EG_PV.hikevelapa, EG_PV.galerias, EG_PV.mandalanightclub
   ],
   // WEEK 3: May 15–21
   [
-    EG_PV.hidingtowns, EVENTS_PV.artnight, EG_PV.losmuertos, EG_PV.zipline, EVENTS_PV.sundaymarket,
-    EG_PV.kayak, EVENTS_PV.salsa, EG_PV.snorkel, EVENTS_PV.livemusic, EG_PV.malecon,
-    EG_PV.whalewatching, EG_PV.tacos, EG_PV.oldtown, EG_PV.surflesson, EG_PV.mariachi,
-    EG_PV.cooking, EG_PV.bikeride, EVENTS_PV.fireworks, EG_PV.cathedral, EG_PV.scuba,
-    EG_PV.stars, EG_PV.marketday, EG_PV.massage, EG_PV.foodtour, EG_PV.nightlife
+    EG_PV.botanicgarden, EG_PV.artwalk, EG_PV.malecon, EG_PV.hikevelapa, EG_PV.marinaartmarket,
+    EG_PV.paddlepv, EG_PV.margaritapv, EG_PV.marietas, EG_PV.losmuertosbeach, EG_PV.romanticzone,
+    EG_PV.scubapv, EG_PV.panchostakos, EG_PV.miradorcruz, EG_PV.whalepv, EG_PV.losarcos,
+    EG_PV.palmcabaret, EG_PV.barlaplaya, EG_PV.cascadapalo, EG_PV.ziplinepv, EG_PV.guadalupe,
+    EG_PV.mandalanightclub, EG_PV.laisla, EG_PV.maleconnightlife, EG_PV.hikecolomitos, EG_PV.galerias
   ],
   // WEEK 4: May 22–28
   [
-    EVENTS_PV.sundaymarket, EG_PV.malecon, EG_PV.surflesson, EG_PV.losmuertos, EVENTS_PV.artnight,
-    EG_PV.boattour, EVENTS_PV.salsa, EG_PV.cooking, EVENTS_PV.livemusic, EG_PV.kayak,
-    EG_PV.oldtown, EG_PV.stars, EG_PV.scuba, EG_PV.tequilatour, EG_PV.nightlife,
-    EG_PV.massage, EG_PV.parasail, EVENTS_PV.fireworks, EG_PV.hidingtowns, EG_PV.marketday,
-    EG_PV.cathedral, EG_PV.foodtour, EG_PV.tacos, EG_PV.bikeride, EG_PV.mariachi
+    EG_PV.marinaartmarket, EG_PV.malecon, EG_PV.losarcos, EG_PV.losmuertosbeach, EG_PV.artwalk,
+    EG_PV.scubapv, EG_PV.panchostakos, EG_PV.botanicgarden, EG_PV.marietas, EG_PV.romanticzone,
+    EG_PV.barlaplaya, EG_PV.ziplinepv, EG_PV.miradorcruz, EG_PV.margaritapv, EG_PV.maleconnightlife,
+    EG_PV.paddlepv, EG_PV.hikecolomitos, EG_PV.palmcabaret, EG_PV.guadalupe, EG_PV.whalepv,
+    EG_PV.laisla, EG_PV.cascadapalo, EG_PV.hikevelapa, EG_PV.galerias, EG_PV.mandalanightclub
   ],
   // WEEK 5: May 29–Jun 4
   [
-    EG_PV.losmuertos, EVENTS_PV.artnight, EG_PV.zipline, EVENTS_PV.sundaymarket, EG_PV.malecon,
-    EG_PV.snorkel, EVENTS_PV.livemusic, EG_PV.stars, EVENTS_PV.salsa, EG_PV.hidingtowns,
-    EG_PV.boattour, EG_PV.cooking, EG_PV.nightlife, EG_PV.cathedral, EG_PV.tacos,
-    EG_PV.kayak, EVENTS_PV.fireworks, EG_PV.surflesson, EG_PV.mariachi, EG_PV.foodtour,
-    EG_PV.scuba, EG_PV.massage, EG_PV.parasail, EG_PV.bikeride, EG_PV.tequilatour
+    EG_PV.losmuertosbeach, EG_PV.artwalk, EG_PV.ziplinepv, EG_PV.marinaartmarket, EG_PV.malecon,
+    EG_PV.losarcos, EG_PV.margaritapv, EG_PV.whalepv, EG_PV.panchostakos, EG_PV.botanicgarden,
+    EG_PV.scubapv, EG_PV.romanticzone, EG_PV.maleconnightlife, EG_PV.guadalupe, EG_PV.marietas,
+    EG_PV.paddlepv, EG_PV.cascadapalo, EG_PV.hikevelapa, EG_PV.palmcabaret, EG_PV.barlaplaya,
+    EG_PV.miradorcruz, EG_PV.hikecolomitos, EG_PV.laisla, EG_PV.mandalanightclub, EG_PV.galerias
   ]
 ];
 
 // ============================================================
-// 5 WEEKLY CARDS — NUEVO VALLARTA (May–Jun 2026)
+// 5 WEEKLY CARDS — NUEVO VALLARTA
 // ============================================================
 const WEEKLY_CARDS_NV = [
   // WEEK 1: May 1–7
   [
-    EG_NV.beachclub, EVENTS_NV.lacruzmkt, EG_NV.puntamita, EG_NV.snorkelislas, EG_NV.tacosnv,
-    EVENTS_NV.livemusicnv, EG_NV.sunsetcruise, EVENTS_NV.bucartsun, EG_NV.fishing, EG_NV.marina,
-    EG_NV.kayaknv, EG_NV.cookclassnv, EG_NV.hiddenbeach, EG_NV.seafood, EG_NV.ziplinenv,
-    EG_NV.horseback, EG_NV.bucerias, EG_NV.bikenv, EG_NV.starsbeach, EG_NV.whalenv,
-    EG_NV.atv, EG_NV.sayulita, EG_NV.massagenv, EG_NV.scubanv, EG_NV.surf
+    EG_NV.playayflamingos, EG_NV.lacruzmkt, EG_NV.puntamitanv, EG_NV.marietasnv, EG_NV.marinadinenv,
+    EG_NV.marinaartmktnv, EG_NV.sunsetcruise, EG_NV.golf, EG_NV.fishingnv, EG_NV.marina_nv,
+    EG_NV.kayaknv, EG_NV.salado, EG_NV.hotelbars, EG_NV.paradisevillage, EG_NV.marietasnv,
+    EG_NV.bikenv, EG_NV.sayulitanv, EG_NV.hikebocanegra, EG_NV.starsbeach, EG_NV.whalenv,
+    EG_NV.snorkelnv, EG_NV.scubanv, EG_NV.beachvolley, EG_NV.spanv, EG_NV.paddlenv
   ],
   // WEEK 2: May 8–14
   [
-    EVENTS_NV.lacruzmkt, EG_NV.beachclub, EG_NV.sayulita, EG_NV.whalenv, EVENTS_NV.livemusicnv,
-    EG_NV.fishing, EVENTS_NV.bucartsun, EG_NV.snorkelislas, EG_NV.marina, EG_NV.tacosnv,
-    EG_NV.surf, EG_NV.massagenv, EG_NV.puntamita, EG_NV.cookclassnv, EG_NV.horseback,
-    EG_NV.bucerias, EG_NV.kayaknv, EG_NV.hiddenbeach, EG_NV.sunsetcruise, EG_NV.seafood,
-    EG_NV.atv, EG_NV.scubanv, EG_NV.starsbeach, EG_NV.bikenv, EG_NV.nightnv
+    EG_NV.lacruzmkt, EG_NV.playayflamingos, EG_NV.sayulitanv, EG_NV.whalenv, EG_NV.marinaartmktnv,
+    EG_NV.fishingnv, EG_NV.golf, EG_NV.marietasnv, EG_NV.marina_nv, EG_NV.marinadinenv,
+    EG_NV.sunsetcruise, EG_NV.spanv, EG_NV.puntamitanv, EG_NV.salado, EG_NV.hotelbars,
+    EG_NV.hikebocanegra, EG_NV.kayaknv, EG_NV.paddlenv, EG_NV.scubanv, EG_NV.snorkelnv,
+    EG_NV.beachvolley, EG_NV.starsbeach, EG_NV.bikenv, EG_NV.paradisevillage, EG_NV.marietasnv
   ],
   // WEEK 3: May 15–21
   [
-    EG_NV.sayulita, EVENTS_NV.livemusicnv, EG_NV.beachclub, EG_NV.ziplinenv, EVENTS_NV.lacruzmkt,
-    EG_NV.kayaknv, EG_NV.horseback, EG_NV.snorkelislas, EVENTS_NV.bucartsun, EG_NV.marina,
-    EG_NV.whalenv, EG_NV.tacosnv, EG_NV.puntamita, EG_NV.surf, EG_NV.atv,
-    EG_NV.cookclassnv, EG_NV.bikenv, EG_NV.sunsetcruise, EG_NV.hiddenbeach, EG_NV.scubanv,
-    EG_NV.starsbeach, EG_NV.seafood, EG_NV.massagenv, EG_NV.fishing, EG_NV.nightnv
+    EG_NV.sayulitanv, EG_NV.marinaartmktnv, EG_NV.playayflamingos, EG_NV.golf, EG_NV.lacruzmkt,
+    EG_NV.kayaknv, EG_NV.salado, EG_NV.marietasnv, EG_NV.marina_nv, EG_NV.sunsetcruise,
+    EG_NV.whalenv, EG_NV.marinadinenv, EG_NV.puntamitanv, EG_NV.fishingnv, EG_NV.hotelbars,
+    EG_NV.scubanv, EG_NV.bikenv, EG_NV.starsbeach, EG_NV.hikebocanegra, EG_NV.paddlenv,
+    EG_NV.snorkelnv, EG_NV.beachvolley, EG_NV.spanv, EG_NV.paradisevillage, EG_NV.marietasnv
   ],
   // WEEK 4: May 22–28
   [
-    EVENTS_NV.lacruzmkt, EG_NV.marina, EG_NV.surf, EG_NV.beachclub, EVENTS_NV.livemusicnv,
-    EG_NV.sunsetcruise, EG_NV.horseback, EG_NV.cookclassnv, EVENTS_NV.bucartsun, EG_NV.kayaknv,
-    EG_NV.bucerias, EG_NV.starsbeach, EG_NV.scubanv, EG_NV.fishing, EG_NV.nightnv,
-    EG_NV.massagenv, EG_NV.hiddenbeach, EG_NV.sayulita, EG_NV.puntamita, EG_NV.seafood,
-    EG_NV.snorkelislas, EG_NV.atv, EG_NV.tacosnv, EG_NV.bikenv, EG_NV.whalenv
+    EG_NV.lacruzmkt, EG_NV.marina_nv, EG_NV.golf, EG_NV.playayflamingos, EG_NV.marinaartmktnv,
+    EG_NV.sunsetcruise, EG_NV.whalenv, EG_NV.salado, EG_NV.marietasnv, EG_NV.kayaknv,
+    EG_NV.puntamitanv, EG_NV.starsbeach, EG_NV.scubanv, EG_NV.fishingnv, EG_NV.hotelbars,
+    EG_NV.spanv, EG_NV.hikebocanegra, EG_NV.sayulitanv, EG_NV.paddlenv, EG_NV.marinadinenv,
+    EG_NV.beachvolley, EG_NV.snorkelnv, EG_NV.bikenv, EG_NV.paradisevillage, EG_NV.marietasnv
   ],
   // WEEK 5: May 29–Jun 4
   [
-    EG_NV.beachclub, EVENTS_NV.livemusicnv, EG_NV.ziplinenv, EVENTS_NV.lacruzmkt, EG_NV.marina,
-    EG_NV.snorkelislas, EVENTS_NV.bucartsun, EG_NV.starsbeach, EG_NV.horseback, EG_NV.sayulita,
-    EG_NV.sunsetcruise, EG_NV.cookclassnv, EG_NV.nightnv, EG_NV.puntamita, EG_NV.tacosnv,
-    EG_NV.kayaknv, EG_NV.hiddenbeach, EG_NV.surf, EG_NV.atv, EG_NV.fishing,
-    EG_NV.scubanv, EG_NV.massagenv, EG_NV.bikenv, EG_NV.bucerias, EG_NV.seafood
+    EG_NV.playayflamingos, EG_NV.marinaartmktnv, EG_NV.golf, EG_NV.lacruzmkt, EG_NV.marina_nv,
+    EG_NV.marietasnv, EG_NV.whalenv, EG_NV.starsbeach, EG_NV.sunsetcruise, EG_NV.sayulitanv,
+    EG_NV.scubanv, EG_NV.salado, EG_NV.hotelbars, EG_NV.puntamitanv, EG_NV.marinadinenv,
+    EG_NV.kayaknv, EG_NV.paddlenv, EG_NV.fishingnv, EG_NV.beachvolley, EG_NV.snorkelnv,
+    EG_NV.hikebocanegra, EG_NV.spanv, EG_NV.bikenv, EG_NV.paradisevillage, EG_NV.marietasnv
   ]
 ];
 
 // ============================================================
-// WEEK CARD LOOKUP — date-based
+// WEEK CARD LOOKUP
 // ============================================================
 function getWeekCard(checkInStr, region) {
   const d = new Date(checkInStr + 'T12:00:00');
@@ -467,7 +436,6 @@ function getWeekCard(checkInStr, region) {
   for (const w of bounds) {
     if (d >= w.start && d <= w.end) return {acts: cards[w.idx].slice(), label: w.label};
   }
-  // Fallback by day of month
   const day = d.getDate();
   const idx = Math.min(Math.floor((day - 1) / 7), 4);
   return {acts: cards[idx].slice(), label: 'Week ' + (idx + 1)};
@@ -479,44 +447,37 @@ function getWeekCard(checkInStr, region) {
 let calYear, calMonth2, selectedCheckIn = null;
 function navMonth(dir) {
   calMonth2 += dir;
-  if(calMonth2 < 0){calMonth2=11; calYear--;}
-  if(calMonth2 > 11){calMonth2=0; calYear++;}
+  if(calMonth2 < 0){calMonth2=11; calYear--;} if(calMonth2 > 11){calMonth2=0; calYear++;}
   renderCal();
 }
 function initCal() {
-  const now = new Date(); calYear = now.getFullYear(); calMonth2 = now.getMonth();
-  renderCal();
+  const now = new Date(); calYear = now.getFullYear(); calMonth2 = now.getMonth(); renderCal();
 }
 function renderCal() {
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('cal-month').textContent = months[calMonth2]+' '+calYear;
   const grid = document.getElementById('cal-grid'); grid.innerHTML = '';
-  ['S','M','T','W','T','F','S'].forEach(d => {
-    const e = document.createElement('div'); e.className='cal-day-name'; e.textContent=d; grid.appendChild(e);
-  });
+  ['S','M','T','W','T','F','S'].forEach(d=>{const e=document.createElement('div');e.className='cal-day-name';e.textContent=d;grid.appendChild(e);});
   const firstDay = new Date(calYear, calMonth2, 1).getDay();
   const daysInMonth = new Date(calYear, calMonth2+1, 0).getDate();
-  for(let i=0; i<firstDay; i++){
-    const e=document.createElement('div'); e.className='cal-day empty'; grid.appendChild(e);
-  }
-  for(let d=1; d<=daysInMonth; d++){
-    const e = document.createElement('div'); e.className='cal-day'; e.textContent=d;
-    const dStr = calYear+'-'+String(calMonth2+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+  for(let i=0;i<firstDay;i++){const e=document.createElement('div');e.className='cal-day empty';grid.appendChild(e);}
+  for(let d=1;d<=daysInMonth;d++){
+    const e=document.createElement('div'); e.className='cal-day'; e.textContent=d;
+    const dStr=calYear+'-'+String(calMonth2+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
     if(selectedCheckIn===dStr) e.classList.add('selected');
-    e.onclick = () => selectDate(dStr, d, e);
+    e.onclick=()=>selectDate(dStr,d,e);
     grid.appendChild(e);
   }
 }
 function selectDate(dStr, day, el) {
-  selectedCheckIn = dStr;
-  document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+  selectedCheckIn=dStr;
+  document.querySelectorAll('.cal-day').forEach(d=>d.classList.remove('selected'));
   el.classList.add('selected');
-  const region = document.getElementById('region-select').value;
-  const {label} = getWeekCard(dStr, region);
+  const region=document.getElementById('region-select').value;
+  const {label}=getWeekCard(dStr,region);
   const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const d = new Date(dStr+'T12:00:00');
-  document.getElementById('stay-display').innerHTML =
-    'Check-in: <strong>'+months[d.getMonth()]+' '+day+', '+d.getFullYear()+'</strong><br><span class="week-badge">You\'ll get the '+label+' Card!</span>';
+  const d=new Date(dStr+'T12:00:00');
+  document.getElementById('stay-display').innerHTML='Check-in: <strong>'+months[d.getMonth()]+' '+day+', '+d.getFullYear()+'</strong><br><span class="week-badge">You\'ll get the '+label+' Card!</span>';
 }
 
 // ============================================================
@@ -526,82 +487,48 @@ let ACTS=[], weekLabel='', done=new Array(25).fill(false);
 let photos=new Array(25).fill(null), photoPaths=new Array(25).fill(null);
 let currentCell=null, currentFile=null, guestCheckIn=null, guestRegion=null;
 
-window.onload = function(){
+window.onload=function(){
   initCal();
-  try {
-    if(!sessionStorage.getItem('naya_pv_logged')){
-      sb.from('bingo_page_views').insert({user_agent: navigator.userAgent})
-        .then(()=>sessionStorage.setItem('naya_pv_logged','1')).catch(()=>{});
-    }
-  } catch(e){}
+  try { if(!sessionStorage.getItem('naya_pv_logged')){ sb.from('bingo_page_views').insert({user_agent:navigator.userAgent}).then(()=>sessionStorage.setItem('naya_pv_logged','1')).catch(()=>{}); } } catch(e){}
 };
 
 async function startGame(){
-  const errEl = document.getElementById('login-error'); errEl.classList.remove('show');
-  if(!selectedCheckIn){ errEl.textContent='Please select your check-in date.'; errEl.classList.add('show'); return; }
-  guestCheckIn = selectedCheckIn;
-  guestRegion = document.getElementById('region-select').value;
-
-  const btn = document.getElementById('login-btn');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Loading your card...';
-
-  try {
-    sb.from('bingo_logins').insert({check_in_date:selectedCheckIn, region:guestRegion, user_agent:navigator.userAgent}).then(()=>{}).catch(()=>{});
-  } catch(e){}
-
-  const {acts, label} = getWeekCard(selectedCheckIn, guestRegion);
-  ACTS = acts; weekLabel = label;
-  done = new Array(25).fill(false);
-  photos = new Array(25).fill(null);
-  photoPaths = new Array(25).fill(null);
-
-  // Restore from localStorage
-  const localKey = 'naya_'+guestRegion+'_'+selectedCheckIn;
-  const saved = localStorage.getItem(localKey);
-  if(saved){
-    try {
-      const p = JSON.parse(saved);
-      if(p.done) p.done.forEach((v,i)=>{if(v)done[i]=true;});
-      if(p.photos) p.photos.forEach((v,i)=>{if(v)photos[i]=v;});
-    } catch(e){}
-  }
-
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('game-screen').style.display = 'block';
-  document.getElementById('week-label').textContent = label+' Card';
-  btn.disabled = false; btn.innerHTML = 'Get My Bingo Card →';
+  const errEl=document.getElementById('login-error'); errEl.classList.remove('show');
+  if(!selectedCheckIn){errEl.textContent='Please select your check-in date.';errEl.classList.add('show');return;}
+  guestCheckIn=selectedCheckIn; guestRegion=document.getElementById('region-select').value;
+  const btn=document.getElementById('login-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Loading your card...';
+  try{sb.from('bingo_logins').insert({check_in_date:selectedCheckIn,region:guestRegion,user_agent:navigator.userAgent}).then(()=>{}).catch(()=>{});}catch(e){}
+  const {acts,label}=getWeekCard(selectedCheckIn,guestRegion);
+  ACTS=acts; weekLabel=label;
+  done=new Array(25).fill(false); photos=new Array(25).fill(null); photoPaths=new Array(25).fill(null);
+  const localKey='naya_'+guestRegion+'_'+selectedCheckIn;
+  const saved=localStorage.getItem(localKey);
+  if(saved){try{const p=JSON.parse(saved);if(p.done)p.done.forEach((v,i)=>{if(v)done[i]=true;});if(p.photos)p.photos.forEach((v,i)=>{if(v)photos[i]=v;});}catch(e){}}
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('game-screen').style.display='block';
+  document.getElementById('week-label').textContent=label+' Card';
+  btn.disabled=false; btn.innerHTML='Get My Bingo Card →';
   renderCard();
 }
 
 function saveLocal(){
   if(!guestCheckIn||!guestRegion) return;
-  try {
-    localStorage.setItem('naya_'+guestRegion+'_'+guestCheckIn, JSON.stringify({done, photos}));
-  } catch(e){}
+  try{localStorage.setItem('naya_'+guestRegion+'_'+guestCheckIn,JSON.stringify({done,photos}));}catch(e){}
 }
 
 function renderCard(){
-  const grid = document.getElementById('bingo-grid'); grid.innerHTML = '';
-  ACTS.forEach((a, i) => {
-    if(!a) a = {n:'Activity'};
-    const c = document.createElement('div');
-    c.className = 'cell'+(a.isEvent?' event-cell':'');
-    if(a.photo){
-      const bg = document.createElement('div'); bg.className='cell-bg';
-      bg.style.backgroundImage = 'url('+a.photo+')'; c.appendChild(bg);
-    }
-    // Show guest photo on top if uploaded
-    if(photos[i]){
-      const pb = document.createElement('div'); pb.className='cell-photo-bg';
-      pb.style.backgroundImage = 'url('+photos[i]+')'; c.appendChild(pb);
-      c.classList.add('has-photo');
-    }
-    const ov = document.createElement('div'); ov.className='cell-overlay'; c.appendChild(ov);
-    if(a.isEvent){ const t=document.createElement('div'); t.className='event-tag'; t.textContent='EVENT'; c.appendChild(t); }
-    const chk = document.createElement('div'); chk.className='check-badge';
-    chk.innerHTML='<svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>'; c.appendChild(chk);
-    const n = document.createElement('div'); n.className='cell-name'; n.textContent=a.n; c.appendChild(n);
-    c.onclick = () => openModal(i);
+  const grid=document.getElementById('bingo-grid'); grid.innerHTML='';
+  ACTS.forEach((a,i)=>{
+    if(!a) a={n:'Activity'};
+    const c=document.createElement('div');
+    c.className='cell'+(a.isEvent?' event-cell':'');
+    if(a.photo){const bg=document.createElement('div');bg.className='cell-bg';bg.style.backgroundImage='url('+a.photo+')';c.appendChild(bg);}
+    if(photos[i]){const pb=document.createElement('div');pb.className='cell-photo-bg';pb.style.backgroundImage='url('+photos[i]+')';c.appendChild(pb);c.classList.add('has-photo');}
+    const ov=document.createElement('div');ov.className='cell-overlay';c.appendChild(ov);
+    if(a.isEvent){const t=document.createElement('div');t.className='event-tag';t.textContent='EVENT';c.appendChild(t);}
+    const chk=document.createElement('div');chk.className='check-badge';chk.innerHTML='<svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>';c.appendChild(chk);
+    const n=document.createElement('div');n.className='cell-name';n.textContent=a.n;c.appendChild(n);
+    c.onclick=()=>openModal(i);
     if(done[i]) c.classList.add('done');
     grid.appendChild(c);
   });
@@ -618,82 +545,63 @@ function getLines(){
 }
 
 function updateProgress(){
-  const lines = getLines();
-  const inLine = new Set(); lines.forEach(l=>l.forEach(i=>inLine.add(i)));
+  const lines=getLines(); const inLine=new Set(); lines.forEach(l=>l.forEach(i=>inLine.add(i)));
   document.querySelectorAll('.cell').forEach((c,i)=>{
     c.classList.remove('line','done');
-    if(done[i]&&inLine.has(i)) c.classList.add('line');
-    else if(done[i]) c.classList.add('done');
+    if(done[i]&&inLine.has(i))c.classList.add('line'); else if(done[i])c.classList.add('done');
   });
-  const cnt = done.filter(Boolean).length;
-  document.getElementById('pfill').style.width = Math.round(cnt/25*100)+'%';
-  document.getElementById('plabel').textContent = cnt+' / 25 done';
-  document.getElementById('badge').innerHTML = lines.length ? '<span>🎉 '+lines.length+' bingo'+(lines.length>1?'s':'')+' complete!</span>' : '';
+  const cnt=done.filter(Boolean).length;
+  document.getElementById('pfill').style.width=Math.round(cnt/25*100)+'%';
+  document.getElementById('plabel').textContent=cnt+' / 25 done';
+  document.getElementById('badge').innerHTML=lines.length?'<span>🎉 '+lines.length+' bingo'+(lines.length>1?'s':'')+' complete!</span>':'';
   document.getElementById('ctabtn').classList[lines.length?'add':'remove']('on');
 }
 
 function openModal(i){
   currentCell=i; currentFile=null;
   const a=ACTS[i]; if(!a) return;
-  document.getElementById('m-event-tag').style.display = a.isEvent?'inline-block':'none';
-  const body = document.getElementById('modal-body');
-  body.style.backgroundImage = a.photo ? "url('"+a.photo+"')" : '';
-  document.getElementById('m-title').textContent = a.n;
-  document.getElementById('m-sub').textContent = (a.when?a.when+' · ':'')+(a.addr||'Banderas Bay');
+  document.getElementById('m-event-tag').style.display=a.isEvent?'inline-block':'none';
+  document.getElementById('modal-body').style.backgroundImage=a.photo?"url('"+a.photo+"')":'';
+  document.getElementById('m-title').textContent=a.n;
+  document.getElementById('m-sub').textContent=(a.when?a.when+' · ':'')+(a.addr||'Banderas Bay');
   let html='';
   if(a.when) html+='📅 <b>When:</b> '+a.when+'<br>';
   if(a.tip) html+='💡 <b>Tip:</b> '+a.tip+'<br>';
-  if(a.phone) html+='📞 <b>Info:</b> <a href="tel:'+a.phone+'">'+a.phone+'</a><br>';
+  if(a.phone) html+='📞 <b>Phone:</b> <a href="tel:'+a.phone+'">'+a.phone+'</a><br>';
   if(a.addr) html+='📍 <b>Address:</b> <a href="'+(a.maps||'#')+'" target="_blank">'+a.addr+'</a><br>';
   if(a.maps) html+='🗺️ <a href="'+a.maps+'" target="_blank">Get Directions →</a>';
-  document.getElementById('m-details').innerHTML = html;
-  const il = document.getElementById('m-info-link');
-  const infoUrl = a.link||a.maps;
-  if(infoUrl){ il.href=infoUrl; il.style.display='block'; } else { il.style.display='none'; }
+  document.getElementById('m-details').innerHTML=html;
+  const il=document.getElementById('m-info-link');
+  const infoUrl=a.link||a.maps;
+  if(infoUrl){il.href=infoUrl;il.style.display='block';}else{il.style.display='none';}
   document.getElementById('preview-wrap').classList.remove('show');
   document.getElementById('preview-img').src='';
   document.getElementById('finput').value='';
-  document.getElementById('btn-done').disabled = !done[i];
-  if(photos[i]){
-    document.getElementById('preview-img').src=photos[i];
-    document.getElementById('preview-wrap').classList.add('show');
-    document.getElementById('btn-done').disabled=false;
-  }
+  document.getElementById('btn-done').disabled=!done[i];
+  if(photos[i]){document.getElementById('preview-img').src=photos[i];document.getElementById('preview-wrap').classList.add('show');document.getElementById('btn-done').disabled=false;}
   document.getElementById('modal-overlay').classList.add('open');
 }
 function handleFile(e){
-  const f=e.target.files[0]; if(!f) return;
-  currentFile=f;
-  const r=new FileReader();
-  r.onload=ev=>{
-    document.getElementById('preview-img').src=ev.target.result;
-    document.getElementById('preview-wrap').classList.add('show');
-    document.getElementById('btn-done').disabled=false;
-  };
-  r.readAsDataURL(f);
+  const f=e.target.files[0]; if(!f) return; currentFile=f;
+  const r=new FileReader(); r.onload=ev=>{document.getElementById('preview-img').src=ev.target.result;document.getElementById('preview-wrap').classList.add('show');document.getElementById('btn-done').disabled=false;}; r.readAsDataURL(f);
 }
 function markDone(){
-  if(currentCell===null) return;
-  done[currentCell]=true;
-  if(currentFile){
-    const r=new FileReader();
-    r.onload=ev=>{ photos[currentCell]=ev.target.result; saveLocal(); renderCard(); };
-    r.readAsDataURL(currentFile);
-  } else { saveLocal(); renderCard(); }
-  closeModal();
-  showToast('✓ Activity completed!');
+  if(currentCell===null) return; done[currentCell]=true;
+  if(currentFile){const r=new FileReader();r.onload=ev=>{photos[currentCell]=ev.target.result;saveLocal();renderCard();};r.readAsDataURL(currentFile);}
+  else{saveLocal();renderCard();}
+  closeModal(); showToast('✓ Activity completed!');
 }
-function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); currentCell=null; currentFile=null; }
-function openRules(){ document.getElementById('rules-overlay').classList.add('open'); }
-function closeRules(){ document.getElementById('rules-overlay').classList.remove('open'); }
-function openClaimModal(){ if(!getLines().length) return; document.getElementById('claim-overlay').classList.add('open'); }
-function closeClaim(){ document.getElementById('claim-overlay').classList.remove('open'); }
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');currentCell=null;currentFile=null;}
+function openRules(){document.getElementById('rules-overlay').classList.add('open');}
+function closeRules(){document.getElementById('rules-overlay').classList.remove('open');}
+function openClaimModal(){if(!getLines().length)return;document.getElementById('claim-overlay').classList.add('open');}
+function closeClaim(){document.getElementById('claim-overlay').classList.remove('open');}
 
 function generateNayaToken(){
   const w1=['PALM','OCEAN','MARINA','MALECON','SAND','SUN','BAHIA','BANDERAS'];
   const w2=['SUNSET','BEACH','WAVE','TROPIC','BREEZE','PARADISE','RIVIERA','NAYARIT'];
-  const a=w1[Math.floor(Math.random()*w1.length)], b=w2[Math.floor(Math.random()*w2.length)];
-  if(a===b) return generateNayaToken();
+  const a=w1[Math.floor(Math.random()*w1.length)],b=w2[Math.floor(Math.random()*w2.length)];
+  if(a===b)return generateNayaToken();
   return a+'-'+b+'-'+String(Math.floor(Math.random()*900)+100);
 }
 
@@ -702,35 +610,25 @@ async function submitClaim(){
   const last=document.getElementById('claim-last').value.trim();
   const res=document.getElementById('claim-res').value.trim();
   const errEl=document.getElementById('claim-error'); errEl.style.display='none';
-  if(!first||!last){ errEl.textContent='Please enter your first and last name.'; errEl.style.display='block'; return; }
-  if(!res){ errEl.textContent='Please enter your reservation number.'; errEl.style.display='block'; return; }
-
-  const btn=document.getElementById('claim-submit-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Saving...';
-
+  if(!first||!last){errEl.textContent='Please enter your first and last name.';errEl.style.display='block';return;}
+  if(!res){errEl.textContent='Please enter your reservation number.';errEl.style.display='block';return;}
+  const btn=document.getElementById('claim-submit-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Saving...';
   const token=generateNayaToken();
   document.getElementById('naya-token').textContent=token;
-
-  try {
+  try{
     const normRes=(res||'').trim().toLowerCase();
     const {data:existing}=await sb.from('bingo_players').select('id').eq('reservation_number',normRes).maybeSingle();
-    if(existing){
-      await sb.from('bingo_players').update({first_name:first,last_name:last,completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photos.filter(p=>p!==null).length,bear_token:token,region:guestRegion}).eq('id',existing.id);
-    } else {
-      await sb.from('bingo_players').insert({first_name:first,last_name:last,reservation_number:normRes,check_in_date:guestCheckIn,started_at:new Date().toISOString(),completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photos.filter(p=>p!==null).length,bear_token:token,region:guestRegion});
-    }
-  } catch(e){ console.error('Claim error:',e); }
-
-  try { localStorage.removeItem('naya_'+guestRegion+'_'+guestCheckIn); } catch(e){}
+    if(existing){await sb.from('bingo_players').update({first_name:first,last_name:last,completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photos.filter(p=>p!==null).length,bear_token:token,region:guestRegion}).eq('id',existing.id);}
+    else{await sb.from('bingo_players').insert({first_name:first,last_name:last,reservation_number:normRes,check_in_date:guestCheckIn,started_at:new Date().toISOString(),completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photos.filter(p=>p!==null).length,bear_token:token,region:guestRegion});}
+  }catch(e){console.error('Claim error:',e);}
+  try{localStorage.removeItem('naya_'+guestRegion+'_'+guestCheckIn);}catch(e){}
   closeClaim();
   document.getElementById('game-screen').style.display='none';
   document.getElementById('congrats-screen').style.display='block';
 }
 
-function showToast(msg){ const t=document.getElementById('saved-toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
-
-// Auto-save every 3 minutes
-setInterval(()=>{ if(selectedCheckIn) saveLocal(); }, 3*60*1000);
+function showToast(msg){const t=document.getElementById('saved-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+setInterval(()=>{if(selectedCheckIn)saveLocal();},3*60*1000);
 </script>
 </body>
 </html>
