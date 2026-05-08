@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naya Homes Bingo — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Urbanist:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--sand);min-height:100vh;color:var(--text)}
+:root{--moss:#415134;--sand:#F8F5EF;--stone:#EDEAE3;--sunshine:#FAE1A1;--sunrise:#EAB88B;--sunset:#F9A28F;--terracotta:#C75147;--ocean:#CADDD3;--moss-dark:#2f3d24;--text:#2a3424}
+h1,h2,h3{font-family:'Urbanist',sans-serif;font-weight:700}
+#admin-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--sand) 0%,var(--stone) 100%)}
+.login-card{background:#fff;border-radius:24px;padding:2rem;max-width:380px;width:90%;box-shadow:0 8px 32px rgba(65,81,52,.15)}
+.login-card h1{font-size:22px;color:var(--moss);margin-bottom:6px}
+.login-card p{font-size:13px;color:#6a7561;margin-bottom:1.5rem}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--moss);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px}
+.field input{width:100%;padding:12px 14px;border:1.5px solid var(--stone);border-radius:12px;font-size:15px;outline:none;margin-bottom:1rem;font-family:'DM Sans',sans-serif}
+.field input:focus{border-color:var(--moss)}
+.admin-btn{width:100%;padding:13px;background:var(--moss);color:var(--sand);border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.admin-btn:hover{background:var(--moss-dark)}
+.err{font-size:12px;color:var(--terracotta);margin-top:.75rem;display:none}
+#dashboard{display:none}
+.topbar{background:var(--moss);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.topbar h1{color:var(--sand);font-size:17px;display:flex;align-items:center;gap:8px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.topbar span{color:var(--ocean);font-size:12px}
+.refresh-btn{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.logout-btn{background:transparent;color:var(--ocean);border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.dash-body{max-width:1200px;margin:0 auto;padding:1.5rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:1.5rem}
+.stat{background:#fff;border-radius:14px;padding:1.25rem;text-align:center;border:1px solid var(--stone)}
+.stat .num{font-size:28px;font-weight:700;color:var(--moss);font-family:'Urbanist',sans-serif}
+.stat .lbl{font-size:11px;color:#6a7561;margin-top:4px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.section-card{background:#fff;border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;border:1px solid var(--stone)}
+.section-card h2{font-size:15px;color:var(--moss);margin-bottom:1rem}
+.filters{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.filter-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--stone);background:#fff;color:#6a7561;font-family:'DM Sans',sans-serif}
+.tab.active{background:var(--moss);color:var(--sand);border-color:var(--moss)}
+.search-box{padding:7px 12px;border:1.5px solid var(--stone);border-radius:8px;font-size:13px;outline:none;min-width:200px;font-family:'DM Sans',sans-serif}
+.search-box:focus{border-color:var(--moss)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:rgba(237,234,227,.5);padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:#6a7561;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--stone)}
+td{padding:12px;border-bottom:1px solid var(--stone);color:var(--text);vertical-align:middle}
+tr:hover td{background:rgba(237,234,227,.3)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge.bingo{background:var(--ocean);color:var(--moss-dark)}
+.badge.playing{background:var(--sunshine);color:var(--moss-dark)}
+.badge.gift-sent{background:#dff0d4;color:#2e5025}
+.badge.pending{background:var(--sunrise);color:var(--moss-dark)}
+.badge.region-pv{background:#fff3e6;color:#a16329;border:1px solid var(--sunrise)}
+.badge.region-nv{background:#e6f2ff;color:#1e5577;border:1px solid var(--ocean)}
+.gift-btn{padding:5px 12px;background:var(--terracotta);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.gift-btn:hover{background:#a83f37}
+.gift-sent-label{font-size:12px;color:#2e5025;font-weight:600}
+.empty{text-align:center;padding:3rem;color:#aaa}
+.loading{text-align:center;padding:2rem;color:#aaa}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--stone);border-top-color:var(--moss);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+.export-btn{padding:6px 14px;background:transparent;border:1.5px solid var(--moss);color:var(--moss);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.export-btn:hover{background:var(--moss);color:var(--sand)}
+</style>
+</head>
+<body>
+
+<div id="admin-login">
+  <div class="login-card">
+    <h1>Naya Bingo Admin</h1>
+    <p>Staff access only — Naya Homes team</p>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="pw-input" onkeydown="if(event.key==='Enter')adminLogin()">
+    </div>
+    <button class="admin-btn" onclick="adminLogin()">Sign In</button>
+    <p class="err" id="pw-err">Incorrect password.</p>
+  </div>
+</div>
+
+<div id="dashboard">
+  <div class="topbar">
+    <h1>🌴 Naya Bingo Dashboard</h1>
+    <div class="topbar-right">
+      <span id="last-refresh"></span>
+      <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+      <button class="logout-btn" onclick="adminLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <div class="section-card" style="padding:1rem 1.25rem;margin-bottom:1rem">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <div style="font-weight:700;color:var(--moss);font-size:13px">📅 Date Range:</div>
+        <div class="filter-tabs">
+          <div class="tab active" onclick="setDateRange('month',this)">This Month</div>
+          <div class="tab" onclick="setDateRange('week',this)">This Week</div>
+          <div class="tab" onclick="setDateRange('today',this)">Today</div>
+          <div class="tab" onclick="setDateRange('all',this)">All Time</div>
+          <div class="tab" onclick="setDateRange('custom',this)">Custom</div>
+        </div>
+        <div id="custom-dates" style="display:none;gap:8px;align-items:center">
+          <input type="date" id="date-from" class="search-box" style="min-width:auto" onchange="applyCustomDates()">
+          <span style="color:#888;font-size:12px">to</span>
+          <input type="date" id="date-to" class="search-box" style="min-width:auto" onchange="applyCustomDates()">
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <div style="font-weight:700;color:var(--moss);font-size:13px">📍 Region:</div>
+          <div class="filter-tabs" id="region-tabs">
+            <div class="tab active" onclick="setRegion('all',this)">All</div>
+            <div class="tab" onclick="setRegion('puerto_vallarta',this)">PV</div>
+            <div class="tab" onclick="setRegion('nuevo_vallarta',this)">NV</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num" id="s-views">—</div><div class="lbl">Page Views</div></div>
+      <div class="stat"><div class="num" id="s-logins">—</div><div class="lbl">Started Game</div></div>
+      <div class="stat"><div class="num" id="s-startrate">—</div><div class="lbl">Game Start Rate</div></div>
+      <div class="stat"><div class="num" id="s-total">—</div><div class="lbl">Players Started</div></div>
+      <div class="stat"><div class="num" id="s-bingo">—</div><div class="lbl">Bingos Completed</div></div>
+      <div class="stat"><div class="num" id="s-conversion">—</div><div class="lbl">Bingo Conversion</div></div>
+      <div class="stat"><div class="num" id="s-pending">—</div><div class="lbl">Gifts Pending</div></div>
+      <div class="stat"><div class="num" id="s-sent">—</div><div class="lbl">Gifts Sent</div></div>
+      <div class="stat"><div class="num" id="s-activities">—</div><div class="lbl">Total Activities</div></div>
+      <div class="stat"><div class="num" id="s-photos">—</div><div class="lbl">Photos Submitted</div></div>
+    </div>
+
+    <div class="section-card">
+      <div class="filters">
+        <div class="filter-tabs">
+          <div class="tab active" onclick="setFilter('all',this)">All Players</div>
+          <div class="tab" onclick="setFilter('bingo',this)">Bingo ✓</div>
+          <div class="tab" onclick="setFilter('pending',this)">Gift Pending</div>
+          <div class="tab" onclick="setFilter('sent',this)">Gift Sent</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="search-box" id="search-box" placeholder="Search name or reservation..." oninput="renderTable()">
+          <button class="export-btn" onclick="exportCSV()">↓ Export CSV</button>
+        </div>
+      </div>
+      <div id="table-wrap"><div class="loading"><span class="spinner"></span> Loading...</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = 'naya-bingo-admin-2026';
+const SUPABASE_URL = 'https://dmqwpbbojuwblurklecg.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtcXdwYmJvanV3Ymx1cmtsZWNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNDU2OTEsImV4cCI6MjA5MzgyMTY5MX0.8Gxb60h6f_BxvaEm4gH5T61bEqqYN0pXqniKgh6_14Q';
+
+let allPlayers=[], allLogins=[], allViews=[];
+let currentFilter='all', dateRange='month', regionFilter='all';
+let customFrom=null, customTo=null;
+
+function adminLogin(){
+  if(document.getElementById('pw-input').value === ADMIN_PASSWORD){
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    loadData();
+  } else { document.getElementById('pw-err').style.display='block'; }
+}
+function adminLogout(){
+  document.getElementById('admin-login').style.display='flex';
+  document.getElementById('dashboard').style.display='none';
+  document.getElementById('pw-input').value='';
+}
+
+async function apiCall(action, payload){
+  const headers = {'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'};
+  if(action==='getPlayers'){ const r=await fetch(SUPABASE_URL+'/rest/v1/bingo_players?select=*&order=started_at.desc',{headers}); return await r.json(); }
+  if(action==='getLogins'){ const r=await fetch(SUPABASE_URL+'/rest/v1/bingo_logins?select=*&order=logged_in_at.desc',{headers}); return await r.json(); }
+  if(action==='getViews'){ const r=await fetch(SUPABASE_URL+'/rest/v1/bingo_page_views?select=*&order=viewed_at.desc',{headers}); return await r.json(); }
+  if(action==='markGiftSent'){ await fetch(SUPABASE_URL+'/rest/v1/bingo_players?id=eq.'+payload.id,{method:'PATCH',headers,body:JSON.stringify({gift_sent:true,gift_sent_at:new Date().toISOString()})}); return {success:true}; }
+}
+
+async function loadData(){
+  document.getElementById('last-refresh').textContent='Updated '+new Date().toLocaleTimeString();
+  document.getElementById('table-wrap').innerHTML='<div class="loading"><span class="spinner"></span> Loading...</div>';
+  try {
+    const [players,logins,views] = await Promise.all([
+      apiCall('getPlayers'),
+      apiCall('getLogins').catch(()=>[]),
+      apiCall('getViews').catch(()=>[])
+    ]);
+    allPlayers = players||[]; allLogins = logins||[]; allViews = views||[];
+    updateStats();
+    renderTable();
+  } catch(e){
+    document.getElementById('table-wrap').innerHTML='<div class="empty">Error loading data.</div>';
+  }
+}
+
+function getDateBounds(){
+  const now = new Date();
+  let from=null, to=null;
+  if(dateRange==='today'){ from=new Date(now.getFullYear(),now.getMonth(),now.getDate()); to=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1); }
+  else if(dateRange==='week'){ const day=now.getDay(); from=new Date(now.getFullYear(),now.getMonth(),now.getDate()-day); to=new Date(now.getFullYear(),now.getMonth(),now.getDate()-day+7); }
+  else if(dateRange==='month'){ from=new Date(now.getFullYear(),now.getMonth(),1); to=new Date(now.getFullYear(),now.getMonth()+1,1); }
+  else if(dateRange==='custom'&&customFrom&&customTo){ from=new Date(customFrom); to=new Date(customTo); to.setDate(to.getDate()+1); }
+  return {from,to};
+}
+function inDateRange(ts){
+  if(dateRange==='all') return true;
+  const {from,to} = getDateBounds();
+  if(!from||!to) return true;
+  const d = new Date(ts);
+  return d>=from && d<to;
+}
+function inRegion(item){
+  if(regionFilter==='all') return true;
+  return item.region === regionFilter;
+}
+
+function updateStats(){
+  const fp = allPlayers.filter(p => inDateRange(p.started_at) && inRegion(p));
+  const fl = allLogins.filter(l => inDateRange(l.logged_in_at) && inRegion(l));
+  const fv = allViews.filter(v => inDateRange(v.viewed_at));
+  const views=fv.length, logins=fl.length, total=fp.length;
+  const bingos = fp.filter(p=>p.completed_bingo).length;
+  const pending = fp.filter(p=>p.completed_bingo&&!p.gift_sent).length;
+  const sent = fp.filter(p=>p.gift_sent).length;
+  const acts = fp.reduce((s,p)=>s+(p.activities_completed||0),0);
+  const phs = fp.reduce((s,p)=>s+(p.photos_submitted||0),0);
+  const conv = logins>0 ? Math.round((bingos/logins)*100)+'%' : '—';
+  const startPct = views>0 ? Math.round((logins/views)*100) : null;
+  const startRate = startPct!==null ? startPct+'%' : '—';
+  const sr = document.getElementById('s-startrate');
+  sr.textContent = startRate;
+  if(startPct===null) sr.style.color='';
+  else if(startPct>=100) sr.style.color='#00AF91';
+  else if(startPct>=50) sr.style.color='var(--moss)';
+  else sr.style.color='var(--terracotta)';
+  document.getElementById('s-views').textContent=views;
+  document.getElementById('s-logins').textContent=logins;
+  document.getElementById('s-total').textContent=total;
+  document.getElementById('s-bingo').textContent=bingos;
+  document.getElementById('s-conversion').textContent=conv;
+  document.getElementById('s-pending').textContent=pending;
+  document.getElementById('s-sent').textContent=sent;
+  document.getElementById('s-activities').textContent=acts;
+  document.getElementById('s-photos').textContent=phs;
+}
+
+function setDateRange(r,el){
+  dateRange = r;
+  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('custom-dates').style.display = r==='custom' ? 'flex' : 'none';
+  if(r==='custom' && !customFrom){
+    const today = new Date().toISOString().split('T')[0];
+    const ago = new Date(); ago.setMonth(ago.getMonth()-1);
+    document.getElementById('date-from').value = ago.toISOString().split('T')[0];
+    document.getElementById('date-to').value = today;
+    customFrom = ago.toISOString().split('T')[0]; customTo = today;
+  }
+  updateStats(); renderTable();
+}
+function applyCustomDates(){
+  customFrom = document.getElementById('date-from').value;
+  customTo = document.getElementById('date-to').value;
+  if(customFrom && customTo){ updateStats(); renderTable(); }
+}
+function setRegion(r,el){
+  regionFilter = r;
+  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  updateStats(); renderTable();
+}
+function setFilter(f,el){
+  currentFilter = f;
+  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderTable();
+}
+
+function renderTable(){
+  const search = (document.getElementById('search-box').value||'').toLowerCase();
+  let filtered = allPlayers.filter(p => inDateRange(p.started_at) && inRegion(p));
+  if(currentFilter==='bingo') filtered = filtered.filter(p=>p.completed_bingo);
+  if(currentFilter==='pending') filtered = filtered.filter(p=>p.completed_bingo&&!p.gift_sent);
+  if(currentFilter==='sent') filtered = filtered.filter(p=>p.gift_sent);
+  if(search){
+    filtered = filtered.filter(p =>
+      (p.first_name||'').toLowerCase().includes(search) ||
+      (p.last_name||'').toLowerCase().includes(search) ||
+      (p.reservation_number||'').toLowerCase().includes(search)
+    );
+  }
+  if(!filtered.length){
+    document.getElementById('table-wrap').innerHTML='<div class="empty">No players found.</div>';
+    return;
+  }
+  const rows = filtered.map(p => {
+    const name = (p.first_name||'')+' '+(p.last_name||'');
+    const checkin = p.check_in_date ? new Date(p.check_in_date).toLocaleDateString() : '—';
+    const started = p.started_at ? new Date(p.started_at).toLocaleDateString()+' '+new Date(p.started_at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) : '—';
+    const status = p.gift_sent ? '<span class="badge gift-sent">✓ Sent</span>' : p.completed_bingo ? '<span class="badge pending">⏳ Pending</span>' : '<span class="badge playing">Playing</span>';
+    const bingoBadge = p.completed_bingo ? '<span class="badge bingo" style="margin-left:4px">Bingo!</span>' : '';
+    const action = p.completed_bingo&&!p.gift_sent ? `<button class="gift-btn" onclick="markGiftSent('${p.id}')">Mark Sent</button>` : p.gift_sent ? '<span class="gift-sent-label">✓ Sent</span>' : '—';
+    const region = p.region==='nuevo_vallarta' ? '<span class="badge region-nv">NV</span>' : p.region==='puerto_vallarta' ? '<span class="badge region-pv">PV</span>' : '—';
+    return `<tr><td><strong>${name.trim()||'—'}</strong></td><td>${region}</td><td>${p.reservation_number||'—'}</td><td>${checkin}</td><td>${started}</td><td>${p.activities_completed||0}/25</td><td>${p.photos_submitted||0}</td><td><span style="font-family:monospace;font-size:12px;color:var(--terracotta);letter-spacing:.05em">${p.bear_token||'—'}</span></td><td>${status}${bingoBadge}</td><td>${action}</td></tr>`;
+  }).join('');
+  document.getElementById('table-wrap').innerHTML = `<table><thead><tr><th>Name</th><th>Region</th><th>Reservation #</th><th>Check-in</th><th>Started</th><th>Activities</th><th>Photos</th><th>Token</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+async function markGiftSent(id){
+  await apiCall('markGiftSent',{id});
+  await loadData();
+}
+
+function exportCSV(){
+  const headers = ['First','Last','Region','Reservation','Check-in','Started','Activities','Photos','Bingo','Gift Sent','Token'];
+  const rows = allPlayers.map(p => [p.first_name||'',p.last_name||'',p.region||'',p.reservation_number||'',p.check_in_date||'',p.started_at||'',p.activities_completed||0,p.photos_submitted||0,p.completed_bingo?'Yes':'No',p.gift_sent?'Yes':'No',p.bear_token||'']);
+  const csv = [headers,...rows].map(r => r.map(v => '"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob = new Blob([csv],{type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'naya-bingo-players-'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
+}
+</script>
+</body>
+</html>

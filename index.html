@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Naya Homes Bingo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Urbanist:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--moss:#415134;--sand:#F8F5EF;--stone:#EDEAE3;--sunshine:#FAE1A1;--sunrise:#EAB88B;--sunset:#F9A28F;--terracotta:#C75147;--ocean:#CADDD3;--moss-dark:#2f3d24;--text:#2a3424}
+body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--sand);min-height:100vh;color:var(--text)}
+h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
+.top-bar{background:var(--moss);padding:1rem 1.25rem;position:sticky;top:0;z-index:50;text-align:center}
+.top-bar .logo{display:flex;align-items:center;justify-content:center;gap:8px}
+.week-tag{display:inline-block;background:rgba(202,221,211,0.2);border:1px solid var(--ocean);color:var(--sand);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-top:6px}
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:linear-gradient(180deg,var(--sand) 0%,var(--stone) 100%)}
+.login-card{background:#fff;border-radius:24px;padding:2rem 1.75rem;max-width:420px;width:100%;box-shadow:0 8px 32px rgba(65,81,52,0.15)}
+.login-card h1{font-size:26px;color:var(--moss);text-align:center;margin-bottom:6px;font-weight:800}
+.subtitle{font-size:13px;color:#6a7561;text-align:center;margin-bottom:1.5rem}
+.login-logo{text-align:center;margin-bottom:1rem}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--moss);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.6px}
+.field select,.field input{width:100%;padding:12px 14px;border:1.5px solid var(--stone);border-radius:12px;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text)}
+.field select:focus,.field input:focus{border-color:var(--moss)}
+.calendar{background:var(--stone);border-radius:14px;padding:1rem;margin-bottom:1rem}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
+.cal-header h3{font-size:15px;color:var(--moss);font-weight:700}
+.cal-nav{background:#fff;border:none;width:30px;height:30px;border-radius:50%;font-size:16px;cursor:pointer;color:var(--moss);font-weight:700}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-day-name{font-size:10px;font-weight:700;color:var(--moss);text-align:center;padding:4px 0;text-transform:uppercase}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:8px;cursor:pointer;color:var(--text);font-weight:500}
+.cal-day:hover{background:rgba(65,81,52,0.1)}
+.cal-day.selected{background:var(--moss);color:var(--sand);font-weight:700}
+.cal-day.empty{cursor:default}
+.stay-display{text-align:center;font-size:12px;color:#6a7561;margin-top:.5rem;font-style:italic}
+.login-btn{width:100%;padding:14px;background:var(--moss);color:var(--sand);border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.login-btn:hover{background:var(--moss-dark)}
+.login-error{font-size:13px;color:var(--terracotta);margin-top:.75rem;text-align:center;display:none}
+.login-error.show{display:block}
+.login-note{font-size:12px;color:#6a7561;text-align:center;margin-top:1rem;font-style:italic}
+#game-screen{display:none;min-height:100vh;padding-bottom:2rem}
+.progress-row{padding:1rem 1.25rem;display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:8px;background:var(--stone);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--moss),var(--ocean));border-radius:4px;width:0%;transition:width .4s}
+.prog-label{font-size:12px;font-weight:700;color:var(--moss)}
+.bingo-badge{text-align:center;color:var(--terracotta);font-weight:700;font-size:14px;margin-bottom:.5rem;min-height:18px}
+.card-wrap{padding:0 1rem}
+.bingo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:520px;margin:0 auto}
+.bingo-letters{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:520px;margin:0 auto .5rem}
+.bingo-letter{text-align:center;font-family:'Urbanist',sans-serif;font-size:18px;font-weight:800;color:var(--moss);letter-spacing:1px}
+.cell{position:relative;aspect-ratio:1;background:#fff;border:2px solid var(--stone);border-radius:10px;cursor:pointer;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;transition:transform .15s,border-color .2s}
+.cell:hover{transform:translateY(-2px);border-color:var(--moss)}
+.cell.event-cell{border-color:var(--terracotta)}
+.cell.done{border-color:var(--moss);background:var(--ocean)}
+.cell.line{border-color:var(--terracotta);background:var(--sunshine);box-shadow:0 0 12px rgba(199,81,71,0.3)}
+.cell-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.7}
+.cell-overlay{position:absolute;inset:0;background:rgba(65,81,52,0)}
+.cell.line .cell-overlay{background:rgba(199,81,71,.15)}
+.cell-name{position:relative;z-index:2;color:var(--moss);background:linear-gradient(180deg,transparent 0%,rgba(248,245,239,0.95) 60%);width:100%;padding:18px 4px 6px;text-align:center;font-size:10px;font-weight:700;line-height:1.15}
+.event-tag{position:absolute;top:4px;left:4px;background:var(--terracotta);color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:6px;z-index:3;letter-spacing:0.5px}
+.claim-cta{margin:1.5rem 1rem 0;padding:14px;background:#ddd;color:#999;border:none;border-radius:14px;font-size:15px;font-weight:700;width:calc(100% - 2rem);max-width:520px;display:block;margin-left:auto;margin-right:auto;cursor:not-allowed;font-family:'DM Sans',sans-serif}
+.claim-cta.on{background:linear-gradient(135deg,var(--terracotta),var(--sunset));color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(199,81,71,0.3)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(65,81,52,.85);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:20px;max-width:440px;width:100%;max-height:92vh;overflow-y:auto}
+.modal-hero{background:var(--moss);padding:1.25rem;display:flex;align-items:flex-start;gap:12px}
+.modal-hero h2{font-size:18px;font-weight:700;color:var(--sand);font-family:'Urbanist',sans-serif}
+.modal-hero p{font-size:11px;color:var(--ocean);margin-top:2px}
+.modal-event-tag{display:inline-block;background:var(--terracotta);color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:6px;margin-bottom:6px}
+.modal-close{margin-left:auto;background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:18px;font-weight:700}
+.modal-body{padding:1.25rem;position:relative;background-size:cover;background-position:center}
+.modal-body::before{content:"";position:absolute;inset:0;background:rgba(248,245,239,.85);z-index:0}
+.modal-body > *{position:relative;z-index:1}
+.modal-desc{font-size:13px;color:var(--text);line-height:1.5;margin-bottom:1rem}
+.modal-details{background:rgba(237,234,227,0.6);border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.7;margin-bottom:1rem}
+.modal-details a{color:var(--terracotta);text-decoration:none;font-weight:600}
+.upload-label{display:block;font-size:11px;font-weight:700;color:var(--moss);margin-bottom:6px;text-transform:uppercase}
+.upload-area{border:2px dashed var(--ocean);background:rgba(202,221,211,0.15);border-radius:12px;padding:18px;text-align:center;cursor:pointer;margin-bottom:1rem;color:var(--moss);font-size:13px;font-weight:600}
+.upload-area input{display:none}
+.preview-wrap{display:none;margin-bottom:1rem}
+.preview-wrap.show{display:block}
+.preview-wrap img{width:100%;max-height:240px;object-fit:cover;border-radius:12px}
+.modal-actions{display:flex;gap:10px}
+.btn-cancel{flex:1;padding:11px;background:#f0f0f0;color:#666;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-done{flex:1;padding:11px;background:var(--moss);border:none;color:#fff;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-done:disabled{opacity:.35;cursor:default}
+#congrats-screen{display:none;min-height:100vh;background:linear-gradient(135deg,var(--moss) 0%,var(--moss-dark) 100%);padding:2rem 1.25rem;text-align:center;color:var(--sand)}
+.congrats-content{max-width:420px;margin:0 auto;padding-top:2rem}
+.congrats-content h1{font-size:32px;color:var(--sand);margin-bottom:.5rem;font-weight:800}
+.emoji{font-size:64px;margin-bottom:1rem}
+.congrats-content p{font-size:15px;margin-bottom:1rem;color:var(--ocean)}
+.congrats-actions{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem}
+.congrats-btn{padding:13px;background:var(--terracotta);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;cursor:pointer}
+.congrats-btn.secondary{background:rgba(202,221,211,0.15);color:var(--sand);border:1.5px solid var(--ocean)}
+.saved-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--moss);color:var(--sand);padding:10px 18px;border-radius:24px;font-size:13px;font-weight:600;z-index:500;transition:transform .3s}
+.saved-toast.show{transform:translateX(-50%) translateY(0)}
+.rules-btn{display:inline-block;font-size:13px;font-weight:700;color:#fff;background:var(--moss);padding:10px 22px;border-radius:24px;text-decoration:none;border:2px solid var(--ocean);cursor:pointer;font-family:'DM Sans',sans-serif}
+.admin-link{font-size:12px;font-weight:700;color:var(--moss);background:var(--ocean);padding:6px 16px;border-radius:20px;text-decoration:none;display:inline-block}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg width="160" height="70" viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 30 95 L 30 35 Q 32 22 48 30 L 72 70 L 72 35 Q 74 22 90 30 L 90 95" stroke="#415134" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="105" y="68" font-family="Urbanist, sans-serif" font-weight="700" font-size="44" fill="#415134" letter-spacing="-1">aya</text>
+        <text x="105" y="98" font-family="Urbanist, sans-serif" font-weight="500" font-size="18" fill="#415134" letter-spacing="2">HOMES</text>
+      </svg>
+    </div>
+    <h1>Naya Homes Bingo</h1>
+    <p class="subtitle">Discover Banderas Bay — 5 in a row wins a gift! 🎁</p>
+    <div class="field">
+      <label>Region</label>
+      <select id="region-select">
+        <option value="puerto_vallarta">Puerto Vallarta, Jalisco</option>
+        <option value="nuevo_vallarta">Nuevo Vallarta, Nayarit</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>When did you check in?</label>
+      <div class="calendar">
+        <div class="cal-header">
+          <button class="cal-nav" onclick="navMonth(-1)">‹</button>
+          <h3 id="cal-month">—</h3>
+          <button class="cal-nav" onclick="navMonth(1)">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="stay-display" id="stay-display">Tap your check-in date above</div>
+      </div>
+    </div>
+    <button class="login-btn" onclick="startGame()">Get My Bingo Card →</button>
+    <div class="login-error" id="login-error"></div>
+    <p class="login-note">Your card is personalized to your stay week!</p>
+    <div style="text-align:center;margin-top:1rem">
+      <a href="#" onclick="openRules();return false;" class="rules-btn">📖 Rules of Play</a>
+    </div>
+    <div style="text-align:center;margin-top:1rem">
+      <a href="/admin" class="admin-link">Admin Login</a>
+    </div>
+  </div>
+</div>
+
+<div id="game-screen">
+  <div class="top-bar">
+    <div class="logo">
+      <svg width="32" height="32" viewBox="0 0 120 120"><path d="M 30 95 L 30 35 Q 32 22 48 30 L 72 70 L 72 35 Q 74 22 90 30 L 90 95" stroke="#F8F5EF" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-family:'Urbanist',sans-serif;font-weight:700;color:var(--sand);font-size:16px">Naya Homes Bingo</span>
+    </div>
+    <div class="week-tag" id="week-label">— Week —</div>
+  </div>
+  <div class="progress-row">
+    <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+    <span class="prog-label" id="plabel">0 / 25 done</span>
+  </div>
+  <div class="bingo-badge" id="badge"></div>
+  <div class="card-wrap">
+    <div class="bingo-letters">
+      <div class="bingo-letter">B</div><div class="bingo-letter">I</div><div class="bingo-letter">N</div><div class="bingo-letter">G</div><div class="bingo-letter">O</div>
+    </div>
+    <div class="bingo-grid" id="bingo-grid"></div>
+  </div>
+  <button class="claim-cta" id="ctabtn" onclick="openClaimModal()">🎁 Claim My Gift</button>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-hero">
+      <div style="flex:1">
+        <div id="m-event-tag" style="display:none" class="modal-event-tag">EVENT</div>
+        <h2 id="m-title"></h2>
+        <p id="m-when" style="display:none"></p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="m-desc"></p>
+      <div class="modal-details" id="m-details"></div>
+      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem;">More Info →</a>
+      <span class="upload-label">Upload your photo to complete:</span>
+      <label class="upload-area">📷 Tap to upload from camera roll<input type="file" accept="image/*" onchange="handleFile(event)"></label>
+      <div class="preview-wrap" id="preview-wrap"><img id="preview-img"></div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-done" id="btn-done" onclick="markDone()" disabled>Mark Complete ✓</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="claim-overlay">
+  <div class="modal">
+    <div class="modal-hero">
+      <div style="flex:1"><h2>🎁 Almost there!</h2><p>Enter your details to claim your gift</p></div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc">We just need a few details to send your thank-you gift!</p>
+      <div class="field"><label>First Name</label><input type="text" id="claim-first"></div>
+      <div class="field"><label>Last Name</label><input type="text" id="claim-last"></div>
+      <div class="field"><label>Reservation Number</label><input type="text" id="claim-res"></div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeClaim()">Cancel</button>
+        <button class="btn-done" onclick="submitClaim()">Claim My Gift 🎁</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="rules-overlay" style="z-index:400">
+  <div class="modal" style="max-width:520px">
+    <div style="background:linear-gradient(135deg,var(--moss) 0%,var(--moss-dark) 100%);padding:1.75rem 1.5rem;text-align:center;position:relative">
+      <button onclick="closeRules()" style="position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;font-weight:700">×</button>
+      <div style="font-size:32px;margin-bottom:6px">🌴</div>
+      <h2 style="color:var(--sand);font-size:22px;font-family:'Urbanist',sans-serif">Naya Homes Bingo</h2>
+      <p style="color:var(--ocean);font-size:13px;font-weight:600;margin-top:6px;letter-spacing:0.5px">OFFICIAL RULES OF PLAY</p>
+    </div>
+    <div style="padding:1.5rem;color:var(--text);font-size:14px;line-height:1.6">
+      <div style="background:linear-gradient(135deg,var(--moss),var(--moss-dark));padding:14px 16px;border-radius:12px;margin-bottom:1.25rem;color:var(--sand)">
+        <div style="font-weight:700;font-size:15px;margin-bottom:4px;font-family:'Urbanist',sans-serif">🎯 The Goal</div>
+        <div style="font-size:13px">Complete <b>5 activities in a row</b> — horizontally, vertically, or diagonally — to earn a special thank-you gift from Naya Homes!</div>
+      </div>
+      <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎟️ Getting Started</h3>
+      <ol style="padding-left:20px;margin-bottom:1.25rem">
+        <li>Choose your region (Puerto Vallarta or Nuevo Vallarta)</li>
+        <li>Pick your check-in date</li>
+        <li>Your custom weekly card loads — 25 unique experiences!</li>
+      </ol>
+      <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎲 How to Play</h3>
+      <p style="margin-bottom:1.25rem">Tap a tile → Go do the activity → Take a photo → Upload it → Mark complete. Get 5 in a row to claim your gift!</p>
+      <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎁 Claiming Your Reward</h3>
+      <p style="margin-bottom:1.25rem">Once you complete a line of 5, tap "Claim My Gift" and enter your name + reservation. You'll get a unique <b>Naya Token</b> (like PALM-OCEAN-427). Show it to a Naya Homes team member to redeem.</p>
+      <div style="background:var(--sunshine);border:1.5px solid var(--sunrise);border-radius:8px;padding:10px 14px;margin-bottom:1.25rem">
+        <b>📌 Save your token!</b> Screenshot or write it down — you'll need it to claim your gift.
+      </div>
+      <div style="background:var(--moss);color:var(--sand);border-radius:12px;padding:16px;text-align:center;margin-top:1rem">
+        <div style="font-weight:700;font-size:15px;margin-bottom:8px;font-family:'Urbanist',sans-serif">❓ Questions or Issues?</div>
+        <div style="font-size:13px;line-height:1.7">
+          <div>📞 <a href="tel:+523151820301" style="color:var(--ocean);text-decoration:none;font-weight:600">+52 315 182 0301</a></div>
+          <div>✉️ <a href="mailto:farid@nayahomes.co" style="color:var(--ocean);text-decoration:none;font-weight:600">farid@nayahomes.co</a></div>
+        </div>
+      </div>
+      <button onclick="closeRules()" style="width:100%;margin-top:1.25rem;padding:12px;background:var(--terracotta);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Got it — let's play! 🎉</button>
+    </div>
+  </div>
+</div>
+
+<div id="congrats-screen">
+  <div class="congrats-content">
+    <div class="emoji">🎉</div>
+    <h1>Bingo!</h1>
+    <p>Show the token below to a Naya Homes team member to redeem your gift.</p>
+    <div id="naya-token" style="display:inline-block;background:rgba(202,221,211,0.15);border:1.5px solid var(--ocean);border-radius:10px;padding:0.6rem 1.4rem;font-size:22px;font-weight:700;letter-spacing:0.15em;color:var(--ocean);font-family:monospace">--</div>
+    <p style="margin-top:1rem;font-size:13px">📌 Take a screenshot or write this down!</p>
+  </div>
+</div>
+
+<div class="saved-toast" id="saved-toast">✓ Saved</div>
+
+<script>
+const SUPABASE_URL = 'https://dmqwpbbojuwblurklecg.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtcXdwYmJvanV3Ymx1cmtsZWNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNDU2OTEsImV4cCI6MjA5MzgyMTY5MX0.8Gxb60h6f_BxvaEm4gH5T61bEqqYN0pXqniKgh6_14Q';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// FILL IN ACTIVITIES — Puerto Vallarta and Nuevo Vallarta separately
+const EG_PV = {};       // recurring PV activities
+const EVENTS_PV = {};   // PV events (date-specific)
+const EG_NV = {};       // recurring NV activities
+const EVENTS_NV = {};   // NV events
+const WEEKLY_CARDS_PV = [[],[],[],[],[]];  // 5 weekly cards x 25 activities each
+const WEEKLY_CARDS_NV = [[],[],[],[],[]];
+
+function getWeekCard(d, region){
+  const cards = region === 'nuevo_vallarta' ? WEEKLY_CARDS_NV : WEEKLY_CARDS_PV;
+  const date = new Date(d + 'T12:00:00');
+  const day = date.getDate();
+  const idx = Math.min(Math.floor((day-1)/7), 4);
+  return {acts: (cards[idx]||[]).slice(), label: 'Week '+(idx+1)};
+}
+
+let calMonth = new Date(); calMonth.setDate(1);
+let selectedCheckIn = null;
+function navMonth(dir){ calMonth.setMonth(calMonth.getMonth()+dir); initCal(); }
+function initCal(){
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month').textContent = months[calMonth.getMonth()]+' '+calMonth.getFullYear();
+  const grid = document.getElementById('cal-grid'); grid.innerHTML = '';
+  ['S','M','T','W','T','F','S'].forEach(d => { const e = document.createElement('div'); e.className='cal-day-name'; e.textContent=d; grid.appendChild(e); });
+  const first = new Date(calMonth.getFullYear(),calMonth.getMonth(),1).getDay();
+  const days = new Date(calMonth.getFullYear(),calMonth.getMonth()+1,0).getDate();
+  for(let i=0;i<first;i++){ const e=document.createElement('div'); e.className='cal-day empty'; grid.appendChild(e); }
+  for(let d=1;d<=days;d++){
+    const e = document.createElement('div'); e.className='cal-day'; e.textContent=d;
+    const dStr = calMonth.getFullYear()+'-'+String(calMonth.getMonth()+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    e.onclick = () => selectDate(dStr,e);
+    if(selectedCheckIn===dStr) e.classList.add('selected');
+    grid.appendChild(e);
+  }
+}
+function selectDate(dStr,el){
+  selectedCheckIn = dStr;
+  document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  const d = new Date(dStr+'T12:00:00');
+  document.getElementById('stay-display').textContent = 'Checking in '+d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+}
+window.onload = function(){
+  initCal();
+  try {
+    if(!sessionStorage.getItem('naya_pv_logged')){
+      sb.from('bingo_page_views').insert({user_agent: navigator.userAgent}).then(()=>sessionStorage.setItem('naya_pv_logged','1')).catch(e=>{});
+    }
+  } catch(e) {}
+};
+
+let ACTS=[], weekLabel='', done=new Array(25).fill(false), photos=new Array(25).fill(null), photoPaths=new Array(25).fill(null);
+let currentCell=null, currentFile=null, guestCheckIn=null, guestRegion=null;
+
+async function startGame(){
+  const errEl = document.getElementById('login-error'); errEl.classList.remove('show');
+  if(!selectedCheckIn){ errEl.textContent='Please select your check-in date'; errEl.classList.add('show'); return; }
+  guestCheckIn = selectedCheckIn;
+  guestRegion = document.getElementById('region-select').value;
+  try { sb.from('bingo_logins').insert({check_in_date:selectedCheckIn,region:guestRegion,user_agent:navigator.userAgent}).then(()=>{}).catch(e=>{}); } catch(e){}
+  const {acts,label} = getWeekCard(selectedCheckIn,guestRegion);
+  if(!acts || acts.length===0){ errEl.textContent='No bingo card available yet for this date.'; errEl.classList.add('show'); return; }
+  ACTS=acts; weekLabel=label;
+  done=new Array(25).fill(false); photos=new Array(25).fill(null); photoPaths=new Array(25).fill(null);
+  const localKey = 'naya_'+guestRegion+'_'+selectedCheckIn;
+  const saved = localStorage.getItem(localKey);
+  if(saved){ try { const p = JSON.parse(saved); if(p.done) p.done.forEach((v,i)=>{if(v)done[i]=true;}); if(p.photos) p.photos.forEach((v,i)=>{if(v)photos[i]=v;}); } catch(e){} }
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('game-screen').style.display='block';
+  document.getElementById('week-label').textContent = label+' Card';
+  renderCard();
+}
+function saveLocal(){ if(!guestCheckIn||!guestRegion) return; localStorage.setItem('naya_'+guestRegion+'_'+guestCheckIn, JSON.stringify({done,photos})); }
+
+function renderCard(){
+  const grid = document.getElementById('bingo-grid'); grid.innerHTML='';
+  ACTS.forEach((a,i) => {
+    if(!a) return;
+    const c = document.createElement('div');
+    const hasPhoto = photos[i]!==null;
+    c.className = 'cell'+(a.isEvent?' event-cell':'')+(hasPhoto?' has-photo':'');
+    if(a.photo){ const bg=document.createElement('div'); bg.className='cell-bg'; bg.style.backgroundImage='url('+a.photo+')'; c.appendChild(bg); }
+    const ov = document.createElement('div'); ov.className='cell-overlay'; c.appendChild(ov);
+    if(hasPhoto){ const ph=document.createElement('div'); ph.style.cssText='position:absolute;inset:0;background-size:cover;background-position:center;background-image:url('+photos[i]+');z-index:1'; c.appendChild(ph); }
+    if(a.isEvent){ const t=document.createElement('div'); t.className='event-tag'; t.textContent='EVENT'; c.appendChild(t); }
+    const n = document.createElement('div'); n.className='cell-name'; n.textContent=a.n; c.appendChild(n);
+    c.onclick = () => openModal(i);
+    if(done[i]) c.classList.add('done');
+    grid.appendChild(c);
+  });
+  updateProgress();
+}
+function getLines(){
+  const lines = [];
+  for(let r=0;r<5;r++){ const row=[r*5,r*5+1,r*5+2,r*5+3,r*5+4]; if(row.every(i=>done[i])) lines.push(row); }
+  for(let c=0;c<5;c++){ const col=[c,c+5,c+10,c+15,c+20]; if(col.every(i=>done[i])) lines.push(col); }
+  const d1=[0,6,12,18,24]; if(d1.every(i=>done[i])) lines.push(d1);
+  const d2=[4,8,12,16,20]; if(d2.every(i=>done[i])) lines.push(d2);
+  return lines;
+}
+function updateProgress(){
+  const lines = getLines();
+  const inLine = new Set(); lines.forEach(l => l.forEach(i => inLine.add(i)));
+  document.querySelectorAll('.cell').forEach((c,i) => {
+    c.classList.remove('line','done');
+    if(done[i]&&inLine.has(i)) c.classList.add('line');
+    else if(done[i]) c.classList.add('done');
+  });
+  const cnt = done.filter(Boolean).length;
+  document.getElementById('pfill').style.width = Math.round(cnt/25*100)+'%';
+  document.getElementById('plabel').textContent = cnt+' / 25 done';
+  document.getElementById('badge').innerHTML = lines.length ? '<span>🎉 '+lines.length+' bingo'+(lines.length>1?'s':'')+' complete!</span>' : '';
+  document.getElementById('ctabtn').classList[lines.length?'add':'remove']('on');
+}
+
+function openModal(i){
+  currentCell=i; currentFile=null;
+  const a = ACTS[i]; if(!a) return;
+  document.getElementById('m-event-tag').style.display = a.isEvent?'inline-block':'none';
+  const body = document.querySelector('#modal-overlay .modal-body');
+  if(body) body.style.backgroundImage = a.photo ? "url('"+a.photo+"')" : '';
+  document.getElementById('m-title').textContent = a.n;
+  const w = document.getElementById('m-when');
+  if(a.when){ w.textContent=a.when; w.style.display='block'; } else { w.style.display='none'; }
+  document.getElementById('m-desc').textContent = 'Click link below for more information about this event or activity. To play this Bingo Spot, take a photo of you doing the event and upload and mark complete. This will mark your Bingo card as checked.';
+  let html='';
+  if(a.when) html += '📅 <b>When:</b> '+a.when+'<br>';
+  if(a.tip) html += '💡 <b>Tip:</b> '+a.tip+'<br>';
+  if(a.phone) html += '📞 <b>Info:</b> <a href="tel:'+a.phone+'">'+a.phone+'</a><br>';
+  if(a.addr) html += '📍 <b>Address:</b> <a href="'+(a.maps||'#')+'" target="_blank">'+a.addr+'</a><br>';
+  if(a.maps) html += '🗺️ <a href="'+a.maps+'" target="_blank">Get Directions →</a>';
+  document.getElementById('m-details').innerHTML = html;
+  const infoUrl = a.link || a.maps;
+  const il = document.getElementById('m-info-link');
+  if(infoUrl){ il.href=infoUrl; il.style.display='block'; } else { il.style.display='none'; }
+  document.getElementById('btn-done').disabled = !done[i];
+  document.getElementById('preview-wrap').classList.remove('show');
+  if(photos[i]){ document.getElementById('preview-img').src=photos[i]; document.getElementById('preview-wrap').classList.add('show'); document.getElementById('btn-done').disabled=false; }
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function handleFile(e){
+  const f = e.target.files[0]; if(!f) return;
+  currentFile = f;
+  const r = new FileReader();
+  r.onload = ev => { document.getElementById('preview-img').src=ev.target.result; document.getElementById('preview-wrap').classList.add('show'); document.getElementById('btn-done').disabled=false; };
+  r.readAsDataURL(f);
+}
+function markDone(){
+  if(currentCell===null) return;
+  done[currentCell] = true;
+  if(currentFile){
+    const r = new FileReader();
+    r.onload = ev => { photos[currentCell]=ev.target.result; saveLocal(); renderCard(); };
+    r.readAsDataURL(currentFile);
+  } else { saveLocal(); renderCard(); }
+  closeModal();
+  showSaved('Activity completed!');
+}
+function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); currentCell=null; currentFile=null; }
+function openRules(){ document.getElementById('rules-overlay').classList.add('open'); }
+function closeRules(){ document.getElementById('rules-overlay').classList.remove('open'); }
+
+function openClaimModal(){ if(!getLines().length) return; document.getElementById('claim-overlay').classList.add('open'); }
+function closeClaim(){ document.getElementById('claim-overlay').classList.remove('open'); }
+function generateNayaToken(){
+  const w1 = ['PALM','OCEAN','MARINA','MALECON','SAND','SUN','BAHIA','BANDERAS'];
+  const w2 = ['SUNSET','BEACH','WAVE','TROPIC','BREEZE','PARADISE','RIVIERA','NAYARIT'];
+  const a = w1[Math.floor(Math.random()*w1.length)], b = w2[Math.floor(Math.random()*w2.length)];
+  if(a===b) return generateNayaToken();
+  return a+'-'+b+'-'+String(Math.floor(Math.random()*900)+100);
+}
+async function submitClaim(){
+  const first = document.getElementById('claim-first').value.trim();
+  const last = document.getElementById('claim-last').value.trim();
+  const res = document.getElementById('claim-res').value.trim();
+  if(!first||!last||!res){ alert('Please fill in all fields'); return; }
+  const token = generateNayaToken();
+  document.getElementById('naya-token').textContent = token;
+  try {
+    const { data: existing } = await sb.from('bingo_players').select('id').eq('reservation_number',res).maybeSingle();
+    if(existing){
+      await sb.from('bingo_players').update({first_name:first,last_name:last,completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photoPaths.filter(p=>p!==null).length,bear_token:token,region:guestRegion}).eq('id',existing.id);
+    } else {
+      await sb.from('bingo_players').insert({first_name:first,last_name:last,reservation_number:res,check_in_date:guestCheckIn,started_at:new Date().toISOString(),completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photoPaths.filter(p=>p!==null).length,bear_token:token,region:guestRegion});
+    }
+  } catch(e){ console.error(e); }
+  closeClaim();
+  document.getElementById('game-screen').style.display='none';
+  document.getElementById('congrats-screen').style.display='block';
+}
+function showSaved(msg){ const t=document.getElementById('saved-toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
+</script>
+</body>
+</html>
