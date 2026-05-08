@@ -35,9 +35,11 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
 .cal-day:hover{background:rgba(65,81,52,0.1)}
 .cal-day.selected{background:var(--moss);color:var(--sand);font-weight:700}
 .cal-day.empty{cursor:default}
-.stay-display{text-align:center;font-size:12px;color:#6a7561;margin-top:.5rem;font-style:italic}
-.login-btn{width:100%;padding:14px;background:var(--moss);color:var(--sand);border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
+.stay-display{text-align:center;font-size:12px;color:#6a7561;margin-top:.5rem;min-height:28px}
+.week-badge{display:inline-block;background:var(--moss);color:var(--sand);font-size:10px;font-weight:700;padding:2px 10px;border-radius:10px;margin-top:4px}
+.login-btn{width:100%;padding:14px;background:var(--moss);color:var(--sand);border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:.5rem}
 .login-btn:hover{background:var(--moss-dark)}
+.login-btn:disabled{opacity:.5;cursor:default}
 .login-error{font-size:13px;color:var(--terracotta);margin-top:.75rem;text-align:center;display:none}
 .login-error.show{display:block}
 .login-note{font-size:12px;color:#6a7561;text-align:center;margin-top:1rem;font-style:italic}
@@ -57,9 +59,14 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
 .cell.done{border-color:var(--moss);background:var(--ocean)}
 .cell.line{border-color:var(--terracotta);background:var(--sunshine);box-shadow:0 0 12px rgba(199,81,71,0.3)}
 .cell-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.7}
+.cell-photo-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:1}
 .cell-overlay{position:absolute;inset:0;background:rgba(65,81,52,0)}
 .cell.line .cell-overlay{background:rgba(199,81,71,.15)}
 .cell-name{position:relative;z-index:2;color:var(--moss);background:linear-gradient(180deg,transparent 0%,rgba(248,245,239,0.95) 60%);width:100%;padding:18px 4px 6px;text-align:center;font-size:10px;font-weight:700;line-height:1.15}
+.cell.has-photo .cell-name{color:#fff;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.75) 60%);text-shadow:0 1px 4px rgba(0,0,0,0.9)}
+.check-badge{position:absolute;top:5px;right:5px;width:20px;height:20px;background:var(--moss);border-radius:50%;display:none;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.cell.done .check-badge{display:flex}
+.check-badge svg{width:11px;height:11px;fill:none;stroke:#fff;stroke-width:2.5}
 .event-tag{position:absolute;top:4px;left:4px;background:var(--terracotta);color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:6px;z-index:3;letter-spacing:0.5px}
 .claim-cta{margin:1.5rem 1rem 0;padding:14px;background:#ddd;color:#999;border:none;border-radius:14px;font-size:15px;font-weight:700;width:calc(100% - 2rem);max-width:520px;display:block;margin-left:auto;margin-right:auto;cursor:not-allowed;font-family:'DM Sans',sans-serif}
 .claim-cta.on{background:linear-gradient(135deg,var(--terracotta),var(--sunset));color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(199,81,71,0.3)}
@@ -92,13 +99,13 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
 .congrats-content h1{font-size:32px;color:var(--sand);margin-bottom:.5rem;font-weight:800}
 .emoji{font-size:64px;margin-bottom:1rem}
 .congrats-content p{font-size:15px;margin-bottom:1rem;color:var(--ocean)}
-.congrats-actions{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem}
-.congrats-btn{padding:13px;background:var(--terracotta);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;font-family:'DM Sans',sans-serif;cursor:pointer}
-.congrats-btn.secondary{background:rgba(202,221,211,0.15);color:var(--sand);border:1.5px solid var(--ocean)}
 .saved-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--moss);color:var(--sand);padding:10px 18px;border-radius:24px;font-size:13px;font-weight:600;z-index:500;transition:transform .3s}
 .saved-toast.show{transform:translateX(-50%) translateY(0)}
 .rules-btn{display:inline-block;font-size:13px;font-weight:700;color:#fff;background:var(--moss);padding:10px 22px;border-radius:24px;text-decoration:none;border:2px solid var(--ocean);cursor:pointer;font-family:'DM Sans',sans-serif}
 .admin-link{font-size:12px;font-weight:700;color:var(--moss);background:var(--ocean);padding:6px 16px;border-radius:20px;text-decoration:none;display:inline-block}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:500px){.cell-name{font-size:9px}}
 </style>
 </head>
 <body>
@@ -133,7 +140,7 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
         <div class="stay-display" id="stay-display">Tap your check-in date above</div>
       </div>
     </div>
-    <button class="login-btn" onclick="startGame()">Get My Bingo Card →</button>
+    <button class="login-btn" id="login-btn" onclick="startGame()">Get My Bingo Card →</button>
     <div class="login-error" id="login-error"></div>
     <p class="login-note">Your card is personalized to your stay week!</p>
     <div style="text-align:center;margin-top:1rem">
@@ -167,22 +174,23 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
   <button class="claim-cta" id="ctabtn" onclick="openClaimModal()">🎁 Claim My Gift</button>
 </div>
 
+<!-- Activity Modal -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-hero">
       <div style="flex:1">
         <div id="m-event-tag" style="display:none" class="modal-event-tag">EVENT</div>
         <h2 id="m-title"></h2>
-        <p id="m-when" style="display:none"></p>
+        <p id="m-sub" style="font-size:11px;color:var(--ocean);margin-top:2px"></p>
       </div>
       <button class="modal-close" onclick="closeModal()">×</button>
     </div>
-    <div class="modal-body">
-      <p class="modal-desc" id="m-desc"></p>
+    <div class="modal-body" id="modal-body">
+      <p class="modal-desc">Click the link below for more info. Take a photo doing the activity, upload it, and mark complete to check this spot!</p>
       <div class="modal-details" id="m-details"></div>
-      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem;">More Info →</a>
+      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem;display:none">More Info →</a>
       <span class="upload-label">Upload your photo to complete:</span>
-      <label class="upload-area">📷 Tap to upload from camera roll<input type="file" accept="image/*" onchange="handleFile(event)"></label>
+      <label class="upload-area">📷 Tap to upload from camera roll<input type="file" accept="image/*" id="finput" onchange="handleFile(event)"></label>
       <div class="preview-wrap" id="preview-wrap"><img id="preview-img"></div>
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeModal()">Cancel</button>
@@ -192,6 +200,7 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
   </div>
 </div>
 
+<!-- Claim Modal -->
 <div class="modal-overlay" id="claim-overlay">
   <div class="modal">
     <div class="modal-hero">
@@ -202,14 +211,16 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
       <div class="field"><label>First Name</label><input type="text" id="claim-first"></div>
       <div class="field"><label>Last Name</label><input type="text" id="claim-last"></div>
       <div class="field"><label>Reservation Number</label><input type="text" id="claim-res"></div>
+      <p id="claim-error" style="font-size:12px;color:var(--terracotta);display:none;margin-bottom:.75rem"></p>
       <div class="modal-actions">
         <button class="btn-cancel" onclick="closeClaim()">Cancel</button>
-        <button class="btn-done" onclick="submitClaim()">Claim My Gift 🎁</button>
+        <button class="btn-done" id="claim-submit-btn" onclick="submitClaim()">Claim My Gift 🎁</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Rules Modal -->
 <div class="modal-overlay" id="rules-overlay" style="z-index:400">
   <div class="modal" style="max-width:520px">
     <div style="background:linear-gradient(135deg,var(--moss) 0%,var(--moss-dark) 100%);padding:1.75rem 1.5rem;text-align:center;position:relative">
@@ -232,12 +243,12 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
       <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎲 How to Play</h3>
       <p style="margin-bottom:1.25rem">Tap a tile → Go do the activity → Take a photo → Upload it → Mark complete. Get 5 in a row to claim your gift!</p>
       <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎁 Claiming Your Reward</h3>
-      <p style="margin-bottom:1.25rem">Once you complete a line of 5, tap "Claim My Gift" and enter your name + reservation. You'll get a unique <b>Naya Token</b> (like PALM-OCEAN-427). Show it to a Naya Homes team member to redeem.</p>
+      <p style="margin-bottom:1.25rem">Once you complete a line of 5, tap "Claim My Gift" and enter your name + reservation number. You'll get a unique <b>Naya Token</b> (like PALM-OCEAN-427). Show it to a Naya Homes team member to redeem.</p>
       <div style="background:var(--sunshine);border:1.5px solid var(--sunrise);border-radius:8px;padding:10px 14px;margin-bottom:1.25rem">
         <b>📌 Save your token!</b> Screenshot or write it down — you'll need it to claim your gift.
       </div>
       <div style="background:var(--moss);color:var(--sand);border-radius:12px;padding:16px;text-align:center;margin-top:1rem">
-        <div style="font-weight:700;font-size:15px;margin-bottom:8px;font-family:'Urbanist',sans-serif">❓ Questions or Issues?</div>
+        <div style="font-weight:700;font-size:15px;margin-bottom:8px;font-family:'Urbanist',sans-serif">❓ Questions?</div>
         <div style="font-size:13px;line-height:1.7">
           <div>📞 <a href="tel:+523151820301" style="color:var(--ocean);text-decoration:none;font-weight:600">+52 315 182 0301</a></div>
           <div>✉️ <a href="mailto:farid@nayahomes.co" style="color:var(--ocean);text-decoration:none;font-weight:600">farid@nayahomes.co</a></div>
@@ -248,6 +259,7 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
   </div>
 </div>
 
+<!-- Congrats Screen -->
 <div id="congrats-screen">
   <div class="congrats-content">
     <div class="emoji">🎉</div>
@@ -265,91 +277,329 @@ const SUPABASE_URL = 'https://dmqwpbbojuwblurklecg.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtcXdwYmJvanV3Ymx1cmtsZWNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyNDU2OTEsImV4cCI6MjA5MzgyMTY5MX0.8Gxb60h6f_BxvaEm4gH5T61bEqqYN0pXqniKgh6_14Q';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-// FILL IN ACTIVITIES — Puerto Vallarta and Nuevo Vallarta separately
-const EG_PV = {};       // recurring PV activities
-const EVENTS_PV = {};   // PV events (date-specific)
-const EG_NV = {};       // recurring NV activities
-const EVENTS_NV = {};   // NV events
-const WEEKLY_CARDS_PV = [[],[],[],[],[]];  // 5 weekly cards x 25 activities each
-const WEEKLY_CARDS_NV = [[],[],[],[],[]];
+// ============================================================
+// PUERTO VALLARTA — EVERGREEN ACTIVITIES
+// ============================================================
+const EG_PV = {
+  malecon:    {n:"Walk the Malecón",tip:"Go at sunset — the sculptures and ocean views are magical at golden hour.",addr:"Paseo Díaz Ordaz, Puerto Vallarta",maps:"https://maps.google.com/?q=Malecon+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1518638150340-f706e86654de?w=400&q=80"},
+  losmuertos: {n:"Beach Day at Los Muertos",tip:"Los Muertos Pier is the heart of the action — great for people-watching and swimming.",addr:"Playa Los Muertos, Puerto Vallarta",maps:"https://maps.google.com/?q=Playa+Los+Muertos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  oldtown:    {n:"Explore Zona Romántica",tip:"The cobblestone streets of the Old Town are best explored in the morning before it gets hot.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
+  whalewatching:{n:"Whale Watching Tour",tip:"Humpback whales are in Banderas Bay Dec–Mar. Other months look for dolphins and manta rays!",phone:"(322) 209-0133",addr:"Los Muertos Pier, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Pier+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+  snorkel:    {n:"Snorkel at Los Arcos",tip:"Los Arcos marine sanctuary has incredible visibility. Book a tour from the pier.",addr:"Los Arcos, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Arcos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  zipline:    {n:"Canopy Zip Line Tour",tip:"Sierra Madre zip line tours depart from Vallarta — book the day before for best availability.",phone:"(322) 222-5954",addr:"Sierra Madre, Puerto Vallarta",maps:"https://maps.google.com/?q=zip+line+tours+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
+  boattour:   {n:"Sunset Boat Tour",tip:"Two-hour sunset cruises leave from Los Muertos Pier — dolphins often show up!",phone:"(322) 224-4777",addr:"Los Muertos Pier, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Pier+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80"},
+  artgallery: {n:"Art Walk Thursday",tip:"Every Thursday (Nov–May) Vallarta's galleries open late for the weekly Art Walk. Free and fun!",when:"Every Thursday, 6–10 PM",addr:"Zona Romántica galleries, Puerto Vallarta",maps:"https://maps.google.com/?q=art+galleries+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
+  tequilatour:{n:"Tequila Tasting",tip:"Several shops in the Romantic Zone offer free tastings — El Catrin has a great selection.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=tequila+tasting+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400&q=80"},
+  marketday:  {n:"Mercado Municipal",tip:"The downtown market is open daily — go early for fresh fruit, flowers, and local snacks.",addr:"Av. Miramar 126, Puerto Vallarta",maps:"https://maps.google.com/?q=Mercado+Municipal+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80"},
+  cathedral:  {n:"Visit the Cathedral",tip:"Our Lady of Guadalupe's crown is iconic. Best photos from the Malecón across the street.",addr:"Calle Hidalgo 370, Puerto Vallarta",maps:"https://maps.google.com/?q=Cathedral+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&q=80"},
+  tacos:      {n:"Eat Street Tacos",tip:"La Esquina del Gusto on Basilio Badillo is a local favorite — open late and incredibly cheap.",addr:"Basilio Badillo, Puerto Vallarta",maps:"https://maps.google.com/?q=tacos+Basilio+Badillo+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80"},
+  surflesson: {n:"Take a Surf Lesson",tip:"Sayulita is 45 min north and perfect for beginners. Punta Mita also has great surf schools.",addr:"Sayulita or Punta Mita, Nayarit",maps:"https://maps.google.com/?q=surf+lessons+Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
+  kayak:      {n:"Kayak the Bay",tip:"Morning kayak tours leave from Los Muertos — calm water and great wildlife sightings before 9am.",addr:"Los Muertos Beach, Puerto Vallarta",maps:"https://maps.google.com/?q=kayak+tours+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
+  hidingtowns:{n:"Day Trip to Sayulita",tip:"The colorful surf town of Sayulita is 45 min away — great tacos, art, and beach vibes.",addr:"Sayulita, Nayarit",maps:"https://maps.google.com/?q=Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
+  massage:    {n:"Spa or Massage",tip:"Vallarta is full of great value spas — book a beach massage or a full treatment at a hotel spa.",addr:"Puerto Vallarta Hotel Zone",maps:"https://maps.google.com/?q=spa+massage+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80"},
+  cooking:    {n:"Mexican Cooking Class",tip:"Several local chefs offer morning classes with market tours included — Vallarta Food Tours is excellent.",addr:"Puerto Vallarta",maps:"https://maps.google.com/?q=cooking+class+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=400&q=80"},
+  bikeride:   {n:"Bike the Malecón",tip:"Rent a bike near the boardwalk — the flat Malecón path is perfect for an early morning ride.",addr:"Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=bike+rental+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=400&q=80"},
+  scuba:      {n:"Scuba Diving",tip:"Banderas Bay has 30+ dive sites. Chimo Divers and Pacific Scuba are highly rated.",phone:"(322) 222-1657",addr:"Los Muertos Pier, Puerto Vallarta",maps:"https://maps.google.com/?q=scuba+diving+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+  rooftopbar: {n:"Rooftop Bar Sunset",tip:"La Palapa and Demente rooftop are iconic for sunset drinks with Banderas Bay views.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=rooftop+bar+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80"},
+  stars:      {n:"Stargazing on the Beach",tip:"Head south past the Romantic Zone to a dark beach — the Milky Way is visible on clear nights.",addr:"South Puerto Vallarta beaches",maps:"https://maps.google.com/?q=beaches+south+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80"},
+  nightlife:  {n:"Explore PV Nightlife",tip:"The Romantic Zone is packed with live music, bars, and drag shows. Starts around 9pm!",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=nightlife+Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
+  mariachi:   {n:"Live Mariachi Show",tip:"El Arrayán and several Malecón restaurants host live mariachi — no reservation needed.",addr:"Malecón & Zona Romántica, PV",maps:"https://maps.google.com/?q=mariachi+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1547476745-29d6572ffd7e?w=400&q=80"},
+  foodtour:   {n:"PV Food Tour",tip:"Vallarta Food Tours runs excellent 3-hour walking tours hitting all the best local spots.",addr:"Puerto Vallarta downtown",maps:"https://maps.google.com/?q=food+tour+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
+  parasail:   {n:"Parasailing",tip:"Multiple operators on Los Muertos Beach offer tandem parasailing — about $40 USD per person.",addr:"Los Muertos Beach, Puerto Vallarta",maps:"https://maps.google.com/?q=parasailing+Los+Muertos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+};
 
-function getWeekCard(d, region){
+// ============================================================
+// PUERTO VALLARTA — WEEKLY EVENTS (May–Jun 2026)
+// ============================================================
+const EVENTS_PV = {
+  artnight:   {n:"Gallery Night Thursday",when:"Every Thursday, 6–10 PM",tip:"Stroll 20+ galleries in the Romantic Zone — free wine and local art.",addr:"Zona Romántica galleries, Puerto Vallarta",maps:"https://maps.google.com/?q=art+galleries+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
+  sundaymarket:{n:"Farmers & Crafts Market",when:"Every Sunday, 9 AM–2 PM",tip:"The boardwalk market has local produce, artisan crafts, and amazing street food.",addr:"Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Sunday+market+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  livemusic:  {n:"Live Music at La Bodeguita",when:"Fri & Sat, 9 PM",tip:"La Bodeguita del Medio is famous for mojitos and live Cuban music on weekends.",addr:"Paseo Díaz Ordaz 858, Puerto Vallarta",maps:"https://maps.google.com/?q=La+Bodeguita+del+Medio+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80",isEvent:true},
+  salsa:      {n:"Salsa Night",when:"Wednesday & Saturday nights",tip:"Salsa clubs in the Romantic Zone get going after 10pm — lessons often available earlier.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=salsa+dancing+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1504609813442-a8924e83f76e?w=400&q=80",isEvent:true},
+  fireworks:  {n:"Malecón Evening Show",when:"Saturday evenings",tip:"The Malecón comes alive on Saturday evenings with performers, vendors, and occasional fireworks.",addr:"Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Malecon+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1514672013381-c6d0df1c8b18?w=400&q=80",isEvent:true},
+};
+
+// ============================================================
+// NUEVO VALLARTA — EVERGREEN ACTIVITIES
+// ============================================================
+const EG_NV = {
+  beachclub:  {n:"Beach Club Day",tip:"Nuevo Vallarta has some of the calmest waters in Banderas Bay — perfect for families.",addr:"Nuevo Vallarta Beach, Nayarit",maps:"https://maps.google.com/?q=Nuevo+Vallarta+beach",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  paradisuspool:{n:"Pools & Waterpark",tip:"The Vidanta resort area has a public access waterpark (Aquaventuras) nearby — worth the trip!",addr:"Av. Paseo Cocoteros, Nuevo Vallarta",maps:"https://maps.google.com/?q=Aquaventuras+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=400&q=80"},
+  marina:     {n:"Explore the Marina",tip:"La Cruz de Huanacaxtle marina is 15 min north — great seafood restaurants and boat tours.",addr:"La Cruz de Huanacaxtle Marina, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+marina",photo:"https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80"},
+  puntamita:  {n:"Day Trip to Punta Mita",tip:"Punta Mita is 20 min away — world-class surf, pristine beaches, and the famous Four Seasons.",addr:"Punta Mita, Nayarit",maps:"https://maps.google.com/?q=Punta+Mita+Nayarit",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
+  sayulita:   {n:"Day Trip to Sayulita",tip:"The hippie surf town 30 min north is a must-do — colorful streets, great tacos, and surf.",addr:"Sayulita, Nayarit",maps:"https://maps.google.com/?q=Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
+  snorkelislas:{n:"Snorkel Islas Marietas",tip:"The hidden beach at Marietas Islands is world-famous — book a tour 2–3 days ahead, spots fill fast!",addr:"Islas Marietas, Banderas Bay",maps:"https://maps.google.com/?q=Islas+Marietas+Nayarit",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  whalenv:    {n:"Whale or Dolphin Tour",tip:"Dolphin pods are common year-round in Banderas Bay. Whale season is Dec–Mar.",addr:"La Cruz Marina, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+marina",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+  surf:       {n:"Surf Lesson",tip:"La Lancha and El Anclote in Punta Mita are great beginner breaks. Lessons ~$40 USD.",addr:"Punta Mita, Nayarit",maps:"https://maps.google.com/?q=surf+lessons+Punta+Mita",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
+  kayaknv:    {n:"Kayak or Paddleboard",tip:"The estuary behind Nuevo Vallarta is perfect for flat-water paddling — great for wildlife.",addr:"Nuevo Vallarta Estuary, Nayarit",maps:"https://maps.google.com/?q=Nuevo+Vallarta+estuary",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
+  fishing:    {n:"Sport Fishing",tip:"Nuevo Vallarta is a prime fishing spot — marlin, tuna, dorado. Charter boats from La Cruz.",phone:"(329) 295-5456",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=sport+fishing+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1504277585821-e2fd1ca03f4d?w=400&q=80"},
+  sunsetcruise:{n:"Sunset Catamaran",tip:"Several operators run sunset catamaran trips from La Cruz Marina — open bar and snorkeling included.",addr:"La Cruz Marina, Nayarit",maps:"https://maps.google.com/?q=catamaran+tour+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80"},
+  atv:        {n:"ATV / Jungle Tour",tip:"Off-road ATV tours into the Sierra Madre depart from Bucerías — great for adrenaline seekers.",addr:"Bucerías, Nayarit",maps:"https://maps.google.com/?q=ATV+tour+Bucerias+Nayarit",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
+  bucerias:   {n:"Explore Bucerías",tip:"The art town of Bucerías is 10 min south — great galleries, seafood, and the Sunday art walk.",addr:"Bucerías, Nayarit",maps:"https://maps.google.com/?q=Bucerias+Nayarit",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80"},
+  seafood:    {n:"Fresh Seafood Lunch",tip:"El Anclote in Punta Mita has the freshest fish tacos and ceviche — order the aguachile.",addr:"Punta Mita or La Cruz, Nayarit",maps:"https://maps.google.com/?q=seafood+restaurant+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
+  ziplinenv:  {n:"Zip Line Adventure",tip:"Vallarta Adventures runs zip line tours into the jungle — departs from Nuevo Vallarta.",phone:"(329) 297-1212",addr:"Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=zip+line+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
+  massagenv:  {n:"Spa or Beach Massage",tip:"Beach massages on the Nuevo Vallarta strip are great value — negotiate a 60-min for ~$30 USD.",addr:"Nuevo Vallarta Beach, Nayarit",maps:"https://maps.google.com/?q=spa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80"},
+  tacosnv:    {n:"Street Tacos in Bucerías",tip:"The taco stands on Bucerías' main street open at 6pm — carnitas and al pastor are the best.",addr:"Bucerías, Nayarit",maps:"https://maps.google.com/?q=tacos+Bucerias+Nayarit",photo:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80"},
+  bikenv:     {n:"Bike Along the Coast",tip:"Rent a bike in Nuevo Vallarta and ride the coastal path toward La Cruz — flat and scenic.",addr:"Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=bike+rental+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=400&q=80"},
+  starsbeach: {n:"Stargazing on the Beach",tip:"The beach in front of Nuevo Vallarta has very little light pollution — incredible stargazing after 9pm.",addr:"Nuevo Vallarta Beach, Nayarit",maps:"https://maps.google.com/?q=Nuevo+Vallarta+beach",photo:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80"},
+  lacruzmkt:  {n:"La Cruz Sunday Market",when:"Every Sunday, 9 AM–2 PM",tip:"The La Cruz market is one of the best on the Riviera Nayarit — fresh food, live music, artisan crafts.",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+market",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  horseback:  {n:"Horseback on the Beach",tip:"Several operators near Bucerías offer beach horseback rides at sunset — about $40 USD/hr.",addr:"Bucerías Beach, Nayarit",maps:"https://maps.google.com/?q=horseback+riding+Bucerias",photo:"https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=400&q=80"},
+  cookclassnv:{n:"Cooking Class",tip:"Book a class in Bucerías or Puerto Vallarta — most include a market tour and 3–4 dishes.",addr:"Bucerías or Puerto Vallarta",maps:"https://maps.google.com/?q=cooking+class+Bucerias",photo:"https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=400&q=80"},
+  nightnv:    {n:"Nightlife in Bucerías",tip:"Bucerías' malecón has great restaurants and live music bars — much more relaxed than PV.",addr:"Bucerías Malecón, Nayarit",maps:"https://maps.google.com/?q=nightlife+Bucerias+Nayarit",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
+  hiddenbeach:{n:"Visit Hidden Beach",tip:"El Anclote beach in Punta Mita is a stunning half-hidden cove — great snorkeling and calm water.",addr:"El Anclote, Punta Mita, Nayarit",maps:"https://maps.google.com/?q=El+Anclote+Punta+Mita",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  scubanv:    {n:"Scuba Diving",tip:"The Marietas Islands dive sites are world-class. Most dive shops are in La Cruz or Punta Mita.",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=scuba+diving+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+};
+
+// ============================================================
+// NUEVO VALLARTA — WEEKLY EVENTS
+// ============================================================
+const EVENTS_NV = {
+  lacruzmkt:  {n:"La Cruz Sunday Market",when:"Every Sunday, 9 AM–2 PM",tip:"The best Sunday market on the Riviera Nayarit — fresh food, live music, artisan goods.",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+market",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  bucartsun:  {n:"Bucerías Art Walk",when:"Every Sunday, 6–9 PM (Nov–Apr)",tip:"Stroll Bucerías' art galleries on Sunday evenings for free wine and local art.",addr:"Bucerías, Nayarit",maps:"https://maps.google.com/?q=art+walk+Bucerias",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
+  livemusicnv:{n:"Live Music at La Cruz",when:"Fri & Sat evenings",tip:"The marina restaurants in La Cruz have live music on weekends — great vibe and fresh seafood.",addr:"La Cruz Marina, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+marina",photo:"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80",isEvent:true},
+};
+
+// ============================================================
+// 5 WEEKLY CARDS — PUERTO VALLARTA (May–Jun 2026)
+// ============================================================
+const WEEKLY_CARDS_PV = [
+  // WEEK 1: May 1–7
+  [
+    EG_PV.malecon, EVENTS_PV.sundaymarket, EG_PV.losmuertos, EG_PV.snorkel, EG_PV.tacos,
+    EVENTS_PV.artnight, EG_PV.boattour, EVENTS_PV.livemusic, EG_PV.tequilatour, EG_PV.cathedral,
+    EG_PV.kayak, EG_PV.cooking, EG_PV.rooftopbar, EG_PV.marketday, EG_PV.zipline,
+    EVENTS_PV.salsa, EG_PV.oldtown, EG_PV.bikeride, EVENTS_PV.fireworks, EG_PV.stars,
+    EG_PV.mariachi, EG_PV.whalewatching, EG_PV.parasail, EG_PV.foodtour, EG_PV.scuba
+  ],
+  // WEEK 2: May 8–14
+  [
+    EVENTS_PV.sundaymarket, EG_PV.losmuertos, EG_PV.oldtown, EG_PV.whalewatching, EVENTS_PV.artnight,
+    EG_PV.tequilatour, EVENTS_PV.livemusic, EG_PV.snorkel, EG_PV.malecon, EG_PV.tacos,
+    EG_PV.surflesson, EG_PV.massage, EG_PV.cathedral, EG_PV.cooking, EG_PV.mariachi,
+    EVENTS_PV.salsa, EG_PV.kayak, EG_PV.hidingtowns, EVENTS_PV.fireworks, EG_PV.boattour,
+    EG_PV.rooftopbar, EG_PV.scuba, EG_PV.foodtour, EG_PV.bikeride, EG_PV.parasail
+  ],
+  // WEEK 3: May 15–21
+  [
+    EG_PV.hidingtowns, EVENTS_PV.artnight, EG_PV.losmuertos, EG_PV.zipline, EVENTS_PV.sundaymarket,
+    EG_PV.kayak, EVENTS_PV.salsa, EG_PV.snorkel, EVENTS_PV.livemusic, EG_PV.malecon,
+    EG_PV.whalewatching, EG_PV.tacos, EG_PV.oldtown, EG_PV.surflesson, EG_PV.mariachi,
+    EG_PV.cooking, EG_PV.bikeride, EVENTS_PV.fireworks, EG_PV.cathedral, EG_PV.scuba,
+    EG_PV.stars, EG_PV.marketday, EG_PV.massage, EG_PV.foodtour, EG_PV.nightlife
+  ],
+  // WEEK 4: May 22–28
+  [
+    EVENTS_PV.sundaymarket, EG_PV.malecon, EG_PV.surflesson, EG_PV.losmuertos, EVENTS_PV.artnight,
+    EG_PV.boattour, EVENTS_PV.salsa, EG_PV.cooking, EVENTS_PV.livemusic, EG_PV.kayak,
+    EG_PV.oldtown, EG_PV.stars, EG_PV.scuba, EG_PV.tequilatour, EG_PV.nightlife,
+    EG_PV.massage, EG_PV.parasail, EVENTS_PV.fireworks, EG_PV.hidingtowns, EG_PV.marketday,
+    EG_PV.cathedral, EG_PV.foodtour, EG_PV.tacos, EG_PV.bikeride, EG_PV.mariachi
+  ],
+  // WEEK 5: May 29–Jun 4
+  [
+    EG_PV.losmuertos, EVENTS_PV.artnight, EG_PV.zipline, EVENTS_PV.sundaymarket, EG_PV.malecon,
+    EG_PV.snorkel, EVENTS_PV.livemusic, EG_PV.stars, EVENTS_PV.salsa, EG_PV.hidingtowns,
+    EG_PV.boattour, EG_PV.cooking, EG_PV.nightlife, EG_PV.cathedral, EG_PV.tacos,
+    EG_PV.kayak, EVENTS_PV.fireworks, EG_PV.surflesson, EG_PV.mariachi, EG_PV.foodtour,
+    EG_PV.scuba, EG_PV.massage, EG_PV.parasail, EG_PV.bikeride, EG_PV.tequilatour
+  ]
+];
+
+// ============================================================
+// 5 WEEKLY CARDS — NUEVO VALLARTA (May–Jun 2026)
+// ============================================================
+const WEEKLY_CARDS_NV = [
+  // WEEK 1: May 1–7
+  [
+    EG_NV.beachclub, EVENTS_NV.lacruzmkt, EG_NV.puntamita, EG_NV.snorkelislas, EG_NV.tacosnv,
+    EVENTS_NV.livemusicnv, EG_NV.sunsetcruise, EVENTS_NV.bucartsun, EG_NV.fishing, EG_NV.marina,
+    EG_NV.kayaknv, EG_NV.cookclassnv, EG_NV.hiddenbeach, EG_NV.seafood, EG_NV.ziplinenv,
+    EG_NV.horseback, EG_NV.bucerias, EG_NV.bikenv, EG_NV.starsbeach, EG_NV.whalenv,
+    EG_NV.atv, EG_NV.sayulita, EG_NV.massagenv, EG_NV.scubanv, EG_NV.surf
+  ],
+  // WEEK 2: May 8–14
+  [
+    EVENTS_NV.lacruzmkt, EG_NV.beachclub, EG_NV.sayulita, EG_NV.whalenv, EVENTS_NV.livemusicnv,
+    EG_NV.fishing, EVENTS_NV.bucartsun, EG_NV.snorkelislas, EG_NV.marina, EG_NV.tacosnv,
+    EG_NV.surf, EG_NV.massagenv, EG_NV.puntamita, EG_NV.cookclassnv, EG_NV.horseback,
+    EG_NV.bucerias, EG_NV.kayaknv, EG_NV.hiddenbeach, EG_NV.sunsetcruise, EG_NV.seafood,
+    EG_NV.atv, EG_NV.scubanv, EG_NV.starsbeach, EG_NV.bikenv, EG_NV.nightnv
+  ],
+  // WEEK 3: May 15–21
+  [
+    EG_NV.sayulita, EVENTS_NV.livemusicnv, EG_NV.beachclub, EG_NV.ziplinenv, EVENTS_NV.lacruzmkt,
+    EG_NV.kayaknv, EG_NV.horseback, EG_NV.snorkelislas, EVENTS_NV.bucartsun, EG_NV.marina,
+    EG_NV.whalenv, EG_NV.tacosnv, EG_NV.puntamita, EG_NV.surf, EG_NV.atv,
+    EG_NV.cookclassnv, EG_NV.bikenv, EG_NV.sunsetcruise, EG_NV.hiddenbeach, EG_NV.scubanv,
+    EG_NV.starsbeach, EG_NV.seafood, EG_NV.massagenv, EG_NV.fishing, EG_NV.nightnv
+  ],
+  // WEEK 4: May 22–28
+  [
+    EVENTS_NV.lacruzmkt, EG_NV.marina, EG_NV.surf, EG_NV.beachclub, EVENTS_NV.livemusicnv,
+    EG_NV.sunsetcruise, EG_NV.horseback, EG_NV.cookclassnv, EVENTS_NV.bucartsun, EG_NV.kayaknv,
+    EG_NV.bucerias, EG_NV.starsbeach, EG_NV.scubanv, EG_NV.fishing, EG_NV.nightnv,
+    EG_NV.massagenv, EG_NV.hiddenbeach, EG_NV.sayulita, EG_NV.puntamita, EG_NV.seafood,
+    EG_NV.snorkelislas, EG_NV.atv, EG_NV.tacosnv, EG_NV.bikenv, EG_NV.whalenv
+  ],
+  // WEEK 5: May 29–Jun 4
+  [
+    EG_NV.beachclub, EVENTS_NV.livemusicnv, EG_NV.ziplinenv, EVENTS_NV.lacruzmkt, EG_NV.marina,
+    EG_NV.snorkelislas, EVENTS_NV.bucartsun, EG_NV.starsbeach, EG_NV.horseback, EG_NV.sayulita,
+    EG_NV.sunsetcruise, EG_NV.cookclassnv, EG_NV.nightnv, EG_NV.puntamita, EG_NV.tacosnv,
+    EG_NV.kayaknv, EG_NV.hiddenbeach, EG_NV.surf, EG_NV.atv, EG_NV.fishing,
+    EG_NV.scubanv, EG_NV.massagenv, EG_NV.bikenv, EG_NV.bucerias, EG_NV.seafood
+  ]
+];
+
+// ============================================================
+// WEEK CARD LOOKUP — date-based
+// ============================================================
+function getWeekCard(checkInStr, region) {
+  const d = new Date(checkInStr + 'T12:00:00');
   const cards = region === 'nuevo_vallarta' ? WEEKLY_CARDS_NV : WEEKLY_CARDS_PV;
-  const date = new Date(d + 'T12:00:00');
-  const day = date.getDate();
-  const idx = Math.min(Math.floor((day-1)/7), 4);
-  return {acts: (cards[idx]||[]).slice(), label: 'Week '+(idx+1)};
+  const bounds = [
+    {start: new Date('2026-04-27'), end: new Date('2026-05-03'), label: 'May Week 1', idx: 0},
+    {start: new Date('2026-05-04'), end: new Date('2026-05-10'), label: 'May Week 2', idx: 1},
+    {start: new Date('2026-05-11'), end: new Date('2026-05-17'), label: 'May Week 3', idx: 2},
+    {start: new Date('2026-05-18'), end: new Date('2026-05-24'), label: 'May Week 4', idx: 3},
+    {start: new Date('2026-05-25'), end: new Date('2026-06-07'), label: 'May Week 5', idx: 4},
+  ];
+  for (const w of bounds) {
+    if (d >= w.start && d <= w.end) return {acts: cards[w.idx].slice(), label: w.label};
+  }
+  // Fallback by day of month
+  const day = d.getDate();
+  const idx = Math.min(Math.floor((day - 1) / 7), 4);
+  return {acts: cards[idx].slice(), label: 'Week ' + (idx + 1)};
 }
 
-let calMonth = new Date(); calMonth.setDate(1);
-let selectedCheckIn = null;
-function navMonth(dir){ calMonth.setMonth(calMonth.getMonth()+dir); initCal(); }
-function initCal(){
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('cal-month').textContent = months[calMonth.getMonth()]+' '+calMonth.getFullYear();
+// ============================================================
+// CALENDAR
+// ============================================================
+let calYear, calMonth2, selectedCheckIn = null;
+function navMonth(dir) {
+  calMonth2 += dir;
+  if(calMonth2 < 0){calMonth2=11; calYear--;}
+  if(calMonth2 > 11){calMonth2=0; calYear++;}
+  renderCal();
+}
+function initCal() {
+  const now = new Date(); calYear = now.getFullYear(); calMonth2 = now.getMonth();
+  renderCal();
+}
+function renderCal() {
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month').textContent = months[calMonth2]+' '+calYear;
   const grid = document.getElementById('cal-grid'); grid.innerHTML = '';
-  ['S','M','T','W','T','F','S'].forEach(d => { const e = document.createElement('div'); e.className='cal-day-name'; e.textContent=d; grid.appendChild(e); });
-  const first = new Date(calMonth.getFullYear(),calMonth.getMonth(),1).getDay();
-  const days = new Date(calMonth.getFullYear(),calMonth.getMonth()+1,0).getDate();
-  for(let i=0;i<first;i++){ const e=document.createElement('div'); e.className='cal-day empty'; grid.appendChild(e); }
-  for(let d=1;d<=days;d++){
+  ['S','M','T','W','T','F','S'].forEach(d => {
+    const e = document.createElement('div'); e.className='cal-day-name'; e.textContent=d; grid.appendChild(e);
+  });
+  const firstDay = new Date(calYear, calMonth2, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth2+1, 0).getDate();
+  for(let i=0; i<firstDay; i++){
+    const e=document.createElement('div'); e.className='cal-day empty'; grid.appendChild(e);
+  }
+  for(let d=1; d<=daysInMonth; d++){
     const e = document.createElement('div'); e.className='cal-day'; e.textContent=d;
-    const dStr = calMonth.getFullYear()+'-'+String(calMonth.getMonth()+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-    e.onclick = () => selectDate(dStr,e);
+    const dStr = calYear+'-'+String(calMonth2+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
     if(selectedCheckIn===dStr) e.classList.add('selected');
+    e.onclick = () => selectDate(dStr, d, e);
     grid.appendChild(e);
   }
 }
-function selectDate(dStr,el){
+function selectDate(dStr, day, el) {
   selectedCheckIn = dStr;
   document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
   el.classList.add('selected');
+  const region = document.getElementById('region-select').value;
+  const {label} = getWeekCard(dStr, region);
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const d = new Date(dStr+'T12:00:00');
-  document.getElementById('stay-display').textContent = 'Checking in '+d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+  document.getElementById('stay-display').innerHTML =
+    'Check-in: <strong>'+months[d.getMonth()]+' '+day+', '+d.getFullYear()+'</strong><br><span class="week-badge">You\'ll get the '+label+' Card!</span>';
 }
+
+// ============================================================
+// GAME STATE
+// ============================================================
+let ACTS=[], weekLabel='', done=new Array(25).fill(false);
+let photos=new Array(25).fill(null), photoPaths=new Array(25).fill(null);
+let currentCell=null, currentFile=null, guestCheckIn=null, guestRegion=null;
+
 window.onload = function(){
   initCal();
   try {
     if(!sessionStorage.getItem('naya_pv_logged')){
-      sb.from('bingo_page_views').insert({user_agent: navigator.userAgent}).then(()=>sessionStorage.setItem('naya_pv_logged','1')).catch(e=>{});
+      sb.from('bingo_page_views').insert({user_agent: navigator.userAgent})
+        .then(()=>sessionStorage.setItem('naya_pv_logged','1')).catch(()=>{});
     }
-  } catch(e) {}
+  } catch(e){}
 };
-
-let ACTS=[], weekLabel='', done=new Array(25).fill(false), photos=new Array(25).fill(null), photoPaths=new Array(25).fill(null);
-let currentCell=null, currentFile=null, guestCheckIn=null, guestRegion=null;
 
 async function startGame(){
   const errEl = document.getElementById('login-error'); errEl.classList.remove('show');
-  if(!selectedCheckIn){ errEl.textContent='Please select your check-in date'; errEl.classList.add('show'); return; }
+  if(!selectedCheckIn){ errEl.textContent='Please select your check-in date.'; errEl.classList.add('show'); return; }
   guestCheckIn = selectedCheckIn;
   guestRegion = document.getElementById('region-select').value;
-  try { sb.from('bingo_logins').insert({check_in_date:selectedCheckIn,region:guestRegion,user_agent:navigator.userAgent}).then(()=>{}).catch(e=>{}); } catch(e){}
-  const {acts,label} = getWeekCard(selectedCheckIn,guestRegion);
-  if(!acts || acts.length===0){ errEl.textContent='No bingo card available yet for this date.'; errEl.classList.add('show'); return; }
-  ACTS=acts; weekLabel=label;
-  done=new Array(25).fill(false); photos=new Array(25).fill(null); photoPaths=new Array(25).fill(null);
+
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Loading your card...';
+
+  try {
+    sb.from('bingo_logins').insert({check_in_date:selectedCheckIn, region:guestRegion, user_agent:navigator.userAgent}).then(()=>{}).catch(()=>{});
+  } catch(e){}
+
+  const {acts, label} = getWeekCard(selectedCheckIn, guestRegion);
+  ACTS = acts; weekLabel = label;
+  done = new Array(25).fill(false);
+  photos = new Array(25).fill(null);
+  photoPaths = new Array(25).fill(null);
+
+  // Restore from localStorage
   const localKey = 'naya_'+guestRegion+'_'+selectedCheckIn;
   const saved = localStorage.getItem(localKey);
-  if(saved){ try { const p = JSON.parse(saved); if(p.done) p.done.forEach((v,i)=>{if(v)done[i]=true;}); if(p.photos) p.photos.forEach((v,i)=>{if(v)photos[i]=v;}); } catch(e){} }
-  document.getElementById('login-screen').style.display='none';
-  document.getElementById('game-screen').style.display='block';
+  if(saved){
+    try {
+      const p = JSON.parse(saved);
+      if(p.done) p.done.forEach((v,i)=>{if(v)done[i]=true;});
+      if(p.photos) p.photos.forEach((v,i)=>{if(v)photos[i]=v;});
+    } catch(e){}
+  }
+
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('game-screen').style.display = 'block';
   document.getElementById('week-label').textContent = label+' Card';
+  btn.disabled = false; btn.innerHTML = 'Get My Bingo Card →';
   renderCard();
 }
-function saveLocal(){ if(!guestCheckIn||!guestRegion) return; localStorage.setItem('naya_'+guestRegion+'_'+guestCheckIn, JSON.stringify({done,photos})); }
+
+function saveLocal(){
+  if(!guestCheckIn||!guestRegion) return;
+  try {
+    localStorage.setItem('naya_'+guestRegion+'_'+guestCheckIn, JSON.stringify({done, photos}));
+  } catch(e){}
+}
 
 function renderCard(){
-  const grid = document.getElementById('bingo-grid'); grid.innerHTML='';
-  ACTS.forEach((a,i) => {
-    if(!a) return;
+  const grid = document.getElementById('bingo-grid'); grid.innerHTML = '';
+  ACTS.forEach((a, i) => {
+    if(!a) a = {n:'Activity'};
     const c = document.createElement('div');
-    const hasPhoto = photos[i]!==null;
-    c.className = 'cell'+(a.isEvent?' event-cell':'')+(hasPhoto?' has-photo':'');
-    if(a.photo){ const bg=document.createElement('div'); bg.className='cell-bg'; bg.style.backgroundImage='url('+a.photo+')'; c.appendChild(bg); }
+    c.className = 'cell'+(a.isEvent?' event-cell':'');
+    if(a.photo){
+      const bg = document.createElement('div'); bg.className='cell-bg';
+      bg.style.backgroundImage = 'url('+a.photo+')'; c.appendChild(bg);
+    }
+    // Show guest photo on top if uploaded
+    if(photos[i]){
+      const pb = document.createElement('div'); pb.className='cell-photo-bg';
+      pb.style.backgroundImage = 'url('+photos[i]+')'; c.appendChild(pb);
+      c.classList.add('has-photo');
+    }
     const ov = document.createElement('div'); ov.className='cell-overlay'; c.appendChild(ov);
-    if(hasPhoto){ const ph=document.createElement('div'); ph.style.cssText='position:absolute;inset:0;background-size:cover;background-position:center;background-image:url('+photos[i]+');z-index:1'; c.appendChild(ph); }
     if(a.isEvent){ const t=document.createElement('div'); t.className='event-tag'; t.textContent='EVENT'; c.appendChild(t); }
+    const chk = document.createElement('div'); chk.className='check-badge';
+    chk.innerHTML='<svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>'; c.appendChild(chk);
     const n = document.createElement('div'); n.className='cell-name'; n.textContent=a.n; c.appendChild(n);
     c.onclick = () => openModal(i);
     if(done[i]) c.classList.add('done');
@@ -357,18 +607,20 @@ function renderCard(){
   });
   updateProgress();
 }
+
 function getLines(){
-  const lines = [];
-  for(let r=0;r<5;r++){ const row=[r*5,r*5+1,r*5+2,r*5+3,r*5+4]; if(row.every(i=>done[i])) lines.push(row); }
-  for(let c=0;c<5;c++){ const col=[c,c+5,c+10,c+15,c+20]; if(col.every(i=>done[i])) lines.push(col); }
-  const d1=[0,6,12,18,24]; if(d1.every(i=>done[i])) lines.push(d1);
-  const d2=[4,8,12,16,20]; if(d2.every(i=>done[i])) lines.push(d2);
+  const lines=[];
+  for(let r=0;r<5;r++){const row=[r*5,r*5+1,r*5+2,r*5+3,r*5+4];if(row.every(i=>done[i]))lines.push(row);}
+  for(let c=0;c<5;c++){const col=[c,c+5,c+10,c+15,c+20];if(col.every(i=>done[i]))lines.push(col);}
+  if([0,6,12,18,24].every(i=>done[i]))lines.push([0,6,12,18,24]);
+  if([4,8,12,16,20].every(i=>done[i]))lines.push([4,8,12,16,20]);
   return lines;
 }
+
 function updateProgress(){
   const lines = getLines();
-  const inLine = new Set(); lines.forEach(l => l.forEach(i => inLine.add(i)));
-  document.querySelectorAll('.cell').forEach((c,i) => {
+  const inLine = new Set(); lines.forEach(l=>l.forEach(i=>inLine.add(i)));
+  document.querySelectorAll('.cell').forEach((c,i)=>{
     c.classList.remove('line','done');
     if(done[i]&&inLine.has(i)) c.classList.add('line');
     else if(done[i]) c.classList.add('done');
@@ -382,80 +634,103 @@ function updateProgress(){
 
 function openModal(i){
   currentCell=i; currentFile=null;
-  const a = ACTS[i]; if(!a) return;
+  const a=ACTS[i]; if(!a) return;
   document.getElementById('m-event-tag').style.display = a.isEvent?'inline-block':'none';
-  const body = document.querySelector('#modal-overlay .modal-body');
-  if(body) body.style.backgroundImage = a.photo ? "url('"+a.photo+"')" : '';
+  const body = document.getElementById('modal-body');
+  body.style.backgroundImage = a.photo ? "url('"+a.photo+"')" : '';
   document.getElementById('m-title').textContent = a.n;
-  const w = document.getElementById('m-when');
-  if(a.when){ w.textContent=a.when; w.style.display='block'; } else { w.style.display='none'; }
-  document.getElementById('m-desc').textContent = 'Click link below for more information about this event or activity. To play this Bingo Spot, take a photo of you doing the event and upload and mark complete. This will mark your Bingo card as checked.';
+  document.getElementById('m-sub').textContent = (a.when?a.when+' · ':'')+(a.addr||'Banderas Bay');
   let html='';
-  if(a.when) html += '📅 <b>When:</b> '+a.when+'<br>';
-  if(a.tip) html += '💡 <b>Tip:</b> '+a.tip+'<br>';
-  if(a.phone) html += '📞 <b>Info:</b> <a href="tel:'+a.phone+'">'+a.phone+'</a><br>';
-  if(a.addr) html += '📍 <b>Address:</b> <a href="'+(a.maps||'#')+'" target="_blank">'+a.addr+'</a><br>';
-  if(a.maps) html += '🗺️ <a href="'+a.maps+'" target="_blank">Get Directions →</a>';
+  if(a.when) html+='📅 <b>When:</b> '+a.when+'<br>';
+  if(a.tip) html+='💡 <b>Tip:</b> '+a.tip+'<br>';
+  if(a.phone) html+='📞 <b>Info:</b> <a href="tel:'+a.phone+'">'+a.phone+'</a><br>';
+  if(a.addr) html+='📍 <b>Address:</b> <a href="'+(a.maps||'#')+'" target="_blank">'+a.addr+'</a><br>';
+  if(a.maps) html+='🗺️ <a href="'+a.maps+'" target="_blank">Get Directions →</a>';
   document.getElementById('m-details').innerHTML = html;
-  const infoUrl = a.link || a.maps;
   const il = document.getElementById('m-info-link');
+  const infoUrl = a.link||a.maps;
   if(infoUrl){ il.href=infoUrl; il.style.display='block'; } else { il.style.display='none'; }
-  document.getElementById('btn-done').disabled = !done[i];
   document.getElementById('preview-wrap').classList.remove('show');
-  if(photos[i]){ document.getElementById('preview-img').src=photos[i]; document.getElementById('preview-wrap').classList.add('show'); document.getElementById('btn-done').disabled=false; }
+  document.getElementById('preview-img').src='';
+  document.getElementById('finput').value='';
+  document.getElementById('btn-done').disabled = !done[i];
+  if(photos[i]){
+    document.getElementById('preview-img').src=photos[i];
+    document.getElementById('preview-wrap').classList.add('show');
+    document.getElementById('btn-done').disabled=false;
+  }
   document.getElementById('modal-overlay').classList.add('open');
 }
 function handleFile(e){
-  const f = e.target.files[0]; if(!f) return;
-  currentFile = f;
-  const r = new FileReader();
-  r.onload = ev => { document.getElementById('preview-img').src=ev.target.result; document.getElementById('preview-wrap').classList.add('show'); document.getElementById('btn-done').disabled=false; };
+  const f=e.target.files[0]; if(!f) return;
+  currentFile=f;
+  const r=new FileReader();
+  r.onload=ev=>{
+    document.getElementById('preview-img').src=ev.target.result;
+    document.getElementById('preview-wrap').classList.add('show');
+    document.getElementById('btn-done').disabled=false;
+  };
   r.readAsDataURL(f);
 }
 function markDone(){
   if(currentCell===null) return;
-  done[currentCell] = true;
+  done[currentCell]=true;
   if(currentFile){
-    const r = new FileReader();
-    r.onload = ev => { photos[currentCell]=ev.target.result; saveLocal(); renderCard(); };
+    const r=new FileReader();
+    r.onload=ev=>{ photos[currentCell]=ev.target.result; saveLocal(); renderCard(); };
     r.readAsDataURL(currentFile);
   } else { saveLocal(); renderCard(); }
   closeModal();
-  showSaved('Activity completed!');
+  showToast('✓ Activity completed!');
 }
 function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); currentCell=null; currentFile=null; }
 function openRules(){ document.getElementById('rules-overlay').classList.add('open'); }
 function closeRules(){ document.getElementById('rules-overlay').classList.remove('open'); }
-
 function openClaimModal(){ if(!getLines().length) return; document.getElementById('claim-overlay').classList.add('open'); }
 function closeClaim(){ document.getElementById('claim-overlay').classList.remove('open'); }
+
 function generateNayaToken(){
-  const w1 = ['PALM','OCEAN','MARINA','MALECON','SAND','SUN','BAHIA','BANDERAS'];
-  const w2 = ['SUNSET','BEACH','WAVE','TROPIC','BREEZE','PARADISE','RIVIERA','NAYARIT'];
-  const a = w1[Math.floor(Math.random()*w1.length)], b = w2[Math.floor(Math.random()*w2.length)];
+  const w1=['PALM','OCEAN','MARINA','MALECON','SAND','SUN','BAHIA','BANDERAS'];
+  const w2=['SUNSET','BEACH','WAVE','TROPIC','BREEZE','PARADISE','RIVIERA','NAYARIT'];
+  const a=w1[Math.floor(Math.random()*w1.length)], b=w2[Math.floor(Math.random()*w2.length)];
   if(a===b) return generateNayaToken();
   return a+'-'+b+'-'+String(Math.floor(Math.random()*900)+100);
 }
+
 async function submitClaim(){
-  const first = document.getElementById('claim-first').value.trim();
-  const last = document.getElementById('claim-last').value.trim();
-  const res = document.getElementById('claim-res').value.trim();
-  if(!first||!last||!res){ alert('Please fill in all fields'); return; }
-  const token = generateNayaToken();
-  document.getElementById('naya-token').textContent = token;
+  const first=document.getElementById('claim-first').value.trim();
+  const last=document.getElementById('claim-last').value.trim();
+  const res=document.getElementById('claim-res').value.trim();
+  const errEl=document.getElementById('claim-error'); errEl.style.display='none';
+  if(!first||!last){ errEl.textContent='Please enter your first and last name.'; errEl.style.display='block'; return; }
+  if(!res){ errEl.textContent='Please enter your reservation number.'; errEl.style.display='block'; return; }
+
+  const btn=document.getElementById('claim-submit-btn');
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Saving...';
+
+  const token=generateNayaToken();
+  document.getElementById('naya-token').textContent=token;
+
   try {
-    const { data: existing } = await sb.from('bingo_players').select('id').eq('reservation_number',res).maybeSingle();
+    const normRes=(res||'').trim().toLowerCase();
+    const {data:existing}=await sb.from('bingo_players').select('id').eq('reservation_number',normRes).maybeSingle();
     if(existing){
-      await sb.from('bingo_players').update({first_name:first,last_name:last,completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photoPaths.filter(p=>p!==null).length,bear_token:token,region:guestRegion}).eq('id',existing.id);
+      await sb.from('bingo_players').update({first_name:first,last_name:last,completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photos.filter(p=>p!==null).length,bear_token:token,region:guestRegion}).eq('id',existing.id);
     } else {
-      await sb.from('bingo_players').insert({first_name:first,last_name:last,reservation_number:res,check_in_date:guestCheckIn,started_at:new Date().toISOString(),completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photoPaths.filter(p=>p!==null).length,bear_token:token,region:guestRegion});
+      await sb.from('bingo_players').insert({first_name:first,last_name:last,reservation_number:normRes,check_in_date:guestCheckIn,started_at:new Date().toISOString(),completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photos.filter(p=>p!==null).length,bear_token:token,region:guestRegion});
     }
-  } catch(e){ console.error(e); }
+  } catch(e){ console.error('Claim error:',e); }
+
+  try { localStorage.removeItem('naya_'+guestRegion+'_'+guestCheckIn); } catch(e){}
   closeClaim();
   document.getElementById('game-screen').style.display='none';
   document.getElementById('congrats-screen').style.display='block';
 }
-function showSaved(msg){ const t=document.getElementById('saved-toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2000); }
+
+function showToast(msg){ const t=document.getElementById('saved-toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
+
+// Auto-save every 3 minutes
+setInterval(()=>{ if(selectedCheckIn) saveLocal(); }, 3*60*1000);
 </script>
 </body>
 </html>
