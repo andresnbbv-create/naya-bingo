@@ -12,12 +12,30 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--moss:#415134;--sand:#F8F5EF;--stone:#EDEAE3;--sunshine:#FAE1A1;--sunrise:#EAB88B;--sunset:#F9A28F;--terracotta:#C75147;--ocean:#CADDD3;--moss-dark:#2f3d24;--text:#2a3424}
 body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--sand);min-height:100vh;color:var(--text)}
-h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
+h1,h2,h3{font-family:'Urbanist',sans-serif;font-weight:700}
+
+/* LANGUAGE PICKER SCREEN */
+#lang-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:linear-gradient(180deg,var(--sand) 0%,var(--stone) 100%)}
+.lang-card{background:#fff;border-radius:24px;padding:2.5rem 2rem;max-width:380px;width:100%;box-shadow:0 8px 32px rgba(65,81,52,0.15);text-align:center}
+.lang-card h2{font-size:20px;color:var(--moss);margin-bottom:.5rem}
+.lang-card p{font-size:13px;color:#6a7561;margin-bottom:2rem}
+.lang-btns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lang-btn{padding:1.25rem 1rem;border-radius:16px;border:2.5px solid var(--stone);background:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.lang-btn:hover{border-color:var(--moss);background:var(--stone)}
+.lang-btn .flag{font-size:36px;display:block;margin-bottom:8px}
+.lang-btn .lang-name{font-size:16px;font-weight:700;color:var(--moss);font-family:'Urbanist',sans-serif}
+.lang-btn .lang-sub{font-size:11px;color:#6a7561;margin-top:2px}
+
+/* LANGUAGE TOGGLE (in game) */
+.lang-toggle{position:fixed;top:12px;right:12px;z-index:100;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;backdrop-filter:blur(4px)}
+.lang-toggle:hover{background:rgba(255,255,255,0.25)}
+
+/* LOGIN */
 .top-bar{background:var(--moss);padding:1rem 1.25rem;position:sticky;top:0;z-index:50;text-align:center}
 .top-bar .logo{display:flex;align-items:center;justify-content:center;gap:8px}
 .week-tag{display:inline-block;background:rgba(202,221,211,0.2);border:1px solid var(--ocean);color:var(--sand);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-top:6px}
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:linear-gradient(180deg,var(--sand) 0%,var(--stone) 100%)}
-.login-card{background:#fff;border-radius:24px;padding:2rem 1.75rem;max-width:420px;width:100%;box-shadow:0 8px 32px rgba(65,81,52,0.15)}
+.login-card{background:#fff;border-radius:24px;padding:2rem 1.75rem;max-width:420px;width:100%;box-shadow:0 8px 32px rgba(65,81,52,0.15);position:relative}
 .login-card h1{font-size:26px;color:var(--moss);text-align:center;margin-bottom:6px;font-weight:800}
 .subtitle{font-size:13px;color:#6a7561;text-align:center;margin-bottom:1.5rem}
 .login-logo{text-align:center;margin-bottom:1rem}
@@ -43,6 +61,9 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
 .login-error{font-size:13px;color:var(--terracotta);margin-top:.75rem;text-align:center;display:none}
 .login-error.show{display:block}
 .login-note{font-size:12px;color:#6a7561;text-align:center;margin-top:1rem;font-style:italic}
+.change-lang-link{font-size:12px;color:#6a7561;text-align:center;margin-top:.75rem;cursor:pointer;text-decoration:underline}
+
+/* GAME */
 #game-screen{display:none;min-height:100vh;padding-bottom:2rem}
 .progress-row{padding:1rem 1.25rem;display:flex;align-items:center;gap:12px}
 .progress-bar{flex:1;height:8px;background:var(--stone);border-radius:4px;overflow:hidden}
@@ -70,6 +91,8 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
 .event-tag{position:absolute;top:4px;left:4px;background:var(--terracotta);color:#fff;font-size:8px;font-weight:700;padding:2px 6px;border-radius:6px;z-index:3;letter-spacing:0.5px}
 .claim-cta{margin:1.5rem 1rem 0;padding:14px;background:#ddd;color:#999;border:none;border-radius:14px;font-size:15px;font-weight:700;width:calc(100% - 2rem);max-width:520px;display:block;margin-left:auto;margin-right:auto;cursor:not-allowed;font-family:'DM Sans',sans-serif}
 .claim-cta.on{background:linear-gradient(135deg,var(--terracotta),var(--sunset));color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(199,81,71,0.3)}
+
+/* MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(65,81,52,.85);z-index:200;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.open{display:flex}
 .modal{background:#fff;border-radius:20px;max-width:440px;width:100%;max-height:92vh;overflow-y:auto}
@@ -94,6 +117,8 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
 .btn-cancel{flex:1;padding:11px;background:#f0f0f0;color:#666;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
 .btn-done{flex:1;padding:11px;background:var(--moss);border:none;color:#fff;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif}
 .btn-done:disabled{opacity:.35;cursor:default}
+
+/* CONGRATS */
 #congrats-screen{display:none;min-height:100vh;background:linear-gradient(135deg,var(--moss) 0%,var(--moss-dark) 100%);padding:2rem 1.25rem;text-align:center;color:var(--sand)}
 .congrats-content{max-width:420px;margin:0 auto;padding-top:2rem}
 .congrats-content h1{font-size:32px;color:var(--sand);margin-bottom:.5rem;font-weight:800}
@@ -110,7 +135,35 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
 </head>
 <body>
 
-<div id="login-screen">
+<!-- LANGUAGE PICKER -->
+<div id="lang-screen">
+  <div class="lang-card">
+    <div style="margin-bottom:1.25rem">
+      <svg width="140" height="60" viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 30 95 L 30 35 Q 32 22 48 30 L 72 70 L 72 35 Q 74 22 90 30 L 90 95" stroke="#415134" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="105" y="68" font-family="Urbanist, sans-serif" font-weight="700" font-size="44" fill="#415134" letter-spacing="-1">aya</text>
+        <text x="105" y="98" font-family="Urbanist, sans-serif" font-weight="500" font-size="18" fill="#415134" letter-spacing="2">HOMES</text>
+      </svg>
+    </div>
+    <h2>Naya Homes Bingo</h2>
+    <p>Choose your language / Elige tu idioma</p>
+    <div class="lang-btns">
+      <button class="lang-btn" onclick="setLang('en')">
+        <span class="flag">🇺🇸</span>
+        <div class="lang-name">English</div>
+        <div class="lang-sub">Continue in English</div>
+      </button>
+      <button class="lang-btn" onclick="setLang('es')">
+        <span class="flag">🇲🇽</span>
+        <div class="lang-name">Español</div>
+        <div class="lang-sub">Continuar en español</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen" style="display:none">
   <div class="login-card">
     <div class="login-logo">
       <svg width="160" height="70" viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg">
@@ -119,17 +172,17 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
         <text x="105" y="98" font-family="Urbanist, sans-serif" font-weight="500" font-size="18" fill="#415134" letter-spacing="2">HOMES</text>
       </svg>
     </div>
-    <h1>Naya Homes Bingo</h1>
-    <p class="subtitle">Discover Banderas Bay — 5 in a row wins a gift! 🎁</p>
+    <h1 id="login-title">Naya Homes Bingo</h1>
+    <p class="subtitle" id="login-subtitle">Discover Banderas Bay — 5 in a row wins a gift! 🎁</p>
     <div class="field">
-      <label>Region</label>
+      <label id="label-region">Region</label>
       <select id="region-select">
         <option value="puerto_vallarta">Puerto Vallarta, Jalisco</option>
         <option value="nuevo_vallarta">Nuevo Vallarta, Nayarit</option>
       </select>
     </div>
     <div class="field">
-      <label>When did you check in?</label>
+      <label id="label-checkin">When did you check in?</label>
       <div class="calendar">
         <div class="cal-header">
           <button class="cal-nav" onclick="navMonth(-1)">‹</button>
@@ -137,32 +190,35 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
           <button class="cal-nav" onclick="navMonth(1)">›</button>
         </div>
         <div class="cal-grid" id="cal-grid"></div>
-        <div class="stay-display" id="stay-display">Tap your check-in date above</div>
+        <div class="stay-display" id="stay-display"></div>
       </div>
     </div>
-    <button class="login-btn" id="login-btn" onclick="startGame()">Get My Bingo Card →</button>
+    <button class="login-btn" id="login-btn" onclick="startGame()"></button>
     <div class="login-error" id="login-error"></div>
-    <p class="login-note">Your card is personalized to your stay week!</p>
+    <p class="login-note" id="login-note"></p>
     <div style="text-align:center;margin-top:1rem">
-      <a href="#" onclick="openRules();return false;" class="rules-btn">📖 Rules of Play</a>
+      <a href="#" onclick="openRules();return false;" class="rules-btn" id="rules-btn-text">📖 Rules of Play</a>
     </div>
     <div style="text-align:center;margin-top:1rem">
-      <a href="/admin" class="admin-link">Admin Login</a>
+      <a href="/admin" class="admin-link" id="admin-link-text">Admin Login</a>
     </div>
+    <p class="change-lang-link" onclick="backToLang()" id="change-lang-link">🌐 Change language / Cambiar idioma</p>
   </div>
 </div>
 
+<!-- GAME SCREEN -->
 <div id="game-screen">
-  <div class="top-bar">
+  <div class="top-bar" style="position:relative">
+    <button class="lang-toggle" onclick="switchLang()" id="lang-toggle-btn">🌐 ES</button>
     <div class="logo">
       <svg width="32" height="32" viewBox="0 0 120 120"><path d="M 30 95 L 30 35 Q 32 22 48 30 L 72 70 L 72 35 Q 74 22 90 30 L 90 95" stroke="#F8F5EF" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span style="font-family:'Urbanist',sans-serif;font-weight:700;color:var(--sand);font-size:16px">Naya Homes Bingo</span>
     </div>
-    <div class="week-tag" id="week-label">— Week —</div>
+    <div class="week-tag" id="week-label">—</div>
   </div>
   <div class="progress-row">
     <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
-    <span class="prog-label" id="plabel">0 / 25 done</span>
+    <span class="prog-label" id="plabel">0 / 25</span>
   </div>
   <div class="bingo-badge" id="badge"></div>
   <div class="card-wrap">
@@ -171,9 +227,10 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
     </div>
     <div class="bingo-grid" id="bingo-grid"></div>
   </div>
-  <button class="claim-cta" id="ctabtn" onclick="openClaimModal()">🎁 Claim My Gift</button>
+  <button class="claim-cta" id="ctabtn" onclick="openClaimModal()"></button>
 </div>
 
+<!-- ACTIVITY MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="modal-hero">
@@ -185,82 +242,68 @@ h1,h2,h3,.brand-font{font-family:'Urbanist',sans-serif;font-weight:700}
       <button class="modal-close" onclick="closeModal()">×</button>
     </div>
     <div class="modal-body" id="modal-body">
-      <p class="modal-desc">Click the link below for more info. Take a photo doing the activity, upload it, and mark complete to check this spot!</p>
+      <p class="modal-desc" id="modal-desc-text"></p>
       <div class="modal-details" id="m-details"></div>
-      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem">More Info →</a>
-      <span class="upload-label">Upload your photo to complete:</span>
-      <label class="upload-area">📷 Tap to upload from camera roll<input type="file" accept="image/*" id="finput" onchange="handleFile(event)"></label>
+      <a id="m-info-link" href="#" target="_blank" style="display:none;background:var(--terracotta);color:#fff;text-align:center;padding:10px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:1rem"></a>
+      <span class="upload-label" id="upload-label-text"></span>
+      <label class="upload-area" id="upload-area-label">
+        <span id="upload-area-text"></span>
+        <input type="file" accept="image/*" id="finput" onchange="handleFile(event)">
+      </label>
       <div class="preview-wrap" id="preview-wrap"><img id="preview-img"></div>
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-done" id="btn-done" onclick="markDone()" disabled>Mark Complete ✓</button>
+        <button class="btn-cancel" id="btn-cancel" onclick="closeModal()"></button>
+        <button class="btn-done" id="btn-done" onclick="markDone()" disabled></button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- CLAIM MODAL -->
 <div class="modal-overlay" id="claim-overlay">
   <div class="modal">
     <div class="modal-hero">
-      <div style="flex:1"><h2>🎁 Almost there!</h2><p>Enter your details to claim your gift</p></div>
+      <div style="flex:1"><h2 id="claim-title">🎁 Almost there!</h2><p id="claim-subtitle">Enter your details to claim your gift</p></div>
     </div>
     <div class="modal-body">
-      <p class="modal-desc">We just need a few details to send your thank-you gift!</p>
-      <div class="field"><label>First Name</label><input type="text" id="claim-first"></div>
-      <div class="field"><label>Last Name</label><input type="text" id="claim-last"></div>
-      <div class="field"><label>Reservation Number</label><input type="text" id="claim-res"></div>
+      <p class="modal-desc" id="claim-desc"></p>
+      <div class="field"><label id="label-firstname">First Name</label><input type="text" id="claim-first"></div>
+      <div class="field"><label id="label-lastname">Last Name</label><input type="text" id="claim-last"></div>
+      <div class="field"><label id="label-resnum">Reservation Number</label><input type="text" id="claim-res"></div>
       <p id="claim-error" style="font-size:12px;color:var(--terracotta);display:none;margin-bottom:.75rem"></p>
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeClaim()">Cancel</button>
-        <button class="btn-done" id="claim-submit-btn" onclick="submitClaim()">Claim My Gift 🎁</button>
+        <button class="btn-cancel" id="claim-cancel-btn" onclick="closeClaim()"></button>
+        <button class="btn-done" id="claim-submit-btn" onclick="submitClaim()"></button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- RULES MODAL -->
 <div class="modal-overlay" id="rules-overlay" style="z-index:400">
   <div class="modal" style="max-width:520px">
     <div style="background:linear-gradient(135deg,var(--moss) 0%,var(--moss-dark) 100%);padding:1.75rem 1.5rem;text-align:center;position:relative">
       <button onclick="closeRules()" style="position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;font-weight:700">×</button>
       <div style="font-size:32px;margin-bottom:6px">🌴</div>
       <h2 style="color:var(--sand);font-size:22px;font-family:'Urbanist',sans-serif">Naya Homes Bingo</h2>
-      <p style="color:var(--ocean);font-size:13px;font-weight:600;margin-top:6px;letter-spacing:0.5px">OFFICIAL RULES OF PLAY</p>
+      <p style="color:var(--ocean);font-size:13px;font-weight:600;margin-top:6px;letter-spacing:0.5px" id="rules-header-sub"></p>
     </div>
-    <div style="padding:1.5rem;color:var(--text);font-size:14px;line-height:1.6">
-      <div style="background:linear-gradient(135deg,var(--moss),var(--moss-dark));padding:14px 16px;border-radius:12px;margin-bottom:1.25rem;color:var(--sand)">
-        <div style="font-weight:700;font-size:15px;margin-bottom:4px;font-family:'Urbanist',sans-serif">🎯 The Goal</div>
-        <div style="font-size:13px">Complete <b>5 activities in a row</b> — horizontally, vertically, or diagonally — to earn a special thank-you gift from Naya Homes!</div>
-      </div>
-      <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎲 How to Play</h3>
-      <p style="margin-bottom:1.25rem">Tap a tile → Go do the activity → Take a photo → Upload it → Mark complete. Get 5 in a row to claim your gift!</p>
-      <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">🎁 Claiming Your Reward</h3>
-      <p style="margin-bottom:1.25rem">Once you complete a line of 5, tap "Claim My Gift" and enter your name + reservation. You'll get a unique <b>Naya Token</b> (like PALM-OCEAN-427). Show it to a Naya Homes team member to redeem.</p>
-      <div style="background:var(--sunshine);border:1.5px solid var(--sunrise);border-radius:8px;padding:10px 14px;margin-bottom:1.25rem">
-        <b>📌 Save your token!</b> Screenshot or write it down — you'll need it to claim your gift.
-      </div>
-      <div style="background:var(--moss);color:var(--sand);border-radius:12px;padding:16px;text-align:center">
-        <div style="font-weight:700;font-size:15px;margin-bottom:8px;font-family:'Urbanist',sans-serif">❓ Questions?</div>
-        <div style="font-size:13px;line-height:1.7">
-          <div>📞 <a href="tel:+523151820301" style="color:var(--ocean);text-decoration:none;font-weight:600">+52 315 182 0301</a></div>
-          <div>✉️ <a href="mailto:farid@nayahomes.co" style="color:var(--ocean);text-decoration:none;font-weight:600">farid@nayahomes.co</a></div>
-        </div>
-      </div>
-      <button onclick="closeRules()" style="width:100%;margin-top:1.25rem;padding:12px;background:var(--terracotta);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">Got it — let's play! 🎉</button>
-    </div>
+    <div style="padding:1.5rem;color:var(--text);font-size:14px;line-height:1.6" id="rules-body"></div>
   </div>
 </div>
 
+<!-- CONGRATS SCREEN -->
 <div id="congrats-screen">
   <div class="congrats-content">
     <div class="emoji">🎉</div>
-    <h1>Bingo!</h1>
-    <p>Show the token below to a Naya Homes team member to redeem your gift.</p>
+    <h1 id="congrats-title">Bingo!</h1>
+    <p id="congrats-p1"></p>
     <div id="naya-token" style="display:inline-block;background:rgba(202,221,211,0.15);border:1.5px solid var(--ocean);border-radius:10px;padding:0.6rem 1.4rem;font-size:22px;font-weight:700;letter-spacing:0.15em;color:var(--ocean);font-family:monospace">--</div>
-    <p style="margin-top:1rem;font-size:13px">📌 Take a screenshot or write this down!</p>
+    <p id="congrats-p2" style="margin-top:1rem;font-size:13px"></p>
   </div>
 </div>
 
-<div class="saved-toast" id="saved-toast">✓ Saved</div>
+<div class="saved-toast" id="saved-toast"></div>
 
 <script>
 const SUPABASE_URL = 'https://dmqwpbbojuwblurklecg.supabase.co';
@@ -268,236 +311,383 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 // ============================================================
-// PUERTO VALLARTA — ACTIVITIES (from official Naya guide)
+// TRANSLATIONS
+// ============================================================
+const T = {
+  en: {
+    loginTitle: 'Naya Homes Bingo',
+    loginSubtitle: 'Discover Banderas Bay — 5 in a row wins a gift! 🎁',
+    labelRegion: 'Region',
+    labelCheckin: 'When did you check in?',
+    calTapPrompt: 'Tap your check-in date above',
+    loginBtn: 'Get My Bingo Card →',
+    loginNote: 'Your card is personalized to your stay week!',
+    rulesBtn: '📖 Rules of Play',
+    adminLink: 'Admin Login',
+    changeLang: '🌐 Cambiar idioma / Change language',
+    weekCard: 'Card',
+    progressLabel: (n) => n + ' / 25 done',
+    bingoMsg: (n) => '🎉 ' + n + ' bingo' + (n>1?'s':'') + ' complete!',
+    claimBtn: '🎁 Claim My Gift',
+    claimTitle: '🎁 Almost there!',
+    claimSub: 'Enter your details to claim your gift',
+    claimDesc: 'We just need a few details to send your thank-you gift!',
+    labelFirst: 'First Name',
+    labelLast: 'Last Name',
+    labelRes: 'Reservation Number',
+    claimSubmit: 'Claim My Gift 🎁',
+    claimCancel: 'Cancel',
+    cancelBtn: 'Cancel',
+    markComplete: 'Mark Complete ✓',
+    uploadLabel: 'Upload your photo to complete:',
+    uploadArea: '📷 Tap to upload from camera roll',
+    moreInfo: 'More Info →',
+    modalDesc: 'Click the link below for more info. Take a photo doing the activity, upload it, and mark complete to check this spot!',
+    eventTag: 'EVENT',
+    rulesHeaderSub: 'OFFICIAL RULES OF PLAY',
+    rulesGoalTitle: '🎯 The Goal',
+    rulesGoalText: 'Complete <b>5 activities in a row</b> — horizontally, vertically, or diagonally — to earn a special thank-you gift from Naya Homes!',
+    rulesHowTitle: '🎲 How to Play',
+    rulesHowText: 'Tap a tile → Go do the activity → Take a photo → Upload it → Mark complete. Get 5 in a row to claim your gift!',
+    rulesRewardTitle: '🎁 Claiming Your Reward',
+    rulesRewardText: 'Once you complete a line of 5, tap "Claim My Gift" and enter your name + reservation. You\'ll get a unique <b>Naya Token</b> (like PALM-OCEAN-427). Show it to a Naya Homes team member to redeem.',
+    rulesSaveNote: '<b>📌 Save your token!</b> Screenshot or write it down — you\'ll need it to claim your gift.',
+    rulesQTitle: '❓ Questions?',
+    rulesCloseBtn: "Got it — let's play! 🎉",
+    congratsTitle: 'Bingo!',
+    congratsP1: 'Show the token below to a Naya Homes team member to redeem your gift.',
+    congratsP2: '📌 Take a screenshot or write this down!',
+    toastSaved: '✓ Activity completed!',
+    errorDate: 'Please select your check-in date.',
+    errorName: 'Please enter your first and last name.',
+    errorRes: 'Please enter your reservation number.',
+    savingText: 'Saving...',
+    langToggle: '🌐 ES',
+    checkinLabel: (months, day, year, label) => 'Check-in: <strong>'+months+' '+day+', '+year+'</strong><br><span class="week-badge">You\'ll get the '+label+' Card!</span>',
+    months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    monthsShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    dayNames: ['S','M','T','W','T','F','S'],
+    tip: '💡 <b>Tip:</b> ',
+    when: '📅 <b>When:</b> ',
+    phone: '📞 <b>Phone:</b> ',
+    address: '📍 <b>Address:</b> ',
+    directions: '🗺️ <a href="{url}" target="_blank">Get Directions →</a>',
+  },
+  es: {
+    loginTitle: 'Naya Homes Bingo',
+    loginSubtitle: '¡Descubre la Bahía de Banderas — 5 en fila gana un regalo! 🎁',
+    labelRegion: 'Región',
+    labelCheckin: '¿Cuándo hiciste tu check-in?',
+    calTapPrompt: 'Toca tu fecha de llegada arriba',
+    loginBtn: 'Obtener mi tarjeta →',
+    loginNote: '¡Tu tarjeta es personalizada según tu semana de estadía!',
+    rulesBtn: '📖 Reglas del juego',
+    adminLink: 'Acceso Admin',
+    changeLang: '🌐 Change language / Cambiar idioma',
+    weekCard: 'Tarjeta',
+    progressLabel: (n) => n + ' / 25 completadas',
+    bingoMsg: (n) => '🎉 ¡' + n + ' bingo' + (n>1?'s':'') + ' completo' + (n>1?'s':'') + '!',
+    claimBtn: '🎁 Reclamar mi regalo',
+    claimTitle: '🎁 ¡Casi listo!',
+    claimSub: 'Ingresa tus datos para reclamar tu regalo',
+    claimDesc: '¡Solo necesitamos algunos datos para enviarte tu regalo de agradecimiento!',
+    labelFirst: 'Nombre',
+    labelLast: 'Apellido',
+    labelRes: 'Número de reserva',
+    claimSubmit: 'Reclamar mi regalo 🎁',
+    claimCancel: 'Cancelar',
+    cancelBtn: 'Cancelar',
+    markComplete: 'Marcar completo ✓',
+    uploadLabel: 'Sube tu foto para completar:',
+    uploadArea: '📷 Toca para subir desde tu cámara',
+    moreInfo: 'Más información →',
+    modalDesc: 'Haz clic en el enlace para más info. Toma una foto haciendo la actividad, súbela y marca completo.',
+    eventTag: 'EVENTO',
+    rulesHeaderSub: 'REGLAS OFICIALES DEL JUEGO',
+    rulesGoalTitle: '🎯 El objetivo',
+    rulesGoalText: 'Completa <b>5 actividades en fila</b> — horizontal, vertical o diagonal — para ganar un regalo especial de Naya Homes.',
+    rulesHowTitle: '🎲 Cómo jugar',
+    rulesHowText: 'Toca un recuadro → Haz la actividad → Toma una foto → Súbela → Marca completo. ¡5 en fila y reclamas tu regalo!',
+    rulesRewardTitle: '🎁 Reclamar tu premio',
+    rulesRewardText: 'Al completar una fila de 5, toca "Reclamar mi regalo" e ingresa tu nombre y número de reserva. Recibirás un <b>Token Naya</b> único (como PALM-OCEAN-427). Muéstralo a un miembro del equipo Naya Homes para canjearlo.',
+    rulesSaveNote: '<b>📌 ¡Guarda tu token!</b> Toma una captura de pantalla o escríbelo — lo necesitarás para reclamar tu regalo.',
+    rulesQTitle: '❓ ¿Preguntas?',
+    rulesCloseBtn: '¡Entendido — a jugar! 🎉',
+    congratsTitle: '¡Bingo!',
+    congratsP1: 'Muestra el token de abajo a un miembro del equipo Naya Homes para canjear tu regalo.',
+    congratsP2: '📌 ¡Toma una captura de pantalla o escríbelo!',
+    toastSaved: '✓ ¡Actividad completada!',
+    errorDate: 'Por favor selecciona tu fecha de check-in.',
+    errorName: 'Por favor ingresa tu nombre y apellido.',
+    errorRes: 'Por favor ingresa tu número de reserva.',
+    savingText: 'Guardando...',
+    langToggle: '🌐 EN',
+    checkinLabel: (months, day, year, label) => 'Check-in: <strong>'+months+' '+day+', '+year+'</strong><br><span class="week-badge">¡Tendrás la tarjeta de '+label+'!</span>',
+    months: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    monthsShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+    dayNames: ['D','L','M','M','J','V','S'],
+    tip: '💡 <b>Consejo:</b> ',
+    when: '📅 <b>Cuándo:</b> ',
+    phone: '📞 <b>Teléfono:</b> ',
+    address: '📍 <b>Dirección:</b> ',
+    directions: '🗺️ <a href="{url}" target="_blank">Cómo llegar →</a>',
+  }
+};
+
+let lang = 'en';
+
+function setLang(l) {
+  lang = l;
+  document.getElementById('lang-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  applyLangLogin();
+  initCal();
+}
+
+function backToLang() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('lang-screen').style.display = 'flex';
+}
+
+function switchLang() {
+  lang = lang === 'en' ? 'es' : 'en';
+  applyLangGame();
+  renderCard(); // re-render to update event tags
+}
+
+function applyLangLogin() {
+  const t = T[lang];
+  document.getElementById('login-title').textContent = t.loginTitle;
+  document.getElementById('login-subtitle').textContent = t.loginSubtitle;
+  document.getElementById('label-region').textContent = t.labelRegion;
+  document.getElementById('label-checkin').textContent = t.labelCheckin;
+  document.getElementById('stay-display').textContent = t.calTapPrompt;
+  document.getElementById('login-btn').textContent = t.loginBtn;
+  document.getElementById('login-note').textContent = t.loginNote;
+  document.getElementById('rules-btn-text').textContent = t.rulesBtn;
+  document.getElementById('admin-link-text').textContent = t.adminLink;
+  document.getElementById('change-lang-link').textContent = t.changeLang;
+}
+
+function applyLangGame() {
+  const t = T[lang];
+  document.getElementById('lang-toggle-btn').textContent = t.langToggle;
+  document.getElementById('ctabtn').textContent = t.claimBtn;
+  const cnt = done.filter(Boolean).length;
+  document.getElementById('plabel').textContent = t.progressLabel(cnt);
+  const lines = getLines();
+  document.getElementById('badge').innerHTML = lines.length ? '<span>'+t.bingoMsg(lines.length)+'</span>' : '';
+  // update week label
+  if(weekLabel) document.getElementById('week-label').textContent = weekLabel + ' ' + t.weekCard;
+}
+
+function applyLangRules() {
+  const t = T[lang];
+  document.getElementById('rules-header-sub').textContent = t.rulesHeaderSub;
+  document.getElementById('rules-body').innerHTML = `
+    <div style="background:linear-gradient(135deg,var(--moss),var(--moss-dark));padding:14px 16px;border-radius:12px;margin-bottom:1.25rem;color:var(--sand)">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px;font-family:'Urbanist',sans-serif">${t.rulesGoalTitle}</div>
+      <div style="font-size:13px">${t.rulesGoalText}</div>
+    </div>
+    <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">${t.rulesHowTitle}</h3>
+    <p style="margin-bottom:1.25rem">${t.rulesHowText}</p>
+    <h3 style="color:var(--moss);font-size:16px;border-bottom:2px solid var(--terracotta);padding-bottom:4px;margin-bottom:8px;font-family:'Urbanist',sans-serif">${t.rulesRewardTitle}</h3>
+    <p style="margin-bottom:1.25rem">${t.rulesRewardText}</p>
+    <div style="background:var(--sunshine);border:1.5px solid var(--sunrise);border-radius:8px;padding:10px 14px;margin-bottom:1.25rem">${t.rulesSaveNote}</div>
+    <div style="background:var(--moss);color:var(--sand);border-radius:12px;padding:16px;text-align:center">
+      <div style="font-weight:700;font-size:15px;margin-bottom:8px;font-family:'Urbanist',sans-serif">${t.rulesQTitle}</div>
+      <div style="font-size:13px;line-height:1.7">
+        <div>📞 <a href="tel:+523151820301" style="color:var(--ocean);text-decoration:none;font-weight:600">+52 315 182 0301</a></div>
+        <div>✉️ <a href="mailto:farid@nayahomes.co" style="color:var(--ocean);text-decoration:none;font-weight:600">farid@nayahomes.co</a></div>
+      </div>
+    </div>
+    <button onclick="closeRules()" style="width:100%;margin-top:1.25rem;padding:12px;background:var(--terracotta);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">${t.rulesCloseBtn}</button>
+  `;
+}
+
+function applyLangModal() {
+  const t = T[lang];
+  document.getElementById('modal-desc-text').textContent = t.modalDesc;
+  document.getElementById('upload-label-text').textContent = t.uploadLabel;
+  document.getElementById('upload-area-text').textContent = t.uploadArea;
+  document.getElementById('btn-cancel').textContent = t.cancelBtn;
+  document.getElementById('btn-done').textContent = t.markComplete;
+  document.getElementById('m-info-link').textContent = t.moreInfo;
+  document.getElementById('m-event-tag').textContent = t.eventTag;
+}
+
+function applyLangClaim() {
+  const t = T[lang];
+  document.getElementById('claim-title').textContent = t.claimTitle;
+  document.getElementById('claim-subtitle').textContent = t.claimSub;
+  document.getElementById('claim-desc').textContent = t.claimDesc;
+  document.getElementById('label-firstname').textContent = t.labelFirst;
+  document.getElementById('label-lastname').textContent = t.labelLast;
+  document.getElementById('label-resnum').textContent = t.labelRes;
+  document.getElementById('claim-cancel-btn').textContent = t.claimCancel;
+  document.getElementById('claim-submit-btn').textContent = t.claimSubmit;
+}
+
+// ============================================================
+// ACTIVITIES — PUERTO VALLARTA
 // ============================================================
 const EG_PV = {
-  malecon:     {n:"Walk the Malecón",tip:"Start or end at Los Muertos Pier. Best at sunset — sculptures, street performers, and ocean views for 1.5 km.",addr:"Malecón Boardwalk, Puerto Vallarta",maps:"https://www.google.com/maps/place/Malecon+Boardwalk+Vallarta/@20.612298,-105.234943,540m/",photo:"https://images.unsplash.com/photo-1518638150340-f706e86654de?w=400&q=80"},
-  guadalupe:   {n:"Visit the Cathedral",tip:"The crown on Our Lady of Guadalupe is a world-famous icon. No visit to PV is complete without it.",addr:"Parroquia de Nuestra Señora de Guadalupe, Puerto Vallarta",maps:"https://www.google.com/maps/place/Parroquia+de+Nuestra+Se%C3%B1ora+de+Guadalupe/@20.608199,-105.2391847",photo:"https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&q=80"},
-  artwalk:     {n:"Art Walk Thursday",tip:"Free weekly gallery crawl every Thursday in the Romantic Zone. Wine, local art, and great vibes 6–10 PM.",when:"Every Thursday, 6–10 PM",addr:"Zona Romántica galleries, Puerto Vallarta",link:"https://vallartaartwalk.com/#mapa",maps:"https://maps.google.com/?q=art+galleries+Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
-  botanicgarden:{n:"Vallarta Botanical Gardens",tip:"8 hectares of plants, bird watching, scenic restaurant Hacienda de Oro, and a swim in Río Los Horcones.",addr:"Jardín Botánico de Vallarta, Km 24 Carretera a Barra de Navidad",link:"https://www.vbgardens.org/es/",maps:"https://www.google.com/maps/place/Jard%C3%ADn+Bot%C3%A1nico+de+Vallarta/@20.4653179,-105.294577",photo:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80"},
-  marietas:    {n:"Boat Trip to Marietas Islands",tip:"National park — perfect for snorkeling, bird watching, and seeing the famous Hidden Beach (Playa del Amor). Book 2 days ahead!",addr:"Las Islas Marietas, Banderas Bay",maps:"https://maps.google.com/?q=Islas+Marietas+Nayarit",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
-  losarcos:    {n:"Snorkel at Los Arcos",tip:"Los Arcos National Marine Park — granite arches, caves, and tropical fish. The best snorkel spot near PV.",addr:"Los Arcos de Mismaloya, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Arcos+Mismaloya+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
-  whalepv:     {n:"Whale Watching Tour",tip:"Humpback whales Dec–Mar. Year-round you'll spot dolphins and manta rays on Banderas Bay tours.",addr:"Los Muertos Pier, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Pier+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
-  hikevelapa:  {n:"Hike to Yelapa Waterfall",tip:"Take a water taxi from Los Muertos Pier to Yelapa, then hike to the stunning waterfall. Half-day adventure!",addr:"Yelapa, Jalisco (water taxi from Los Muertos)",maps:"https://maps.google.com/?q=Yelapa+waterfall+Jalisco",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
-  hikecolomitos:{n:"Hike Boca de Tomatlán to Las Ánimas",tip:"Most iconic coastal hike in the region — 4 km through virgin coves including famous Playa Colomitos.",addr:"Boca de Tomatlán, Puerto Vallarta",maps:"https://maps.google.com/?q=Boca+de+Tomatlan+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80"},
-  miradorcruz: {n:"Mirador Cerro de la Cruz",tip:"Steep steps but the reward is the most spectacular panoramic view of the entire Bahía de Banderas. Go at sunrise!",addr:"Cerro de la Cruz, Puerto Vallarta",maps:"https://maps.google.com/?q=Cerro+de+la+Cruz+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
-  cascadapalo: {n:"Cascada Palo María",tip:"Follow the river through rocky trails to find natural pools and waterfalls. A true off-the-beaten-path adventure.",addr:"Cascada Palo María, Puerto Vallarta",maps:"https://maps.google.com/?q=Cascada+Palo+Maria+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80"},
-  ziplinepv:   {n:"Zip Line in Sierra Madre",tip:"Multiple operators offer canopy zip line tours into the Sierra Madre. Book the day before for best availability.",addr:"Sierra Madre, Puerto Vallarta",maps:"https://maps.google.com/?q=zip+line+tours+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=400&q=80"},
-  margaritapv: {n:"Drinks at Margarita PV",tip:"Famous Margaritas Grill in the Romantic Zone — huge variety of margaritas, great food, and live music.",addr:"Margarita PV, Zona Romántica, Puerto Vallarta",maps:"https://www.google.com/maps/place/Margarita+PV/@20.6024059,-105.2367872",photo:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80"},
-  panchostakos:{n:"Tacos at Pancho's",tip:"Local favorite taqueria in the Romantic Zone — beloved by thousands of visitors. Go late, go hungry.",addr:"Pancho's Takos, Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=Pancho+Takos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80"},
-  palmcabaret: {n:"Show at The Palm Cabaret",tip:"World-class live shows in the Romantic Zone — comedy, drag, music. Book tickets in advance!",addr:"The Palm Cabaret & Bar, Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=The+Palm+Cabaret+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
-  barlaplaya:  {n:"Drinks at Bar La Playa",tip:"Oceanfront bar with a relaxed atmosphere and great views. Perfect for a sunset cocktail.",addr:"Bar La Playa, Puerto Vallarta",maps:"https://maps.google.com/?q=Bar+La+Playa+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
-  maleconnightlife:{n:"Malecón Nightlife",tip:"Murphy's and Andale's offer live rock and jazz. Street performers at Los Arcos amphitheater most evenings.",addr:"El Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Malecon+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80"},
-  romanticzone:{n:"Explore Zona Romántica",tip:"Cobblestone streets, art galleries, Los Muertos Pier, piano clubs, and vibrant cabaret shows. PV's bohemian heart.",addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
-  laisla:      {n:"La Isla Shopping Village",tip:"Elegant outdoor mall with water canals, international brands, and movie theaters. Great for a rainy afternoon.",addr:"La Isla Shopping Village, Puerto Vallarta",maps:"https://maps.google.com/?q=La+Isla+Shopping+Village+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80"},
-  galerias:    {n:"Galerías Vallarta",tip:"Traditional shopping center opposite the cruise terminal — quick shopping, food court, and local stores.",addr:"Galerías Vallarta, Puerto Vallarta",maps:"https://maps.google.com/?q=Galerias+Vallarta",photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80"},
-  mandalanightclub:{n:"Mandala or Strana Club",tip:"The top nightclubs on the Malecón — dancing until dawn. Best Thu–Sat after 11pm.",addr:"Mandala Nightclub, Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Mandala+nightclub+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
-  paddlepv:    {n:"Paddleboard or Kayak",tip:"Rent a board or kayak at Los Muertos Beach — calm morning waters are best before 10am.",addr:"Los Muertos Beach, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Beach+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
-  scubapv:     {n:"Scuba Dive Banderas Bay",tip:"30+ dive sites in Banderas Bay. Los Arcos has the best visibility and tropical fish variety.",addr:"Los Arcos / Banderas Bay, Puerto Vallarta",maps:"https://maps.google.com/?q=scuba+diving+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
-  marinaartmarket:{n:"Marina Art & Market Thursday",tip:"Every Thursday night at Marina Vallarta — live music, artisan crafts, and local food stalls.",when:"Every Thursday night",addr:"Marina Vallarta, Puerto Vallarta",maps:"https://maps.google.com/?q=Marina+Vallarta",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
-  losmuertosbeach:{n:"Day at Los Muertos Beach",tip:"The iconic pier, beach clubs, water sports, and people-watching — the heart of PV beach life.",addr:"Playa Los Muertos, Puerto Vallarta",maps:"https://maps.google.com/?q=Playa+Los+Muertos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  malecon:      {n:{en:"Walk the Malecón",es:"Pasear por el Malecón"},tip:{en:"Start or end at Los Muertos Pier. Best at sunset — sculptures, street performers, and ocean views for 1.5 km.",es:"Comienza o termina en el muelle de Los Muertos. Ideal al atardecer — esculturas, artistas y vistas al mar por 1.5 km."},addr:"Malecón Boardwalk, Puerto Vallarta",maps:"https://www.google.com/maps/place/Malecon+Boardwalk+Vallarta/@20.612298,-105.234943",photo:"https://images.unsplash.com/photo-1518638150340-f706e86654de?w=400&q=80"},
+  guadalupe:    {n:{en:"Visit the Cathedral",es:"Visitar la Catedral"},tip:{en:"The crown on Our Lady of Guadalupe is a world-famous icon. No visit to PV is complete without it.",es:"La corona de la Iglesia de Nuestra Señora de Guadalupe es un ícono mundial. Ninguna visita a PV está completa sin verla."},addr:"Parroquia de Nuestra Señora de Guadalupe, PV",maps:"https://www.google.com/maps/place/Parroquia+de+Nuestra+Se%C3%B1ora+de+Guadalupe/@20.608199,-105.2391847",photo:"https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&q=80"},
+  artwalk:      {n:{en:"Art Walk Thursday",es:"Art Walk de los jueves"},tip:{en:"Free weekly gallery crawl every Thursday in the Romantic Zone. Wine, local art, and great vibes 6–10 PM.",es:"Recorrido gratuito por galerías cada jueves en la Zona Romántica. Vino, arte local y gran ambiente de 6 a 10 PM."},when:{en:"Every Thursday, 6–10 PM",es:"Todos los jueves, 6–10 PM"},addr:"Zona Romántica, Puerto Vallarta",link:"https://vallartaartwalk.com/#mapa",maps:"https://maps.google.com/?q=art+galleries+Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&q=80",isEvent:true},
+  botanicgarden:{n:{en:"Vallarta Botanical Gardens",es:"Jardines Botánicos de Vallarta"},tip:{en:"8 hectares of plants, bird watching, scenic restaurant Hacienda de Oro, and a swim in Río Los Horcones.",es:"8 hectáreas de plantas, avistamiento de aves, restaurante Hacienda de Oro y un baño en el Río Los Horcones."},addr:"Jardín Botánico de Vallarta, Km 24 Carretera Barra de Navidad",link:"https://www.vbgardens.org/es/",maps:"https://www.google.com/maps/place/Jard%C3%ADn+Bot%C3%A1nico+de+Vallarta/@20.4653179,-105.294577",photo:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80"},
+  marietas:     {n:{en:"Boat Trip to Marietas Islands",es:"Paseo en bote a Islas Marietas"},tip:{en:"National park — snorkeling, bird watching, and the famous Hidden Beach (Playa del Amor). Book 2 days ahead!",es:"Parque nacional — snorkel, avistamiento de aves y la famosa Playa Escondida (Playa del Amor). ¡Reserva 2 días antes!"},addr:"Las Islas Marietas, Bahía de Banderas",maps:"https://maps.google.com/?q=Islas+Marietas+Nayarit",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  losarcos:     {n:{en:"Snorkel at Los Arcos",es:"Snorkel en Los Arcos"},tip:{en:"Los Arcos National Marine Park — granite arches, caves, and tropical fish. Best snorkel spot near PV.",es:"Parque Nacional Marino Los Arcos — arcos de granito, cuevas y peces tropicales. El mejor lugar de snorkel cerca de PV."},addr:"Los Arcos de Mismaloya, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Arcos+Mismaloya+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  whalepv:      {n:{en:"Whale Watching Tour",es:"Tour de avistamiento de ballenas"},tip:{en:"Humpback whales Dec–Mar. Year-round you'll spot dolphins and manta rays.",es:"Ballenas jorobadas dic–mar. Todo el año puedes ver delfines y mantas rayas."},addr:"Muelle Los Muertos, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Pier+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+  hikevelapa:   {n:{en:"Hike to Yelapa Waterfall",es:"Senderismo a la Cascada de Yelapa"},tip:{en:"Take a water taxi from Los Muertos Pier to Yelapa, then hike to the stunning waterfall.",es:"Toma un taxi acuático desde el muelle de Los Muertos hacia Yelapa y camina hasta la impresionante cascada."},addr:"Yelapa, Jalisco (taxi acuático desde Los Muertos)",maps:"https://maps.google.com/?q=Yelapa+waterfall+Jalisco",photo:"https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=400&q=80"},
+  hikecolomitos:{n:{en:"Hike Boca de Tomatlán to Las Ánimas",es:"Caminata de Boca de Tomatlán a Las Ánimas"},tip:{en:"Most iconic coastal hike — 4 km through virgin coves including famous Playa Colomitos.",es:"La caminata costera más icónica — 4 km por caletas vírgenes incluyendo la famosa Playa Colomitos."},addr:"Boca de Tomatlán, Puerto Vallarta",maps:"https://maps.google.com/?q=Boca+de+Tomatlan+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80"},
+  miradorcruz:  {n:{en:"Mirador Cerro de la Cruz",es:"Mirador Cerro de la Cruz"},tip:{en:"Steep steps but the most spectacular panoramic view of Banderas Bay at the top. Go at sunrise!",es:"Escalones empinados pero la vista panorámica más espectacular de toda la Bahía de Banderas. ¡Ve al amanecer!"},addr:"Cerro de la Cruz, Puerto Vallarta",maps:"https://maps.google.com/?q=Cerro+de+la+Cruz+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
+  cascadapalo:  {n:{en:"Cascada Palo María",es:"Cascada Palo María"},tip:{en:"Follow the river through rocky trails to find natural pools and waterfalls. Off the beaten path!",es:"Sigue el río por senderos rocosos hasta encontrar pozas naturales y refrescantes cascadas. ¡Fuera del camino común!"},addr:"Cascada Palo María, Puerto Vallarta",maps:"https://maps.google.com/?q=Cascada+Palo+Maria+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80"},
+  ziplinepv:    {n:{en:"Zip Line in Sierra Madre",es:"Tirolesa en la Sierra Madre"},tip:{en:"Multiple canopy zip line operators into the Sierra Madre. Book the day before.",es:"Varios operadores de tirolesa en la Sierra Madre. Reserva el día anterior."},addr:"Sierra Madre, Puerto Vallarta",maps:"https://maps.google.com/?q=zip+line+tours+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=400&q=80"},
+  margaritapv:  {n:{en:"Drinks at Margarita PV",es:"Margaritas en Margarita PV"},tip:{en:"Famous bar-restaurant in the Romantic Zone — huge variety of margaritas, great food, and live music.",es:"Famoso bar-restaurante en la Zona Romántica — gran variedad de margaritas, comida y música en vivo."},addr:"Margarita PV, Zona Romántica, Puerto Vallarta",maps:"https://www.google.com/maps/place/Margarita+PV/@20.6024059,-105.2367872",photo:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80"},
+  panchostakos: {n:{en:"Tacos at Pancho's",es:"Tacos en Pancho's"},tip:{en:"Local favorite taqueria in the Romantic Zone — beloved by thousands of visitors. Go late, go hungry.",es:"Taquería favorita de los locales en la Zona Romántica — amada por miles de visitantes. Ve tarde y con hambre."},addr:"Pancho's Takos, Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=Pancho+Takos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80"},
+  palmcabaret:  {n:{en:"Show at The Palm Cabaret",es:"Espectáculo en The Palm Cabaret"},tip:{en:"World-class live shows in the Romantic Zone — comedy, drag, music. Book tickets in advance!",es:"Espectáculos en vivo de clase mundial en la Zona Romántica — comedia, drag, música. ¡Compra boletos con anticipación!"},addr:"The Palm Cabaret & Bar, Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=The+Palm+Cabaret+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
+  barlaplaya:   {n:{en:"Drinks at Bar La Playa",es:"Tragos en Bar La Playa"},tip:{en:"Oceanfront bar with a relaxed atmosphere and great views. Perfect for a sunset cocktail.",es:"Bar frente al mar con ambiente relajado y hermosas vistas. Perfecto para un cóctel al atardecer."},addr:"Bar La Playa, Puerto Vallarta",maps:"https://maps.google.com/?q=Bar+La+Playa+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
+  maleconnightlife:{n:{en:"Malecón Nightlife",es:"Vida nocturna en el Malecón"},tip:{en:"Murphy's and Andale's offer live rock and jazz. Street performers at Los Arcos amphitheater most evenings.",es:"Murphy's y Andale's ofrecen rock y jazz en vivo. Artistas callejeros en el anfiteatro Los Arcos casi todas las noches."},addr:"El Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Malecon+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&q=80"},
+  romanticzone: {n:{en:"Explore Zona Romántica",es:"Explorar la Zona Romántica"},tip:{en:"Cobblestone streets, art galleries, Los Muertos Pier, piano clubs, and vibrant cabaret shows. PV's bohemian heart.",es:"Calles empedradas, galerías de arte, muelle Los Muertos, clubes de piano y animados cabarés. El corazón bohemio de PV."},addr:"Zona Romántica, Puerto Vallarta",maps:"https://maps.google.com/?q=Zona+Romantica+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
+  laisla:       {n:{en:"La Isla Shopping Village",es:"La Isla Shopping Village"},tip:{en:"Elegant outdoor mall with water canals, international brands, and movie theaters.",es:"Elegante centro comercial al aire libre con canales de agua, marcas internacionales y cines."},addr:"La Isla Shopping Village, Puerto Vallarta",maps:"https://maps.google.com/?q=La+Isla+Shopping+Village+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80"},
+  galerias:     {n:{en:"Galerías Vallarta",es:"Galerías Vallarta"},tip:{en:"Traditional shopping center opposite the cruise terminal — quick shopping, food court, and local stores.",es:"Centro comercial tradicional frente a la terminal de cruceros — compras rápidas y opciones gastronómicas."},addr:"Galerías Vallarta, Puerto Vallarta",maps:"https://maps.google.com/?q=Galerias+Vallarta",photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80"},
+  mandalanightclub:{n:{en:"Mandala or Strana Club",es:"Club Mandala o Strana"},tip:{en:"Top nightclubs on the Malecón — dancing until dawn. Best Thu–Sat after 11pm.",es:"Los mejores clubs del Malecón — baile hasta el amanecer. Mejor jue–sáb después de las 11pm."},addr:"Mandala Nightclub, Malecón, Puerto Vallarta",maps:"https://maps.google.com/?q=Mandala+nightclub+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"},
+  paddlepv:     {n:{en:"Paddleboard or Kayak",es:"Paddleboard o kayak"},tip:{en:"Rent at Los Muertos Beach — calm morning waters are best before 10am.",es:"Renta en la Playa Los Muertos — las aguas de la mañana están más tranquilas antes de las 10am."},addr:"Playa Los Muertos, Puerto Vallarta",maps:"https://maps.google.com/?q=Los+Muertos+Beach+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
+  scubapv:      {n:{en:"Scuba Dive Banderas Bay",es:"Buceo en la Bahía de Banderas"},tip:{en:"30+ dive sites in Banderas Bay. Los Arcos has the best visibility and tropical fish variety.",es:"Más de 30 sitios de buceo en la Bahía de Banderas. Los Arcos tiene la mejor visibilidad y variedad de peces tropicales."},addr:"Los Arcos / Bahía de Banderas, Puerto Vallarta",maps:"https://maps.google.com/?q=scuba+diving+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  marinaartmarket:{n:{en:"Marina Art & Market",es:"Arte y Mercado en la Marina"},tip:{en:"Every Thursday night at Marina Vallarta — live music, artisan crafts stalls, and local food.",es:"Todos los jueves en la Marina Vallarta — música en vivo, artesanías y comida local."},when:{en:"Every Thursday night",es:"Todos los jueves por la noche"},addr:"Marina Vallarta, Puerto Vallarta",maps:"https://maps.google.com/?q=Marina+Vallarta",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  losmuertosbeach:{n:{en:"Day at Los Muertos Beach",es:"Día en Playa Los Muertos"},tip:{en:"The iconic pier, beach clubs, water sports, and people-watching — the heart of PV beach life.",es:"El muelle icónico, clubes de playa, deportes acuáticos — el corazón de la vida playera de PV."},addr:"Playa Los Muertos, Puerto Vallarta",maps:"https://maps.google.com/?q=Playa+Los+Muertos+Puerto+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
 };
 
 // ============================================================
-// NUEVO VALLARTA — ACTIVITIES (from official Naya guide)
+// ACTIVITIES — NUEVO VALLARTA
 // ============================================================
 const EG_NV = {
-  playayflamingos:{n:"Playa Flamingos Walk",tip:"Long sandy beach ideal for walking, running, or just relaxing — one of the calmest and cleanest in Banderas Bay.",addr:"Playa Flamingos, Nuevo Vallarta",maps:"https://maps.google.com/?q=Playa+Flamingos+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
-  marina_nv:   {n:"Explore the Marina",tip:"Nuevo Vallarta Marina has great restaurants, boutique shops, and boat tour operators. Great for an evening stroll.",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80"},
-  salado:      {n:"Estero El Salado",tip:"The only urban mangrove Protected Natural Area in Mexico — incredible wildlife, birds, and eco-tours available.",addr:"Estero El Salado, Nuevo Vallarta",maps:"https://maps.google.com/?q=Estero+El+Salado+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80"},
-  golf:        {n:"Golf at El Tigre",tip:"World-class 18-hole course at El Tigre Golf Club — one of the top-rated courses in Riviera Nayarit.",addr:"El Tigre Golf Club, Nuevo Vallarta",maps:"https://maps.google.com/?q=El+Tigre+Golf+Club+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=400&q=80"},
-  kayaknv:     {n:"Kayak or Paddleboard",tip:"Rent directly in front of the resorts on Playa Nuevo Vallarta — calm waters perfect for beginners.",addr:"Playa Nuevo Vallarta (resort beach), Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
-  fishingnv:   {n:"Deep Sea Sport Fishing",tip:"Charter boats from Marina Nuevo Vallarta target marlin, tuna, and dorado. Half-day charters available.",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=sport+fishing+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1504277585821-e2fd1ca03f4d?w=400&q=80"},
-  spanv:       {n:"Resort Spa Day",tip:"Vidanta, Grand Velas, and Hard Rock all have world-class spas — book a treatment and enjoy the pools.",addr:"Nuevo Vallarta resort area, Nayarit",maps:"https://maps.google.com/?q=spa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80"},
-  hikebocanegra:{n:"Hike to Playa Bocanegra",tip:"Flat and quiet hike from Plaza Marina to Playa Bocanegra — perfect for wildlife spotting near the Río Ameca mouth.",addr:"Plaza Marina to Playa Bocanegra, Nayarit",maps:"https://maps.google.com/?q=Playa+Bocanegra+Nayarit",photo:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80"},
-  marietasnv:  {n:"Marietas Islands — Hidden Beach",tip:"The iconic Playa Escondida (Hidden Beach) is only accessible by swimming through a cave tunnel. Book well in advance!",addr:"Islas Marietas — Playa Escondida, Banderas Bay",maps:"https://maps.google.com/?q=Islas+Marietas+hidden+beach",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
-  paddlenv:    {n:"Paddleboard at Marietas",tip:"Marietas Islands is a top destination for deep paddleboarding and scuba — crystal clear water and marine life.",addr:"Islas Marietas, Banderas Bay",maps:"https://maps.google.com/?q=Islas+Marietas+Nayarit",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
-  paradisevillage:{n:"Paradise Village Shopping",tip:"The main shopping plaza in Nuevo Vallarta — souvenirs, restaurants, and essential services facing the marina.",addr:"Paradise Village Shopping Center, Nuevo Vallarta",maps:"https://maps.google.com/?q=Paradise+Village+Shopping+Center+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80"},
-  marinaartmktnv:{n:"Marina Art & Market Thursday",tip:"Every Thursday night at Marina Vallarta — live music, artisan crafts stalls, great atmosphere.",when:"Every Thursday night",addr:"Marina Vallarta (NV/PV border), Nayarit",maps:"https://maps.google.com/?q=Marina+Vallarta",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
-  hotelbars:   {n:"Luxury Resort Bar Night",tip:"Catch a sunset at the Grand Velas or Hard Rock rooftop bar — open to non-guests at most spots.",addr:"Nuevo Vallarta resort strip, Nayarit",maps:"https://maps.google.com/?q=Grand+Velas+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80"},
-  marinadinenv:{n:"Dinner at Marina Restaurants",tip:"The marina-front restaurants are perfect for a relaxed dinner with boats and bay views. Try the ceviche!",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=restaurants+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
-  puntamitanv: {n:"Day Trip to Punta Mita",tip:"20 min north — world-class surf, the Four Seasons beach club (open to public), and the best fish tacos at El Anclote.",addr:"Punta Mita, Nayarit",maps:"https://maps.google.com/?q=Punta+Mita+Nayarit",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
-  sayulitanv:  {n:"Day Trip to Sayulita",tip:"Colorful hippie surf town 30 min north — murals, tacos, surfboard rentals, and a great beach vibe.",addr:"Sayulita, Nayarit",maps:"https://maps.google.com/?q=Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
-  scubanv:     {n:"Scuba Dive Banderas Bay",tip:"La Cruz de Huanacaxtle has excellent dive shops for Marietas and bay dive sites.",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=scuba+diving+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
-  sunsetcruise:{n:"Sunset Catamaran",tip:"Open-bar sunset catamaran cruises depart from Marina Nuevo Vallarta — dolphins often join the ride!",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=catamaran+tour+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80"},
-  beachvolley: {n:"Beach Volleyball & Sports",tip:"The resort beaches have volleyball nets, beach soccer, and watersports set up daily — just show up and play!",addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80"},
-  lacruzmkt:   {n:"La Cruz Sunday Market",tip:"Best Sunday market on the Riviera Nayarit — 15 min from NV. Fresh food, live music, artisan crafts, and great energy.",when:"Every Sunday, 9 AM–2 PM",addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+market",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
-  bikenv:      {n:"Bike Along the Coast",tip:"Rent a bike in Nuevo Vallarta and ride the coastal path toward La Cruz — flat, scenic, and perfect at sunrise.",addr:"Nuevo Vallarta coastal path, Nayarit",maps:"https://maps.google.com/?q=bike+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=400&q=80"},
-  whalenv:     {n:"Whale or Dolphin Tour",tip:"Dolphin pods are common year-round in Banderas Bay. Whale season is Dec–Mar — humpbacks right in the bay!",addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=whale+watching+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
-  starsbeach:  {n:"Stargazing on the Beach",tip:"Nuevo Vallarta beaches have minimal light pollution. Grab a blanket, walk past the resort lights, and look up.",addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80"},
-  snorkelnv:   {n:"Snorkel in Banderas Bay",tip:"The calm waters off Nuevo Vallarta have surprisingly good snorkeling — rent gear from beach vendors.",addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=snorkeling+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  playayflamingos:{n:{en:"Playa Flamingos Walk",es:"Caminata en Playa Flamingos"},tip:{en:"Long sandy beach ideal for walking, running, or relaxing — one of the calmest in Banderas Bay.",es:"Extensa playa de arena ideal para caminar, correr o relajarse — una de las más tranquilas de la Bahía de Banderas."},addr:"Playa Flamingos, Nuevo Vallarta",maps:"https://maps.google.com/?q=Playa+Flamingos+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  marina_nv:    {n:{en:"Explore the Marina",es:"Explorar la Marina"},tip:{en:"Nuevo Vallarta Marina has great restaurants, boutique shops, and boat tour operators.",es:"La Marina de Nuevo Vallarta tiene excelentes restaurantes, tiendas y operadores de tours acuáticos."},addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80"},
+  salado:       {n:{en:"Estero El Salado",es:"Estero El Salado"},tip:{en:"The only urban mangrove Protected Natural Area in Mexico — incredible wildlife and eco-tours.",es:"La única Área Natural Protegida de manglar urbano en México — increíble fauna y ecoturismo disponible."},addr:"Estero El Salado, Nuevo Vallarta",maps:"https://maps.google.com/?q=Estero+El+Salado+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80"},
+  golf:         {n:{en:"Golf at El Tigre",es:"Golf en El Tigre"},tip:{en:"World-class 18-hole course at El Tigre Golf Club — one of the top-rated courses in Riviera Nayarit.",es:"Cancha de golf de clase mundial de 18 hoyos en El Tigre Golf Club — una de las mejor calificadas en Riviera Nayarit."},addr:"El Tigre Golf Club, Nuevo Vallarta",maps:"https://maps.google.com/?q=El+Tigre+Golf+Club+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=400&q=80"},
+  kayaknv:      {n:{en:"Kayak or Paddleboard",es:"Kayak o paddleboard"},tip:{en:"Rent directly in front of the resorts on Playa Nuevo Vallarta — calm waters perfect for beginners.",es:"Renta frente a los resorts en Playa Nuevo Vallarta — aguas tranquilas perfectas para principiantes."},addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=400&q=80"},
+  fishingnv:    {n:{en:"Deep Sea Sport Fishing",es:"Pesca deportiva en alta mar"},tip:{en:"Charter boats from Marina Nuevo Vallarta target marlin, tuna, and dorado.",es:"Barcos chárter desde Marina Nuevo Vallarta buscan marlín, atún y dorado."},addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=sport+fishing+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1504277585821-e2fd1ca03f4d?w=400&q=80"},
+  spanv:        {n:{en:"Resort Spa Day",es:"Día de spa en el resort"},tip:{en:"Vidanta, Grand Velas, and Hard Rock all have world-class spas — book a treatment and enjoy the pools.",es:"Vidanta, Grand Velas y Hard Rock tienen spas de clase mundial — reserva un tratamiento y disfruta las albercas."},addr:"Zona de resorts, Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=spa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80"},
+  hikebocanegra:{n:{en:"Hike to Playa Bocanegra",es:"Caminata a Playa Bocanegra"},tip:{en:"Flat and quiet hike from Plaza Marina to Playa Bocanegra — perfect for wildlife spotting near Río Ameca.",es:"Caminata plana y tranquila de Plaza Marina a Playa Bocanegra — perfecta para avistar fauna cerca del Río Ameca."},addr:"Plaza Marina a Playa Bocanegra, Nayarit",maps:"https://maps.google.com/?q=Playa+Bocanegra+Nayarit",photo:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80"},
+  marietasnv:   {n:{en:"Marietas — Hidden Beach",es:"Marietas — Playa Escondida"},tip:{en:"The iconic Playa Escondida is only accessible by swimming through a tunnel. Book well in advance!",es:"La icónica Playa Escondida solo es accesible nadando por un túnel. ¡Reserva con mucha anticipación!"},addr:"Islas Marietas — Playa Escondida, Bahía de Banderas",maps:"https://maps.google.com/?q=Islas+Marietas+hidden+beach",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
+  paddlenv:     {n:{en:"Paddleboard at Marietas",es:"Paddleboard en Marietas"},tip:{en:"Marietas Islands is a top destination for paddleboarding and scuba — crystal clear water.",es:"Las Islas Marietas son un destino top para paddleboard y buceo — agua cristalina."},addr:"Islas Marietas, Bahía de Banderas",maps:"https://maps.google.com/?q=Islas+Marietas+Nayarit",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  paradisevillage:{n:{en:"Paradise Village Shopping",es:"Plaza Paradise Village"},tip:{en:"Main shopping plaza in Nuevo Vallarta — souvenirs, restaurants, and services facing the marina.",es:"Plaza principal de Nuevo Vallarta — souvenirs, restaurantes y servicios frente a la marina."},addr:"Paradise Village Shopping Center, Nuevo Vallarta",maps:"https://maps.google.com/?q=Paradise+Village+Shopping+Center+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80"},
+  marinaartmktnv:{n:{en:"Marina Art & Market Thursday",es:"Arte y Mercado en la Marina"},tip:{en:"Every Thursday night at Marina Vallarta — live music and artisan crafts.",es:"Todos los jueves en la Marina Vallarta — música en vivo y artesanías."},when:{en:"Every Thursday night",es:"Todos los jueves por la noche"},addr:"Marina Vallarta, Nayarit/PV",maps:"https://maps.google.com/?q=Marina+Vallarta",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  hotelbars:    {n:{en:"Luxury Resort Bar Night",es:"Noche en el bar del resort"},tip:{en:"Catch a sunset at the Grand Velas or Hard Rock rooftop bar — open to non-guests at most spots.",es:"Disfruta el atardecer en el bar del Grand Velas o Hard Rock — abierto a no huéspedes en la mayoría."},addr:"Zona de resorts, Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Grand+Velas+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=400&q=80"},
+  marinadinenv: {n:{en:"Dinner at the Marina",es:"Cena en la Marina"},tip:{en:"Marina-front restaurants are perfect for a relaxed dinner with boats and bay views. Try the ceviche!",es:"Los restaurantes frente a la marina son perfectos para una cena relajada con vistas a la bahía. ¡Pide el ceviche!"},addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=restaurants+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80"},
+  puntamitanv:  {n:{en:"Day Trip to Punta Mita",es:"Excursión a Punta Mita"},tip:{en:"20 min north — world-class surf, the Four Seasons beach, and the best fish tacos at El Anclote.",es:"20 min al norte — surf de clase mundial, la playa del Four Seasons y los mejores tacos de pescado en El Anclote."},addr:"Punta Mita, Nayarit",maps:"https://maps.google.com/?q=Punta+Mita+Nayarit",photo:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=400&q=80"},
+  sayulitanv:   {n:{en:"Day Trip to Sayulita",es:"Excursión a Sayulita"},tip:{en:"Colorful surf town 30 min north — murals, tacos, surfboard rentals, and a great beach vibe.",es:"Colorido pueblo surfer a 30 min al norte — murales, tacos, tablas de surf y un ambiente playero increíble."},addr:"Sayulita, Nayarit",maps:"https://maps.google.com/?q=Sayulita+Nayarit",photo:"https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=400&q=80"},
+  scubanv:      {n:{en:"Scuba Diving",es:"Buceo"},tip:{en:"La Cruz de Huanacaxtle has excellent dive shops for Marietas and bay dive sites.",es:"La Cruz de Huanacaxtle tiene excelentes tiendas de buceo para los sitios de las Marietas y la bahía."},addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=scuba+diving+La+Cruz+Nayarit",photo:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80"},
+  sunsetcruise: {n:{en:"Sunset Catamaran",es:"Catamarán al atardecer"},tip:{en:"Open-bar sunset catamaran cruises from Marina Nuevo Vallarta — dolphins often join the ride!",es:"Cruceros en catamarán con barra libre desde Marina Nuevo Vallarta — ¡los delfines a menudo se unen al paseo!"},addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=catamaran+tour+Marina+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&q=80"},
+  beachvolley:  {n:{en:"Beach Volleyball & Sports",es:"Voleibol y deportes de playa"},tip:{en:"Resort beaches have volleyball nets and beach soccer set up daily — just show up and play!",es:"Las playas de los resorts tienen redes de voleibol y fútbol playa instalados diariamente — ¡solo preséntate!"},addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80"},
+  lacruzmkt:    {n:{en:"La Cruz Sunday Market",es:"Mercado dominical de La Cruz"},tip:{en:"Best Sunday market on the Riviera Nayarit — 15 min from NV. Fresh food, live music, artisan crafts.",es:"El mejor mercado dominical de Riviera Nayarit — a 15 min de NV. Comida fresca, música en vivo y artesanías."},when:{en:"Every Sunday, 9 AM–2 PM",es:"Todos los domingos, 9 AM–2 PM"},addr:"La Cruz de Huanacaxtle, Nayarit",maps:"https://maps.google.com/?q=La+Cruz+de+Huanacaxtle+market",photo:"https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&q=80",isEvent:true},
+  bikenv:       {n:{en:"Bike Along the Coast",es:"Ciclismo por la costa"},tip:{en:"Rent a bike in Nuevo Vallarta and ride the coastal path toward La Cruz — flat, scenic, and great at sunrise.",es:"Renta una bicicleta en Nuevo Vallarta y recorre el camino costero hacia La Cruz — plano, panorámico y perfecto al amanecer."},addr:"Camino costero, Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=bike+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=400&q=80"},
+  whalenv:      {n:{en:"Whale or Dolphin Tour",es:"Tour de ballenas o delfines"},tip:{en:"Dolphin pods are common year-round. Whale season is Dec–Mar — humpbacks right in the bay!",es:"Las manadas de delfines son comunes todo el año. Temporada de ballenas dic–mar — jorobadas en la misma bahía."},addr:"Marina Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=whale+watching+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&q=80"},
+  starsbeach:   {n:{en:"Stargazing on the Beach",es:"Observar estrellas en la playa"},tip:{en:"Nuevo Vallarta beaches have minimal light pollution. Grab a blanket, walk past the resort lights.",es:"Las playas de Nuevo Vallarta tienen poca contaminación lumínica. Toma una cobija y aléjate de las luces del resort."},addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=Playa+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&q=80"},
+  snorkelnv:    {n:{en:"Snorkel in Banderas Bay",es:"Snorkel en la Bahía de Banderas"},tip:{en:"The calm waters off Nuevo Vallarta have good snorkeling — rent gear from beach vendors.",es:"Las tranquilas aguas frente a Nuevo Vallarta tienen buen snorkel — renta equipo de los vendedores de playa."},addr:"Playa Nuevo Vallarta, Nayarit",maps:"https://maps.google.com/?q=snorkeling+Nuevo+Vallarta",photo:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=80"},
 };
 
+// Helper to get localized name
+function actName(a) { return (a.n && a.n[lang]) ? a.n[lang] : (a.n || ''); }
+function actTip(a)  { return (a.tip && a.tip[lang]) ? a.tip[lang] : (a.tip || ''); }
+function actWhen(a) { return a.when ? (a.when[lang] || a.when) : null; }
+
 // ============================================================
-// 5 WEEKLY CARDS — PUERTO VALLARTA
+// WEEKLY CARDS — PV
 // ============================================================
 const WEEKLY_CARDS_PV = [
-  // WEEK 1: May 1–7
-  [
-    EG_PV.malecon, EG_PV.artwalk, EG_PV.losmuertosbeach, EG_PV.marietas, EG_PV.panchostakos,
-    EG_PV.marinaartmarket, EG_PV.losarcos, EG_PV.margaritapv, EG_PV.guadalupe, EG_PV.romanticzone,
-    EG_PV.paddlepv, EG_PV.hikecolomitos, EG_PV.palmcabaret, EG_PV.botanicgarden, EG_PV.ziplinepv,
-    EG_PV.barlaplaya, EG_PV.miradorcruz, EG_PV.maleconnightlife, EG_PV.whalepv, EG_PV.scubapv,
-    EG_PV.laisla, EG_PV.hikevelapa, EG_PV.cascadapalo, EG_PV.mandalanightclub, EG_PV.galerias
-  ],
-  // WEEK 2: May 8–14
-  [
-    EG_PV.losmuertosbeach, EG_PV.marinaartmarket, EG_PV.romanticzone, EG_PV.whalepv, EG_PV.artwalk,
-    EG_PV.panchostakos, EG_PV.margaritapv, EG_PV.losarcos, EG_PV.malecon, EG_PV.guadalupe,
-    EG_PV.hikecolomitos, EG_PV.botanicgarden, EG_PV.cascadapalo, EG_PV.palmcabaret, EG_PV.ziplinepv,
-    EG_PV.barlaplaya, EG_PV.paddlepv, EG_PV.marietas, EG_PV.maleconnightlife, EG_PV.scubapv,
-    EG_PV.laisla, EG_PV.miradorcruz, EG_PV.hikevelapa, EG_PV.galerias, EG_PV.mandalanightclub
-  ],
-  // WEEK 3: May 15–21
-  [
-    EG_PV.botanicgarden, EG_PV.artwalk, EG_PV.malecon, EG_PV.hikevelapa, EG_PV.marinaartmarket,
-    EG_PV.paddlepv, EG_PV.margaritapv, EG_PV.marietas, EG_PV.losmuertosbeach, EG_PV.romanticzone,
-    EG_PV.scubapv, EG_PV.panchostakos, EG_PV.miradorcruz, EG_PV.whalepv, EG_PV.losarcos,
-    EG_PV.palmcabaret, EG_PV.barlaplaya, EG_PV.cascadapalo, EG_PV.ziplinepv, EG_PV.guadalupe,
-    EG_PV.mandalanightclub, EG_PV.laisla, EG_PV.maleconnightlife, EG_PV.hikecolomitos, EG_PV.galerias
-  ],
-  // WEEK 4: May 22–28
-  [
-    EG_PV.marinaartmarket, EG_PV.malecon, EG_PV.losarcos, EG_PV.losmuertosbeach, EG_PV.artwalk,
-    EG_PV.scubapv, EG_PV.panchostakos, EG_PV.botanicgarden, EG_PV.marietas, EG_PV.romanticzone,
-    EG_PV.barlaplaya, EG_PV.ziplinepv, EG_PV.miradorcruz, EG_PV.margaritapv, EG_PV.maleconnightlife,
-    EG_PV.paddlepv, EG_PV.hikecolomitos, EG_PV.palmcabaret, EG_PV.guadalupe, EG_PV.whalepv,
-    EG_PV.laisla, EG_PV.cascadapalo, EG_PV.hikevelapa, EG_PV.galerias, EG_PV.mandalanightclub
-  ],
-  // WEEK 5: May 29–Jun 4
-  [
-    EG_PV.losmuertosbeach, EG_PV.artwalk, EG_PV.ziplinepv, EG_PV.marinaartmarket, EG_PV.malecon,
-    EG_PV.losarcos, EG_PV.margaritapv, EG_PV.whalepv, EG_PV.panchostakos, EG_PV.botanicgarden,
-    EG_PV.scubapv, EG_PV.romanticzone, EG_PV.maleconnightlife, EG_PV.guadalupe, EG_PV.marietas,
-    EG_PV.paddlepv, EG_PV.cascadapalo, EG_PV.hikevelapa, EG_PV.palmcabaret, EG_PV.barlaplaya,
-    EG_PV.miradorcruz, EG_PV.hikecolomitos, EG_PV.laisla, EG_PV.mandalanightclub, EG_PV.galerias
-  ]
+  [EG_PV.malecon,EG_PV.artwalk,EG_PV.losmuertosbeach,EG_PV.marietas,EG_PV.panchostakos,EG_PV.marinaartmarket,EG_PV.losarcos,EG_PV.margaritapv,EG_PV.guadalupe,EG_PV.romanticzone,EG_PV.paddlepv,EG_PV.hikecolomitos,EG_PV.palmcabaret,EG_PV.botanicgarden,EG_PV.ziplinepv,EG_PV.barlaplaya,EG_PV.miradorcruz,EG_PV.maleconnightlife,EG_PV.whalepv,EG_PV.scubapv,EG_PV.laisla,EG_PV.hikevelapa,EG_PV.cascadapalo,EG_PV.mandalanightclub,EG_PV.galerias],
+  [EG_PV.losmuertosbeach,EG_PV.marinaartmarket,EG_PV.romanticzone,EG_PV.whalepv,EG_PV.artwalk,EG_PV.panchostakos,EG_PV.margaritapv,EG_PV.losarcos,EG_PV.malecon,EG_PV.guadalupe,EG_PV.hikecolomitos,EG_PV.botanicgarden,EG_PV.cascadapalo,EG_PV.palmcabaret,EG_PV.ziplinepv,EG_PV.barlaplaya,EG_PV.paddlepv,EG_PV.marietas,EG_PV.maleconnightlife,EG_PV.scubapv,EG_PV.laisla,EG_PV.miradorcruz,EG_PV.hikevelapa,EG_PV.galerias,EG_PV.mandalanightclub],
+  [EG_PV.botanicgarden,EG_PV.artwalk,EG_PV.malecon,EG_PV.hikevelapa,EG_PV.marinaartmarket,EG_PV.paddlepv,EG_PV.margaritapv,EG_PV.marietas,EG_PV.losmuertosbeach,EG_PV.romanticzone,EG_PV.scubapv,EG_PV.panchostakos,EG_PV.miradorcruz,EG_PV.whalepv,EG_PV.losarcos,EG_PV.palmcabaret,EG_PV.barlaplaya,EG_PV.cascadapalo,EG_PV.ziplinepv,EG_PV.guadalupe,EG_PV.mandalanightclub,EG_PV.laisla,EG_PV.maleconnightlife,EG_PV.hikecolomitos,EG_PV.galerias],
+  [EG_PV.marinaartmarket,EG_PV.malecon,EG_PV.losarcos,EG_PV.losmuertosbeach,EG_PV.artwalk,EG_PV.scubapv,EG_PV.panchostakos,EG_PV.botanicgarden,EG_PV.marietas,EG_PV.romanticzone,EG_PV.barlaplaya,EG_PV.ziplinepv,EG_PV.miradorcruz,EG_PV.margaritapv,EG_PV.maleconnightlife,EG_PV.paddlepv,EG_PV.hikecolomitos,EG_PV.palmcabaret,EG_PV.guadalupe,EG_PV.whalepv,EG_PV.laisla,EG_PV.cascadapalo,EG_PV.hikevelapa,EG_PV.galerias,EG_PV.mandalanightclub],
+  [EG_PV.losmuertosbeach,EG_PV.artwalk,EG_PV.ziplinepv,EG_PV.marinaartmarket,EG_PV.malecon,EG_PV.losarcos,EG_PV.margaritapv,EG_PV.whalepv,EG_PV.panchostakos,EG_PV.botanicgarden,EG_PV.scubapv,EG_PV.romanticzone,EG_PV.maleconnightlife,EG_PV.guadalupe,EG_PV.marietas,EG_PV.paddlepv,EG_PV.cascadapalo,EG_PV.hikevelapa,EG_PV.palmcabaret,EG_PV.barlaplaya,EG_PV.miradorcruz,EG_PV.hikecolomitos,EG_PV.laisla,EG_PV.mandalanightclub,EG_PV.galerias]
 ];
 
 // ============================================================
-// 5 WEEKLY CARDS — NUEVO VALLARTA
+// WEEKLY CARDS — NV
 // ============================================================
 const WEEKLY_CARDS_NV = [
-  // WEEK 1: May 1–7
-  [
-    EG_NV.playayflamingos, EG_NV.lacruzmkt, EG_NV.puntamitanv, EG_NV.marietasnv, EG_NV.marinadinenv,
-    EG_NV.marinaartmktnv, EG_NV.sunsetcruise, EG_NV.golf, EG_NV.fishingnv, EG_NV.marina_nv,
-    EG_NV.kayaknv, EG_NV.salado, EG_NV.hotelbars, EG_NV.paradisevillage, EG_NV.marietasnv,
-    EG_NV.bikenv, EG_NV.sayulitanv, EG_NV.hikebocanegra, EG_NV.starsbeach, EG_NV.whalenv,
-    EG_NV.snorkelnv, EG_NV.scubanv, EG_NV.beachvolley, EG_NV.spanv, EG_NV.paddlenv
-  ],
-  // WEEK 2: May 8–14
-  [
-    EG_NV.lacruzmkt, EG_NV.playayflamingos, EG_NV.sayulitanv, EG_NV.whalenv, EG_NV.marinaartmktnv,
-    EG_NV.fishingnv, EG_NV.golf, EG_NV.marietasnv, EG_NV.marina_nv, EG_NV.marinadinenv,
-    EG_NV.sunsetcruise, EG_NV.spanv, EG_NV.puntamitanv, EG_NV.salado, EG_NV.hotelbars,
-    EG_NV.hikebocanegra, EG_NV.kayaknv, EG_NV.paddlenv, EG_NV.scubanv, EG_NV.snorkelnv,
-    EG_NV.beachvolley, EG_NV.starsbeach, EG_NV.bikenv, EG_NV.paradisevillage, EG_NV.marietasnv
-  ],
-  // WEEK 3: May 15–21
-  [
-    EG_NV.sayulitanv, EG_NV.marinaartmktnv, EG_NV.playayflamingos, EG_NV.golf, EG_NV.lacruzmkt,
-    EG_NV.kayaknv, EG_NV.salado, EG_NV.marietasnv, EG_NV.marina_nv, EG_NV.sunsetcruise,
-    EG_NV.whalenv, EG_NV.marinadinenv, EG_NV.puntamitanv, EG_NV.fishingnv, EG_NV.hotelbars,
-    EG_NV.scubanv, EG_NV.bikenv, EG_NV.starsbeach, EG_NV.hikebocanegra, EG_NV.paddlenv,
-    EG_NV.snorkelnv, EG_NV.beachvolley, EG_NV.spanv, EG_NV.paradisevillage, EG_NV.marietasnv
-  ],
-  // WEEK 4: May 22–28
-  [
-    EG_NV.lacruzmkt, EG_NV.marina_nv, EG_NV.golf, EG_NV.playayflamingos, EG_NV.marinaartmktnv,
-    EG_NV.sunsetcruise, EG_NV.whalenv, EG_NV.salado, EG_NV.marietasnv, EG_NV.kayaknv,
-    EG_NV.puntamitanv, EG_NV.starsbeach, EG_NV.scubanv, EG_NV.fishingnv, EG_NV.hotelbars,
-    EG_NV.spanv, EG_NV.hikebocanegra, EG_NV.sayulitanv, EG_NV.paddlenv, EG_NV.marinadinenv,
-    EG_NV.beachvolley, EG_NV.snorkelnv, EG_NV.bikenv, EG_NV.paradisevillage, EG_NV.marietasnv
-  ],
-  // WEEK 5: May 29–Jun 4
-  [
-    EG_NV.playayflamingos, EG_NV.marinaartmktnv, EG_NV.golf, EG_NV.lacruzmkt, EG_NV.marina_nv,
-    EG_NV.marietasnv, EG_NV.whalenv, EG_NV.starsbeach, EG_NV.sunsetcruise, EG_NV.sayulitanv,
-    EG_NV.scubanv, EG_NV.salado, EG_NV.hotelbars, EG_NV.puntamitanv, EG_NV.marinadinenv,
-    EG_NV.kayaknv, EG_NV.paddlenv, EG_NV.fishingnv, EG_NV.beachvolley, EG_NV.snorkelnv,
-    EG_NV.hikebocanegra, EG_NV.spanv, EG_NV.bikenv, EG_NV.paradisevillage, EG_NV.marietasnv
-  ]
+  [EG_NV.playayflamingos,EG_NV.lacruzmkt,EG_NV.puntamitanv,EG_NV.marietasnv,EG_NV.marinadinenv,EG_NV.marinaartmktnv,EG_NV.sunsetcruise,EG_NV.golf,EG_NV.fishingnv,EG_NV.marina_nv,EG_NV.kayaknv,EG_NV.salado,EG_NV.hotelbars,EG_NV.paradisevillage,EG_NV.marietasnv,EG_NV.bikenv,EG_NV.sayulitanv,EG_NV.hikebocanegra,EG_NV.starsbeach,EG_NV.whalenv,EG_NV.snorkelnv,EG_NV.scubanv,EG_NV.beachvolley,EG_NV.spanv,EG_NV.paddlenv],
+  [EG_NV.lacruzmkt,EG_NV.playayflamingos,EG_NV.sayulitanv,EG_NV.whalenv,EG_NV.marinaartmktnv,EG_NV.fishingnv,EG_NV.golf,EG_NV.marietasnv,EG_NV.marina_nv,EG_NV.marinadinenv,EG_NV.sunsetcruise,EG_NV.spanv,EG_NV.puntamitanv,EG_NV.salado,EG_NV.hotelbars,EG_NV.hikebocanegra,EG_NV.kayaknv,EG_NV.paddlenv,EG_NV.scubanv,EG_NV.snorkelnv,EG_NV.beachvolley,EG_NV.starsbeach,EG_NV.bikenv,EG_NV.paradisevillage,EG_NV.marietasnv],
+  [EG_NV.sayulitanv,EG_NV.marinaartmktnv,EG_NV.playayflamingos,EG_NV.golf,EG_NV.lacruzmkt,EG_NV.kayaknv,EG_NV.salado,EG_NV.marietasnv,EG_NV.marina_nv,EG_NV.sunsetcruise,EG_NV.whalenv,EG_NV.marinadinenv,EG_NV.puntamitanv,EG_NV.fishingnv,EG_NV.hotelbars,EG_NV.scubanv,EG_NV.bikenv,EG_NV.starsbeach,EG_NV.hikebocanegra,EG_NV.paddlenv,EG_NV.snorkelnv,EG_NV.beachvolley,EG_NV.spanv,EG_NV.paradisevillage,EG_NV.marietasnv],
+  [EG_NV.lacruzmkt,EG_NV.marina_nv,EG_NV.golf,EG_NV.playayflamingos,EG_NV.marinaartmktnv,EG_NV.sunsetcruise,EG_NV.whalenv,EG_NV.salado,EG_NV.marietasnv,EG_NV.kayaknv,EG_NV.puntamitanv,EG_NV.starsbeach,EG_NV.scubanv,EG_NV.fishingnv,EG_NV.hotelbars,EG_NV.spanv,EG_NV.hikebocanegra,EG_NV.sayulitanv,EG_NV.paddlenv,EG_NV.marinadinenv,EG_NV.beachvolley,EG_NV.snorkelnv,EG_NV.bikenv,EG_NV.paradisevillage,EG_NV.marietasnv],
+  [EG_NV.playayflamingos,EG_NV.marinaartmktnv,EG_NV.golf,EG_NV.lacruzmkt,EG_NV.marina_nv,EG_NV.marietasnv,EG_NV.whalenv,EG_NV.starsbeach,EG_NV.sunsetcruise,EG_NV.sayulitanv,EG_NV.scubanv,EG_NV.salado,EG_NV.hotelbars,EG_NV.puntamitanv,EG_NV.marinadinenv,EG_NV.kayaknv,EG_NV.paddlenv,EG_NV.fishingnv,EG_NV.beachvolley,EG_NV.snorkelnv,EG_NV.hikebocanegra,EG_NV.spanv,EG_NV.bikenv,EG_NV.paradisevillage,EG_NV.marietasnv]
 ];
 
-// ============================================================
-// WEEK CARD LOOKUP
-// ============================================================
 function getWeekCard(checkInStr, region) {
   const d = new Date(checkInStr + 'T12:00:00');
   const cards = region === 'nuevo_vallarta' ? WEEKLY_CARDS_NV : WEEKLY_CARDS_PV;
   const bounds = [
-    {start: new Date('2026-04-27'), end: new Date('2026-05-03'), label: 'May Week 1', idx: 0},
-    {start: new Date('2026-05-04'), end: new Date('2026-05-10'), label: 'May Week 2', idx: 1},
-    {start: new Date('2026-05-11'), end: new Date('2026-05-17'), label: 'May Week 3', idx: 2},
-    {start: new Date('2026-05-18'), end: new Date('2026-05-24'), label: 'May Week 4', idx: 3},
-    {start: new Date('2026-05-25'), end: new Date('2026-06-07'), label: 'May Week 5', idx: 4},
+    {start:new Date('2026-04-27'),end:new Date('2026-05-03'),label:'May Week 1',idx:0},
+    {start:new Date('2026-05-04'),end:new Date('2026-05-10'),label:'May Week 2',idx:1},
+    {start:new Date('2026-05-11'),end:new Date('2026-05-17'),label:'May Week 3',idx:2},
+    {start:new Date('2026-05-18'),end:new Date('2026-05-24'),label:'May Week 4',idx:3},
+    {start:new Date('2026-05-25'),end:new Date('2026-06-07'),label:'May Week 5',idx:4},
   ];
-  for (const w of bounds) {
-    if (d >= w.start && d <= w.end) return {acts: cards[w.idx].slice(), label: w.label};
-  }
-  const day = d.getDate();
-  const idx = Math.min(Math.floor((day - 1) / 7), 4);
-  return {acts: cards[idx].slice(), label: 'Week ' + (idx + 1)};
+  for(const w of bounds){ if(d>=w.start&&d<=w.end) return {acts:cards[w.idx].slice(),label:w.label}; }
+  const idx = Math.min(Math.floor((d.getDate()-1)/7),4);
+  return {acts:cards[idx].slice(),label:'Week '+(idx+1)};
 }
 
 // ============================================================
 // CALENDAR
 // ============================================================
 let calYear, calMonth2, selectedCheckIn = null;
-function navMonth(dir) {
-  calMonth2 += dir;
-  if(calMonth2 < 0){calMonth2=11; calYear--;} if(calMonth2 > 11){calMonth2=0; calYear++;}
+function navMonth(dir){
+  calMonth2+=dir; if(calMonth2<0){calMonth2=11;calYear--;} if(calMonth2>11){calMonth2=0;calYear++;}
   renderCal();
 }
-function initCal() {
-  const now = new Date(); calYear = now.getFullYear(); calMonth2 = now.getMonth(); renderCal();
+function initCal(){
+  const now=new Date(); calYear=now.getFullYear(); calMonth2=now.getMonth(); renderCal();
 }
-function renderCal() {
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('cal-month').textContent = months[calMonth2]+' '+calYear;
-  const grid = document.getElementById('cal-grid'); grid.innerHTML = '';
-  ['S','M','T','W','T','F','S'].forEach(d=>{const e=document.createElement('div');e.className='cal-day-name';e.textContent=d;grid.appendChild(e);});
-  const firstDay = new Date(calYear, calMonth2, 1).getDay();
-  const daysInMonth = new Date(calYear, calMonth2+1, 0).getDate();
+function renderCal(){
+  const t=T[lang];
+  document.getElementById('cal-month').textContent=t.months[calMonth2]+' '+calYear;
+  const grid=document.getElementById('cal-grid'); grid.innerHTML='';
+  t.dayNames.forEach(d=>{const e=document.createElement('div');e.className='cal-day-name';e.textContent=d;grid.appendChild(e);});
+  const firstDay=new Date(calYear,calMonth2,1).getDay();
+  const daysInMonth=new Date(calYear,calMonth2+1,0).getDate();
   for(let i=0;i<firstDay;i++){const e=document.createElement('div');e.className='cal-day empty';grid.appendChild(e);}
   for(let d=1;d<=daysInMonth;d++){
-    const e=document.createElement('div'); e.className='cal-day'; e.textContent=d;
+    const e=document.createElement('div');e.className='cal-day';e.textContent=d;
     const dStr=calYear+'-'+String(calMonth2+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-    if(selectedCheckIn===dStr) e.classList.add('selected');
+    if(selectedCheckIn===dStr)e.classList.add('selected');
     e.onclick=()=>selectDate(dStr,d,e);
     grid.appendChild(e);
   }
 }
-function selectDate(dStr, day, el) {
+function selectDate(dStr,day,el){
   selectedCheckIn=dStr;
   document.querySelectorAll('.cal-day').forEach(d=>d.classList.remove('selected'));
   el.classList.add('selected');
   const region=document.getElementById('region-select').value;
   const {label}=getWeekCard(dStr,region);
-  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const t=T[lang];
   const d=new Date(dStr+'T12:00:00');
-  document.getElementById('stay-display').innerHTML='Check-in: <strong>'+months[d.getMonth()]+' '+day+', '+d.getFullYear()+'</strong><br><span class="week-badge">You\'ll get the '+label+' Card!</span>';
+  document.getElementById('stay-display').innerHTML=t.checkinLabel(t.monthsShort[d.getMonth()],day,d.getFullYear(),label);
 }
 
 // ============================================================
 // GAME STATE
 // ============================================================
-let ACTS=[], weekLabel='', done=new Array(25).fill(false);
-let photos=new Array(25).fill(null), photoPaths=new Array(25).fill(null);
-let currentCell=null, currentFile=null, guestCheckIn=null, guestRegion=null;
+let ACTS=[],weekLabel='',done=new Array(25).fill(false);
+let photos=new Array(25).fill(null),photoPaths=new Array(25).fill(null);
+let currentCell=null,currentFile=null,guestCheckIn=null,guestRegion=null;
 
 window.onload=function(){
-  initCal();
-  try { if(!sessionStorage.getItem('naya_pv_logged')){ sb.from('bingo_page_views').insert({user_agent:navigator.userAgent}).then(()=>sessionStorage.setItem('naya_pv_logged','1')).catch(()=>{}); } } catch(e){}
+  // don't init cal here — wait for lang selection
+  try{if(!sessionStorage.getItem('naya_pv_logged')){sb.from('bingo_page_views').insert({user_agent:navigator.userAgent}).then(()=>sessionStorage.setItem('naya_pv_logged','1')).catch(()=>{});}}catch(e){}
 };
 
 async function startGame(){
+  const t=T[lang];
   const errEl=document.getElementById('login-error'); errEl.classList.remove('show');
-  if(!selectedCheckIn){errEl.textContent='Please select your check-in date.';errEl.classList.add('show');return;}
+  if(!selectedCheckIn){errEl.textContent=t.errorDate;errEl.classList.add('show');return;}
   guestCheckIn=selectedCheckIn; guestRegion=document.getElementById('region-select').value;
-  const btn=document.getElementById('login-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Loading your card...';
-  try{sb.from('bingo_logins').insert({check_in_date:selectedCheckIn,region:guestRegion,user_agent:navigator.userAgent}).then(()=>{}).catch(()=>{});}catch(e){}
+  const btn=document.getElementById('login-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>'+t.savingText;
+  try{sb.from('bingo_logins').insert({check_in_date:selectedCheckIn,region:guestRegion,user_agent:navigator.userAgent,lang:lang}).then(()=>{}).catch(()=>{});}catch(e){}
   const {acts,label}=getWeekCard(selectedCheckIn,guestRegion);
   ACTS=acts; weekLabel=label;
   done=new Array(25).fill(false); photos=new Array(25).fill(null); photoPaths=new Array(25).fill(null);
@@ -506,30 +696,33 @@ async function startGame(){
   if(saved){try{const p=JSON.parse(saved);if(p.done)p.done.forEach((v,i)=>{if(v)done[i]=true;});if(p.photos)p.photos.forEach((v,i)=>{if(v)photos[i]=v;});}catch(e){}}
   document.getElementById('login-screen').style.display='none';
   document.getElementById('game-screen').style.display='block';
-  document.getElementById('week-label').textContent=label+' Card';
-  btn.disabled=false; btn.innerHTML='Get My Bingo Card →';
+  document.getElementById('week-label').textContent=label+' '+t.weekCard;
+  document.getElementById('lang-toggle-btn').textContent=t.langToggle;
+  btn.disabled=false; btn.textContent=t.loginBtn;
   renderCard();
+  applyLangGame();
 }
 
 function saveLocal(){
-  if(!guestCheckIn||!guestRegion) return;
+  if(!guestCheckIn||!guestRegion)return;
   try{localStorage.setItem('naya_'+guestRegion+'_'+guestCheckIn,JSON.stringify({done,photos}));}catch(e){}
 }
 
 function renderCard(){
+  const t=T[lang];
   const grid=document.getElementById('bingo-grid'); grid.innerHTML='';
   ACTS.forEach((a,i)=>{
-    if(!a) a={n:'Activity'};
+    if(!a)a={n:{en:'Activity',es:'Actividad'}};
     const c=document.createElement('div');
     c.className='cell'+(a.isEvent?' event-cell':'');
     if(a.photo){const bg=document.createElement('div');bg.className='cell-bg';bg.style.backgroundImage='url('+a.photo+')';c.appendChild(bg);}
     if(photos[i]){const pb=document.createElement('div');pb.className='cell-photo-bg';pb.style.backgroundImage='url('+photos[i]+')';c.appendChild(pb);c.classList.add('has-photo');}
     const ov=document.createElement('div');ov.className='cell-overlay';c.appendChild(ov);
-    if(a.isEvent){const t=document.createElement('div');t.className='event-tag';t.textContent='EVENT';c.appendChild(t);}
+    if(a.isEvent){const tag=document.createElement('div');tag.className='event-tag';tag.textContent=t.eventTag;c.appendChild(tag);}
     const chk=document.createElement('div');chk.className='check-badge';chk.innerHTML='<svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>';c.appendChild(chk);
-    const n=document.createElement('div');n.className='cell-name';n.textContent=a.n;c.appendChild(n);
+    const n=document.createElement('div');n.className='cell-name';n.textContent=actName(a);c.appendChild(n);
     c.onclick=()=>openModal(i);
-    if(done[i]) c.classList.add('done');
+    if(done[i])c.classList.add('done');
     grid.appendChild(c);
   });
   updateProgress();
@@ -545,6 +738,7 @@ function getLines(){
 }
 
 function updateProgress(){
+  const t=T[lang];
   const lines=getLines(); const inLine=new Set(); lines.forEach(l=>l.forEach(i=>inLine.add(i)));
   document.querySelectorAll('.cell').forEach((c,i)=>{
     c.classList.remove('line','done');
@@ -552,27 +746,31 @@ function updateProgress(){
   });
   const cnt=done.filter(Boolean).length;
   document.getElementById('pfill').style.width=Math.round(cnt/25*100)+'%';
-  document.getElementById('plabel').textContent=cnt+' / 25 done';
-  document.getElementById('badge').innerHTML=lines.length?'<span>🎉 '+lines.length+' bingo'+(lines.length>1?'s':'')+' complete!</span>':'';
+  document.getElementById('plabel').textContent=t.progressLabel(cnt);
+  document.getElementById('badge').innerHTML=lines.length?'<span>'+t.bingoMsg(lines.length)+'</span>':'';
   document.getElementById('ctabtn').classList[lines.length?'add':'remove']('on');
+  document.getElementById('ctabtn').textContent=t.claimBtn;
 }
 
 function openModal(i){
   currentCell=i; currentFile=null;
-  const a=ACTS[i]; if(!a) return;
+  const a=ACTS[i]; if(!a)return;
+  const t=T[lang];
+  applyLangModal();
   document.getElementById('m-event-tag').style.display=a.isEvent?'inline-block':'none';
   document.getElementById('modal-body').style.backgroundImage=a.photo?"url('"+a.photo+"')":'';
-  document.getElementById('m-title').textContent=a.n;
-  document.getElementById('m-sub').textContent=(a.when?a.when+' · ':'')+(a.addr||'Banderas Bay');
+  document.getElementById('m-title').textContent=actName(a);
+  const when=actWhen(a);
+  document.getElementById('m-sub').textContent=(when?when+' · ':'')+(a.addr||'Banderas Bay');
   let html='';
-  if(a.when) html+='📅 <b>When:</b> '+a.when+'<br>';
-  if(a.tip) html+='💡 <b>Tip:</b> '+a.tip+'<br>';
-  if(a.phone) html+='📞 <b>Phone:</b> <a href="tel:'+a.phone+'">'+a.phone+'</a><br>';
-  if(a.addr) html+='📍 <b>Address:</b> <a href="'+(a.maps||'#')+'" target="_blank">'+a.addr+'</a><br>';
-  if(a.maps) html+='🗺️ <a href="'+a.maps+'" target="_blank">Get Directions →</a>';
+  if(when) html+=t.when+when+'<br>';
+  if(a.tip) html+=t.tip+actTip(a)+'<br>';
+  if(a.phone) html+=t.phone+'<a href="tel:'+a.phone+'">'+a.phone+'</a><br>';
+  if(a.addr) html+=t.address+'<a href="'+(a.maps||'#')+'" target="_blank">'+a.addr+'</a><br>';
+  if(a.maps) html+=t.directions.replace('{url}',a.maps);
   document.getElementById('m-details').innerHTML=html;
-  const il=document.getElementById('m-info-link');
   const infoUrl=a.link||a.maps;
+  const il=document.getElementById('m-info-link');
   if(infoUrl){il.href=infoUrl;il.style.display='block';}else{il.style.display='none';}
   document.getElementById('preview-wrap').classList.remove('show');
   document.getElementById('preview-img').src='';
@@ -582,19 +780,19 @@ function openModal(i){
   document.getElementById('modal-overlay').classList.add('open');
 }
 function handleFile(e){
-  const f=e.target.files[0]; if(!f) return; currentFile=f;
-  const r=new FileReader(); r.onload=ev=>{document.getElementById('preview-img').src=ev.target.result;document.getElementById('preview-wrap').classList.add('show');document.getElementById('btn-done').disabled=false;}; r.readAsDataURL(f);
+  const f=e.target.files[0];if(!f)return;currentFile=f;
+  const r=new FileReader();r.onload=ev=>{document.getElementById('preview-img').src=ev.target.result;document.getElementById('preview-wrap').classList.add('show');document.getElementById('btn-done').disabled=false;};r.readAsDataURL(f);
 }
 function markDone(){
-  if(currentCell===null) return; done[currentCell]=true;
+  if(currentCell===null)return;done[currentCell]=true;
   if(currentFile){const r=new FileReader();r.onload=ev=>{photos[currentCell]=ev.target.result;saveLocal();renderCard();};r.readAsDataURL(currentFile);}
   else{saveLocal();renderCard();}
-  closeModal(); showToast('✓ Activity completed!');
+  closeModal();showToast(T[lang].toastSaved);
 }
 function closeModal(){document.getElementById('modal-overlay').classList.remove('open');currentCell=null;currentFile=null;}
-function openRules(){document.getElementById('rules-overlay').classList.add('open');}
+function openRules(){applyLangRules();document.getElementById('rules-overlay').classList.add('open');}
 function closeRules(){document.getElementById('rules-overlay').classList.remove('open');}
-function openClaimModal(){if(!getLines().length)return;document.getElementById('claim-overlay').classList.add('open');}
+function openClaimModal(){if(!getLines().length)return;applyLangClaim();document.getElementById('claim-overlay').classList.add('open');}
 function closeClaim(){document.getElementById('claim-overlay').classList.remove('open');}
 
 function generateNayaToken(){
@@ -606,28 +804,32 @@ function generateNayaToken(){
 }
 
 async function submitClaim(){
+  const t=T[lang];
   const first=document.getElementById('claim-first').value.trim();
   const last=document.getElementById('claim-last').value.trim();
   const res=document.getElementById('claim-res').value.trim();
-  const errEl=document.getElementById('claim-error'); errEl.style.display='none';
-  if(!first||!last){errEl.textContent='Please enter your first and last name.';errEl.style.display='block';return;}
-  if(!res){errEl.textContent='Please enter your reservation number.';errEl.style.display='block';return;}
-  const btn=document.getElementById('claim-submit-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span>Saving...';
+  const errEl=document.getElementById('claim-error');errEl.style.display='none';
+  if(!first||!last){errEl.textContent=t.errorName;errEl.style.display='block';return;}
+  if(!res){errEl.textContent=t.errorRes;errEl.style.display='block';return;}
+  const btn=document.getElementById('claim-submit-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>'+t.savingText;
   const token=generateNayaToken();
   document.getElementById('naya-token').textContent=token;
   try{
     const normRes=(res||'').trim().toLowerCase();
-    const {data:existing}=await sb.from('bingo_players').select('id').eq('reservation_number',normRes).maybeSingle();
+    const{data:existing}=await sb.from('bingo_players').select('id').eq('reservation_number',normRes).maybeSingle();
     if(existing){await sb.from('bingo_players').update({first_name:first,last_name:last,completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photos.filter(p=>p!==null).length,bear_token:token,region:guestRegion}).eq('id',existing.id);}
     else{await sb.from('bingo_players').insert({first_name:first,last_name:last,reservation_number:normRes,check_in_date:guestCheckIn,started_at:new Date().toISOString(),completed_bingo:true,activities_completed:done.filter(Boolean).length,photos_submitted:photos.filter(p=>p!==null).length,bear_token:token,region:guestRegion});}
   }catch(e){console.error('Claim error:',e);}
   try{localStorage.removeItem('naya_'+guestRegion+'_'+guestCheckIn);}catch(e){}
   closeClaim();
+  document.getElementById('congrats-title').textContent=t.congratsTitle;
+  document.getElementById('congrats-p1').textContent=t.congratsP1;
+  document.getElementById('congrats-p2').textContent=t.congratsP2;
   document.getElementById('game-screen').style.display='none';
   document.getElementById('congrats-screen').style.display='block';
 }
 
-function showToast(msg){const t=document.getElementById('saved-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function showToast(msg){const toast=document.getElementById('saved-toast');toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2500);}
 setInterval(()=>{if(selectedCheckIn)saveLocal();},3*60*1000);
 </script>
 </body>
