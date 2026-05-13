@@ -120,10 +120,23 @@ h1,h2,h3{font-family:'Urbanist',sans-serif;font-weight:700}
 
 /* CONGRATS */
 #congrats-screen{display:none;min-height:100vh;background:linear-gradient(135deg,var(--moss) 0%,var(--moss-dark) 100%);padding:2rem 1.25rem;text-align:center;color:var(--sand)}
-.congrats-content{max-width:420px;margin:0 auto;padding-top:2rem}
-.congrats-content h1{font-size:32px;color:var(--sand);margin-bottom:.5rem;font-weight:800}
-.emoji{font-size:64px;margin-bottom:1rem}
+.congrats-content{max-width:420px;margin:0 auto;padding-top:1rem}
+.congrats-logo{margin-bottom:1rem}
+.congrats-content h1{font-size:26px;color:var(--sand);margin-bottom:.5rem;font-weight:800;line-height:1.25}
+.emoji{font-size:48px;margin-bottom:.75rem}
 .congrats-content p{font-size:15px;margin-bottom:1rem;color:var(--ocean)}
+.congrats-subheadline{font-size:14px;color:var(--ocean);margin-bottom:1.5rem;font-weight:500}
+.congrats-card{border-radius:14px;padding:1rem 1.1rem;margin-bottom:1.25rem;text-align:center;line-height:1.5}
+.congrats-instructions{background:rgba(202,221,211,0.08);border:1.5px solid rgba(202,221,211,0.35)}
+.congrats-instructions p{font-size:13.5px;color:var(--sand);margin:0;line-height:1.55}
+.congrats-instructions a{color:var(--sunshine);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(250,225,161,0.4)}
+.congrats-instructions a:hover{border-bottom-color:var(--sunshine)}
+.congrats-token-section{margin:1.5rem 0}
+.congrats-token-label{font-size:11px;font-weight:700;color:var(--ocean);letter-spacing:1.5px;margin-bottom:.6rem;text-transform:uppercase}
+.congrats-token-box{display:inline-block;background:rgba(202,221,211,0.1);border:1.5px solid var(--ocean);border-radius:12px;padding:0.75rem 1.5rem;font-size:22px;font-weight:700;letter-spacing:0.18em;color:var(--ocean);font-family:monospace}
+.congrats-token-helper{font-size:12px;color:var(--ocean);margin-top:.75rem;font-style:italic;opacity:0.85}
+.congrats-confirmation{background:rgba(250,225,161,0.08);border:1.5px solid rgba(250,225,161,0.35)}
+.congrats-confirmation p{font-size:13px;color:var(--sand);margin:0;line-height:1.55}
 .saved-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--moss);color:var(--sand);padding:10px 18px;border-radius:24px;font-size:13px;font-weight:600;z-index:500;transition:transform .3s}
 .saved-toast.show{transform:translateX(-50%) translateY(0)}
 .rules-btn{display:inline-block;font-size:13px;font-weight:700;color:#fff;background:var(--moss);padding:10px 22px;border-radius:24px;text-decoration:none;border:2px solid var(--ocean);cursor:pointer;font-family:'DM Sans',sans-serif}
@@ -280,11 +293,28 @@ h1,h2,h3{font-family:'Urbanist',sans-serif;font-weight:700}
 <!-- CONGRATS SCREEN -->
 <div id="congrats-screen">
   <div class="congrats-content">
+    <div class="congrats-logo">
+      <div style="font-family:'Urbanist',sans-serif;font-weight:800;font-size:22px;color:var(--sand);letter-spacing:1px">NAYA HOMES</div>
+    </div>
     <div class="emoji">🎉</div>
-    <h1 id="congrats-title">Bingo!</h1>
-    <p id="congrats-p1"></p>
-    <div id="naya-token" style="display:inline-block;background:rgba(202,221,211,0.15);border:1.5px solid var(--ocean);border-radius:10px;padding:0.6rem 1.4rem;font-size:22px;font-weight:700;letter-spacing:0.15em;color:var(--ocean);font-family:monospace">--</div>
-    <p id="congrats-p2" style="margin-top:1rem;font-size:13px"></p>
+    <h1 id="congrats-title">You completed Naya Homes Bingo!</h1>
+    <p id="congrats-subheadline" class="congrats-subheadline">Share your stay with us and claim your gift!</p>
+
+    <div class="congrats-card congrats-instructions">
+      <p id="congrats-instructions-text">
+        To claim your gift, share your experience with a <a href="https://g.page/r/nayahomes/review" target="_blank" id="congrats-review-link">Google Review</a> or tag us on Instagram <a href="https://instagram.com/nayahomes" target="_blank" id="congrats-ig-link">@NayaHomes</a> in a post or story — then show our team. Thank you for being part of the Naya family! 🎁
+      </p>
+    </div>
+
+    <div class="congrats-token-section">
+      <div class="congrats-token-label" id="congrats-token-label">YOUR BINGO ADVENTURE CODE</div>
+      <div id="naya-token" class="congrats-token-box">--</div>
+      <p class="congrats-token-helper" id="congrats-token-helper">Include this code in your Google Review so we can track and send your gift!</p>
+    </div>
+
+    <div class="congrats-card congrats-confirmation">
+      <p id="congrats-confirmation-text">🎁 Thank you for sharing your stay! Our team will be in touch within 24 hours to deliver your gift.</p>
+    </div>
   </div>
 </div>
 
@@ -339,7 +369,12 @@ const T = {
     rulesSaveNote: '<b>📌 Save your token!</b> Screenshot or write it down — you\'ll need it to claim your gift.',
     rulesQTitle: '❓ Questions?',
     rulesCloseBtn: "Got it — let's play! 🎉",
-    congratsTitle: 'Bingo!',
+    congratsTitle: 'You completed Naya Homes Bingo!',
+    congratsSubheadline: 'Share your stay with us and claim your gift!',
+    congratsInstructions: 'To claim your gift, share your experience with a <a href="https://g.page/r/nayahomes/review" target="_blank">Google Review</a> or tag us on Instagram <a href="https://instagram.com/nayahomes" target="_blank">@NayaHomes</a> in a post or story — then show our team. Thank you for being part of the Naya family! 🎁',
+    congratsTokenLabel: 'YOUR BINGO ADVENTURE CODE',
+    congratsTokenHelper: 'Include this code in your Google Review so we can track and send your gift!',
+    congratsConfirmation: '🎁 Thank you for sharing your stay! Our team will be in touch within 24 hours to deliver your gift.',
     congratsP1: 'Show the token below to a Naya Homes team member to redeem your gift.',
     congratsP2: '📌 Take a screenshot or write this down!',
     toastSaved: '✓ Activity completed!',
@@ -398,7 +433,12 @@ const T = {
     rulesSaveNote: '<b>📌 ¡Guarda tu token!</b> Toma una captura de pantalla o escríbelo — lo necesitarás para reclamar tu regalo.',
     rulesQTitle: '❓ ¿Preguntas?',
     rulesCloseBtn: '¡Entendido — a jugar! 🎉',
-    congratsTitle: '¡Bingo!',
+    congratsTitle: '¡Completaste el Bingo de Naya Homes!',
+    congratsSubheadline: '¡Comparte tu estancia con nosotros y reclama tu regalo!',
+    congratsInstructions: 'Para reclamar tu regalo, comparte tu experiencia con una <a href="https://g.page/r/nayahomes/review" target="_blank">Reseña en Google</a> o etiquétanos en Instagram <a href="https://instagram.com/nayahomes" target="_blank">@NayaHomes</a> en una publicación o historia — luego muéstrala a nuestro equipo. ¡Gracias por ser parte de la familia Naya! 🎁',
+    congratsTokenLabel: 'TU CÓDIGO DE AVENTURA BINGO',
+    congratsTokenHelper: '¡Incluye este código en tu reseña de Google para que podamos rastrearla y enviarte tu regalo!',
+    congratsConfirmation: '🎁 ¡Gracias por compartir tu estancia! Nuestro equipo se pondrá en contacto contigo en 24 horas para entregarte tu regalo.',
     congratsP1: 'Muestra el token de abajo a un miembro del equipo Naya Homes para canjear tu regalo.',
     congratsP2: '📌 ¡Toma una captura de pantalla o escríbelo!',
     toastSaved: '✓ ¡Actividad completada!',
@@ -823,8 +863,11 @@ async function submitClaim(){
   try{localStorage.removeItem('naya_'+guestRegion+'_'+guestCheckIn);}catch(e){}
   closeClaim();
   document.getElementById('congrats-title').textContent=t.congratsTitle;
-  document.getElementById('congrats-p1').textContent=t.congratsP1;
-  document.getElementById('congrats-p2').textContent=t.congratsP2;
+  document.getElementById('congrats-subheadline').textContent=t.congratsSubheadline;
+  document.getElementById('congrats-instructions-text').innerHTML=t.congratsInstructions;
+  document.getElementById('congrats-token-label').textContent=t.congratsTokenLabel;
+  document.getElementById('congrats-token-helper').textContent=t.congratsTokenHelper;
+  document.getElementById('congrats-confirmation-text').textContent=t.congratsConfirmation;
   document.getElementById('game-screen').style.display='none';
   document.getElementById('congrats-screen').style.display='block';
 }
